@@ -1,0 +1,117 @@
+create database students
+
+use students
+create table admin
+(
+	id integer primary key auto_increment not null,
+	firstname varchar(20),
+	lastname varchar(20),
+	username varchar(20),
+	aPassword varchar(20),
+	deleted bit
+);
+
+create table student
+(
+	indexNumber integer primary key auto_increment not null,
+	firstname varchar(20),
+	lastname varchar(20),
+	accountNumber char(18) unique,
+	studYear integer,
+	email varchar(30),
+	sPassword varchar(20),
+	deleted bit
+);
+
+create table teacher
+(
+	id integer primary key auto_increment not null,
+	firstname varchar(20),
+	lastname varchar(20),
+	email varchar(30),
+	sPassword varchar(20),
+	rank varchar(30),
+	deleted bit
+);
+
+create table course
+(
+	id integer primary key auto_increment not null,
+	courseName varchar(50),
+	courseTeacherId integer,
+	deleted bit,
+
+	Foreign Key (courseTeacherId) References teacher(id)
+);
+
+create table studentAttendsCourse
+(
+	id integer primary key auto_increment not null,
+	studentId integer,
+	courseId integer,
+	deleted bit,
+
+	Foreign Key (studentId) References student(indexNumber),
+	Foreign Key (courseId) References course(id)
+);
+
+create table teacherTeachesCourse
+(
+	id integer primary key auto_increment not null,
+	teacherId integer,
+	courseId integer,
+	deleted bit,
+
+	Foreign Key (teacherId) References teacher(id),
+	Foreign Key (courseId) References course(id)
+);
+
+create table document
+(
+	id integer primary key auto_increment not null,
+	documentName varchar(30),
+	documentType varchar(30),
+	mimeType varchar(30),
+	studentId integer,
+	deleted bit,
+	
+	Foreign Key (studentId) References student(indexNumber)
+);
+
+create table payment
+(
+	id integer primary key auto_increment not null,
+	studentId integer,
+	amount float,
+	cause varchar(30),
+	deleted bit,
+
+	Foreign Key (studentId) References student(accountNumber)
+);
+
+create table exam
+(
+	id integer primary key auto_increment not null,
+	courseId integer,
+	examType varchar(30),
+	examDateTime datetime,
+	deleted bit,
+
+	Foreign Key (courseId) References course(id)
+);
+
+create table examResult
+(
+	id integer primary key auto_increment not null,
+	examId integer,
+	studentId integer,
+	points float,
+	deleted bit,
+
+	Foreign Key (examId) References exam(id),
+	Foreign Key (studentId) References student(indexNumber)
+);
+
+
+
+
