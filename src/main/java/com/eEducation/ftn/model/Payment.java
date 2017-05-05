@@ -6,6 +6,7 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,16 +28,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Lazar Stijakovic
  */
 @Entity
-@Table(name = "document")
+@Table(name = "payment")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Document d")
-    , @NamedQuery(name = "Document.findById", query = "SELECT d FROM Document d WHERE d.id = :id")
-    , @NamedQuery(name = "Document.findByDocumentName", query = "SELECT d FROM Document d WHERE d.documentName = :documentName")
-    , @NamedQuery(name = "Document.findByDocumentType", query = "SELECT d FROM Document d WHERE d.documentType = :documentType")
-    , @NamedQuery(name = "Document.findByMimeType", query = "SELECT d FROM Document d WHERE d.mimeType = :mimeType")
-    , @NamedQuery(name = "Document.findByDeleted", query = "SELECT d FROM Document d WHERE d.deleted = :deleted")})
-public class Document implements Serializable {
+    @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p")
+    , @NamedQuery(name = "Payment.findById", query = "SELECT p FROM Payment p WHERE p.id = :id")
+    , @NamedQuery(name = "Payment.findByAmount", query = "SELECT p FROM Payment p WHERE p.amount = :amount")
+    , @NamedQuery(name = "Payment.findByCause", query = "SELECT p FROM Payment p WHERE p.cause = :cause")
+    , @NamedQuery(name = "Payment.findByPDate", query = "SELECT p FROM Payment p WHERE p.pDate = :pDate")
+    , @NamedQuery(name = "Payment.findByDeleted", query = "SELECT p FROM Payment p WHERE p.deleted = :deleted")})
+public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,25 +45,25 @@ public class Document implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "amount")
+    private Float amount;
     @Size(max = 30)
-    @Column(name = "documentName")
-    private String documentName;
-    @Size(max = 30)
-    @Column(name = "documentType")
-    private String documentType;
-    @Size(max = 30)
-    @Column(name = "mimeType")
-    private String mimeType;
+    @Column(name = "cause")
+    private String cause;
+    @Column(name = "pDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date pDate;
     @Column(name = "deleted")
     private Boolean deleted;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "studentId", referencedColumnName = "accountNumber")
     @ManyToOne
     private Student studentId;
 
-    public Document() {
+    public Payment() {
     }
 
-    public Document(Integer id) {
+    public Payment(Integer id) {
         this.id = id;
     }
 
@@ -72,28 +75,28 @@ public class Document implements Serializable {
         this.id = id;
     }
 
-    public String getDocumentName() {
-        return documentName;
+    public Float getAmount() {
+        return amount;
     }
 
-    public void setDocumentName(String documentName) {
-        this.documentName = documentName;
+    public void setAmount(Float amount) {
+        this.amount = amount;
     }
 
-    public String getDocumentType() {
-        return documentType;
+    public String getCause() {
+        return cause;
     }
 
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
+    public void setCause(String cause) {
+        this.cause = cause;
     }
 
-    public String getMimeType() {
-        return mimeType;
+    public Date getPDate() {
+        return pDate;
     }
 
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
+    public void setPDate(Date pDate) {
+        this.pDate = pDate;
     }
 
     public Boolean getDeleted() {
@@ -122,10 +125,10 @@ public class Document implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Document)) {
+        if (!(object instanceof Payment)) {
             return false;
         }
-        Document other = (Document) object;
+        Payment other = (Payment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -134,7 +137,7 @@ public class Document implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Document[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.Payment[ id=" + id + " ]";
     }
     
 }

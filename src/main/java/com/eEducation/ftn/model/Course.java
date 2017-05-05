@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar
+ * @author Lazar Stijakovic
  */
 @Entity
 @Table(name = "course")
@@ -146,7 +146,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "asdf.Course[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.Course[ id=" + id + " ]";
     }
     
 }

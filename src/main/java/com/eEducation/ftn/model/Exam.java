@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar
+ * @author Lazar Stijakovic
  */
 @Entity
 @Table(name = "exam")
@@ -38,6 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Exam.findById", query = "SELECT e FROM Exam e WHERE e.id = :id")
     , @NamedQuery(name = "Exam.findByExamType", query = "SELECT e FROM Exam e WHERE e.examType = :examType")
     , @NamedQuery(name = "Exam.findByExamDateTime", query = "SELECT e FROM Exam e WHERE e.examDateTime = :examDateTime")
+    , @NamedQuery(name = "Exam.findByExamPoints", query = "SELECT e FROM Exam e WHERE e.examPoints = :examPoints")
+    , @NamedQuery(name = "Exam.findByExamGrade", query = "SELECT e FROM Exam e WHERE e.examGrade = :examGrade")
     , @NamedQuery(name = "Exam.findByDeleted", query = "SELECT e FROM Exam e WHERE e.deleted = :deleted")})
 public class Exam implements Serializable {
 
@@ -53,6 +55,11 @@ public class Exam implements Serializable {
     @Column(name = "examDateTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date examDateTime;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "examPoints")
+    private Float examPoints;
+    @Column(name = "examGrade")
+    private Integer examGrade;
     @Column(name = "deleted")
     private Boolean deleted;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
@@ -90,6 +97,22 @@ public class Exam implements Serializable {
 
     public void setExamDateTime(Date examDateTime) {
         this.examDateTime = examDateTime;
+    }
+
+    public Float getExamPoints() {
+        return examPoints;
+    }
+
+    public void setExamPoints(Float examPoints) {
+        this.examPoints = examPoints;
+    }
+
+    public Integer getExamGrade() {
+        return examGrade;
+    }
+
+    public void setExamGrade(Integer examGrade) {
+        this.examGrade = examGrade;
     }
 
     public Boolean getDeleted() {
@@ -139,7 +162,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "asdf.Exam[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.Exam[ id=" + id + " ]";
     }
     
 }

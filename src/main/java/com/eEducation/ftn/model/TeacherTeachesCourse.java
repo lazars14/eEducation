@@ -24,14 +24,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Lazar Stijakovic
  */
 @Entity
-@Table(name = "examResult")
+@Table(name = "teacherTeachesCourse")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ExamResult.findAll", query = "SELECT e FROM ExamResult e")
-    , @NamedQuery(name = "ExamResult.findById", query = "SELECT e FROM ExamResult e WHERE e.id = :id")
-    , @NamedQuery(name = "ExamResult.findByPoints", query = "SELECT e FROM ExamResult e WHERE e.points = :points")
-    , @NamedQuery(name = "ExamResult.findByDeleted", query = "SELECT e FROM ExamResult e WHERE e.deleted = :deleted")})
-public class ExamResult implements Serializable {
+    @NamedQuery(name = "TeacherTeachesCourse.findAll", query = "SELECT t FROM TeacherTeachesCourse t")
+    , @NamedQuery(name = "TeacherTeachesCourse.findById", query = "SELECT t FROM TeacherTeachesCourse t WHERE t.id = :id")
+    , @NamedQuery(name = "TeacherTeachesCourse.findByDeleted", query = "SELECT t FROM TeacherTeachesCourse t WHERE t.deleted = :deleted")})
+public class TeacherTeachesCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,22 +38,19 @@ public class ExamResult implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "points")
-    private Float points;
     @Column(name = "deleted")
     private Boolean deleted;
-    @JoinColumn(name = "examId", referencedColumnName = "id")
+    @JoinColumn(name = "teacherId", referencedColumnName = "id")
     @ManyToOne
-    private Exam examId;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    private Teacher teacherId;
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Student studentId;
+    private Course courseId;
 
-    public ExamResult() {
+    public TeacherTeachesCourse() {
     }
 
-    public ExamResult(Integer id) {
+    public TeacherTeachesCourse(Integer id) {
         this.id = id;
     }
 
@@ -66,14 +62,6 @@ public class ExamResult implements Serializable {
         this.id = id;
     }
 
-    public Float getPoints() {
-        return points;
-    }
-
-    public void setPoints(Float points) {
-        this.points = points;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
@@ -82,20 +70,20 @@ public class ExamResult implements Serializable {
         this.deleted = deleted;
     }
 
-    public Exam getExamId() {
-        return examId;
+    public Teacher getTeacherId() {
+        return teacherId;
     }
 
-    public void setExamId(Exam examId) {
-        this.examId = examId;
+    public void setTeacherId(Teacher teacherId) {
+        this.teacherId = teacherId;
     }
 
-    public Student getStudentId() {
-        return studentId;
+    public Course getCourseId() {
+        return courseId;
     }
 
-    public void setStudentId(Student studentId) {
-        this.studentId = studentId;
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
     }
 
     @Override
@@ -108,10 +96,10 @@ public class ExamResult implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ExamResult)) {
+        if (!(object instanceof TeacherTeachesCourse)) {
             return false;
         }
-        ExamResult other = (ExamResult) object;
+        TeacherTeachesCourse other = (TeacherTeachesCourse) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -120,7 +108,7 @@ public class ExamResult implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.ExamResult[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.TeacherTeachesCourse[ id=" + id + " ]";
     }
     
 }

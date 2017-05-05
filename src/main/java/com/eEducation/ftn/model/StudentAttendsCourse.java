@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,16 +24,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Lazar Stijakovic
  */
 @Entity
-@Table(name = "document")
+@Table(name = "studentAttendsCourse")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Document d")
-    , @NamedQuery(name = "Document.findById", query = "SELECT d FROM Document d WHERE d.id = :id")
-    , @NamedQuery(name = "Document.findByDocumentName", query = "SELECT d FROM Document d WHERE d.documentName = :documentName")
-    , @NamedQuery(name = "Document.findByDocumentType", query = "SELECT d FROM Document d WHERE d.documentType = :documentType")
-    , @NamedQuery(name = "Document.findByMimeType", query = "SELECT d FROM Document d WHERE d.mimeType = :mimeType")
-    , @NamedQuery(name = "Document.findByDeleted", query = "SELECT d FROM Document d WHERE d.deleted = :deleted")})
-public class Document implements Serializable {
+    @NamedQuery(name = "StudentAttendsCourse.findAll", query = "SELECT s FROM StudentAttendsCourse s")
+    , @NamedQuery(name = "StudentAttendsCourse.findById", query = "SELECT s FROM StudentAttendsCourse s WHERE s.id = :id")
+    , @NamedQuery(name = "StudentAttendsCourse.findByDeleted", query = "SELECT s FROM StudentAttendsCourse s WHERE s.deleted = :deleted")})
+public class StudentAttendsCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,25 +38,19 @@ public class Document implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 30)
-    @Column(name = "documentName")
-    private String documentName;
-    @Size(max = 30)
-    @Column(name = "documentType")
-    private String documentType;
-    @Size(max = 30)
-    @Column(name = "mimeType")
-    private String mimeType;
     @Column(name = "deleted")
     private Boolean deleted;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student studentId;
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @ManyToOne
+    private Course courseId;
 
-    public Document() {
+    public StudentAttendsCourse() {
     }
 
-    public Document(Integer id) {
+    public StudentAttendsCourse(Integer id) {
         this.id = id;
     }
 
@@ -70,30 +60,6 @@ public class Document implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDocumentName() {
-        return documentName;
-    }
-
-    public void setDocumentName(String documentName) {
-        this.documentName = documentName;
-    }
-
-    public String getDocumentType() {
-        return documentType;
-    }
-
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
-    }
-
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
     }
 
     public Boolean getDeleted() {
@@ -112,6 +78,14 @@ public class Document implements Serializable {
         this.studentId = studentId;
     }
 
+    public Course getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -122,10 +96,10 @@ public class Document implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Document)) {
+        if (!(object instanceof StudentAttendsCourse)) {
             return false;
         }
-        Document other = (Document) object;
+        StudentAttendsCourse other = (StudentAttendsCourse) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -134,7 +108,7 @@ public class Document implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Document[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.StudentAttendsCourse[ id=" + id + " ]";
     }
     
 }

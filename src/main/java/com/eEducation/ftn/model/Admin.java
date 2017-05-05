@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Lazar
+ * @author Lazar Stijakovic
  */
 @Entity
 @Table(name = "admin")
@@ -133,7 +133,7 @@ public class Admin implements Serializable {
 
     @Override
     public String toString() {
-        return "asdf.Admin[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.Admin[ id=" + id + " ]";
     }
     
 }
