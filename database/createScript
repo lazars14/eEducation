@@ -1,25 +1,46 @@
-create database students
+create database students;
 
-use students
-create table admin
+use students;
+
+create table appUser
 (
 	id integer primary key auto_increment not null,
 	firstname varchar(20),
 	lastname varchar(20),
 	username varchar(20),
 	aPassword varchar(20),
+	role varchar(20),
+	deleted bit
+);
+
+create table class
+(
+	id integer primary key auto_increment not null,
+	name varchar(50),
 	deleted bit
 );
 
 create table student
 (
-	indexNumber integer primary key auto_increment not null,
+	id integer primary key auto_increment not null,
+	indexNumber varchar(15),
 	firstname varchar(20),
 	lastname varchar(20),
 	accountNumber char(18) unique,
 	studYear integer,
 	email varchar(30),
 	sPassword varchar(20),
+	classId integer,
+	espbPoints integer,
+	deleted bit,
+
+	Foreign Key (classId) References class(id)
+);
+
+create table rank
+(
+	id integer primary key auto_increment not null,
+	name varchar(30),
 	deleted bit
 );
 
@@ -30,18 +51,20 @@ create table teacher
 	lastname varchar(20),
 	email varchar(30),
 	sPassword varchar(20),
-	rank varchar(30),
-	deleted bit
+	rank integer,
+	classId integer,
+	deleted bit,
+
+	Foreign Key (rank) References rank(id),
+	Foreign Key (classId) References class(id)
 );
 
 create table course
 (
 	id integer primary key auto_increment not null,
 	courseName varchar(50),
-	courseTeacherId integer,
-	deleted bit,
-
-	Foreign Key (courseTeacherId) References teacher(id)
+	espbPoints integer,
+	deleted bit
 );
 
 create table studentAttendsCourse
@@ -51,7 +74,7 @@ create table studentAttendsCourse
 	courseId integer,
 	deleted bit,
 
-	Foreign Key (studentId) References student(indexNumber),
+	Foreign Key (studentId) References student(id),
 	Foreign Key (courseId) References course(id)
 );
 
@@ -71,28 +94,30 @@ create table document
 	id integer primary key auto_increment not null,
 	documentName varchar(30),
 	documentType varchar(30),
+	documentURL varchar(200),
 	mimeType varchar(30),
 	studentId integer,
 	deleted bit,
 	
-	Foreign Key (studentId) References student(indexNumber)
+	Foreign Key (studentId) References student(id)
 );
 
 create table payment
 (
 	id integer primary key auto_increment not null,
-	studentId integer,
+	accountNumber varchar(18),
 	amount float,
 	cause varchar(30),
-	deleted bit,
-
-	Foreign Key (studentId) References student(accountNumber)
+	paymentDate datetime,
+	owes bit,
+	deleted bit
 );
 
 create table exam
 (
 	id integer primary key auto_increment not null,
 	courseId integer,
+	maxPoints float,
 	examType varchar(30),
 	examDateTime datetime,
 	deleted bit,
@@ -100,18 +125,65 @@ create table exam
 	Foreign Key (courseId) References course(id)
 );
 
-create table examResult
+create table subexam
 (
 	id integer primary key auto_increment not null,
 	examId integer,
-	studentId integer,
-	points float,
+	examPercentage float,
+	maxPoints float,
+	eDate datetime,
+	due datetime,
+	documentId integer,
 	deleted bit,
 
 	Foreign Key (examId) References exam(id),
-	Foreign Key (studentId) References student(indexNumber)
+	Foreign Key (documentId) References document(id)
 );
 
+create table subexamResult
+(
+	id integer primary key auto_increment not null,
+	subexamId integer,
+	studentId integer,
+	points float,
+	passed bit,
+	deleted bit,
 
+	Foreign Key (subexamId) References subexam(id),
+	Foreign Key (studentId) References student(id)
+);
 
+create table grade
+(
+	id integer primary key auto_increment not null,
+	grade integer,
+	courseId integer,
+	studentId integer,
+	deleted bit,
 
+	Foreign Key (courseId) References course(id),
+	Foreign Key (studentId) References student(id)
+);
+
+create table examPeriod
+(
+	id integer primary key auto_increment not null,
+	startDate datetime,
+	endDate datetime,
+	deleted bit
+);
+
+create table notification
+(
+	id integer primary key auto_increment not null,
+	message varchar(200),
+	courseId integer,
+	classId integer,
+	documentId integer,
+	nDate datetime,
+	deleted bit,
+
+	Foreign Key (courseId) References course(id),
+	Foreign Key (classId) References class(id),
+	Foreign Key (documentId) References document(id)
+);
