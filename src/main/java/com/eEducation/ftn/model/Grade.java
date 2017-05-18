@@ -24,14 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Lazar Stijakovic
  */
 @Entity
-@Table(name = "examResult")
+@Table(name = "grade")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ExamResult.findAll", query = "SELECT e FROM ExamResult e")
-    , @NamedQuery(name = "ExamResult.findById", query = "SELECT e FROM ExamResult e WHERE e.id = :id")
-    , @NamedQuery(name = "ExamResult.findByPoints", query = "SELECT e FROM ExamResult e WHERE e.points = :points")
-    , @NamedQuery(name = "ExamResult.findByDeleted", query = "SELECT e FROM ExamResult e WHERE e.deleted = :deleted")})
-public class ExamResult implements Serializable {
+    @NamedQuery(name = "Grade.findAll", query = "SELECT g FROM Grade g")
+    , @NamedQuery(name = "Grade.findById", query = "SELECT g FROM Grade g WHERE g.id = :id")
+    , @NamedQuery(name = "Grade.findByGrade", query = "SELECT g FROM Grade g WHERE g.grade = :grade")
+    , @NamedQuery(name = "Grade.findByDeleted", query = "SELECT g FROM Grade g WHERE g.deleted = :deleted")})
+public class Grade implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,22 +39,21 @@ public class ExamResult implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "points")
-    private Float points;
+    @Column(name = "grade")
+    private Integer grade;
     @Column(name = "deleted")
     private Boolean deleted;
-    @JoinColumn(name = "examId", referencedColumnName = "id")
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Exam examId;
+    private Course courseId;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student studentId;
 
-    public ExamResult() {
+    public Grade() {
     }
 
-    public ExamResult(Integer id) {
+    public Grade(Integer id) {
         this.id = id;
     }
 
@@ -66,12 +65,12 @@ public class ExamResult implements Serializable {
         this.id = id;
     }
 
-    public Float getPoints() {
-        return points;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setPoints(Float points) {
-        this.points = points;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
     public Boolean getDeleted() {
@@ -82,12 +81,12 @@ public class ExamResult implements Serializable {
         this.deleted = deleted;
     }
 
-    public Exam getExamId() {
-        return examId;
+    public Course getCourseId() {
+        return courseId;
     }
 
-    public void setExamId(Exam examId) {
-        this.examId = examId;
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
     }
 
     public Student getStudentId() {
@@ -108,10 +107,10 @@ public class ExamResult implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ExamResult)) {
+        if (!(object instanceof Grade)) {
             return false;
         }
-        ExamResult other = (ExamResult) object;
+        Grade other = (Grade) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -120,7 +119,7 @@ public class ExamResult implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.ExamResult[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.Grade[ id=" + id + " ]";
     }
     
 }

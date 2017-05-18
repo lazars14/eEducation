@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,29 +17,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Lazar Stijakovic
  */
 @Entity
-@Table(name = "exam")
+@Table(name = "notification")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e")
-    , @NamedQuery(name = "Exam.findById", query = "SELECT e FROM Exam e WHERE e.id = :id")
-    , @NamedQuery(name = "Exam.findByMaxPoints", query = "SELECT e FROM Exam e WHERE e.maxPoints = :maxPoints")
-    , @NamedQuery(name = "Exam.findByExamType", query = "SELECT e FROM Exam e WHERE e.examType = :examType")
-    , @NamedQuery(name = "Exam.findByExamDateTime", query = "SELECT e FROM Exam e WHERE e.examDateTime = :examDateTime")
-    , @NamedQuery(name = "Exam.findByDeleted", query = "SELECT e FROM Exam e WHERE e.deleted = :deleted")})
-public class Exam implements Serializable {
+    @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n")
+    , @NamedQuery(name = "Notification.findById", query = "SELECT n FROM Notification n WHERE n.id = :id")
+    , @NamedQuery(name = "Notification.findByMessage", query = "SELECT n FROM Notification n WHERE n.message = :message")
+    , @NamedQuery(name = "Notification.findByNDate", query = "SELECT n FROM Notification n WHERE n.nDate = :nDate")
+    , @NamedQuery(name = "Notification.findByDeleted", query = "SELECT n FROM Notification n WHERE n.deleted = :deleted")})
+public class Notification implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,27 +44,28 @@ public class Exam implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "maxPoints")
-    private Float maxPoints;
-    @Size(max = 30)
-    @Column(name = "examType")
-    private String examType;
-    @Column(name = "examDateTime")
+    @Size(max = 200)
+    @Column(name = "message")
+    private String message;
+    @Column(name = "nDate")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date examDateTime;
+    private Date nDate;
     @Column(name = "deleted")
     private Boolean deleted;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
     private Course courseId;
-    @OneToMany(mappedBy = "examId")
-    private Collection<Subexam> subexamCollection;
+    @JoinColumn(name = "classId", referencedColumnName = "id")
+    @ManyToOne
+    private Class classId;
+    @JoinColumn(name = "documentId", referencedColumnName = "id")
+    @ManyToOne
+    private Document documentId;
 
-    public Exam() {
+    public Notification() {
     }
 
-    public Exam(Integer id) {
+    public Notification(Integer id) {
         this.id = id;
     }
 
@@ -80,28 +77,20 @@ public class Exam implements Serializable {
         this.id = id;
     }
 
-    public Float getMaxPoints() {
-        return maxPoints;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMaxPoints(Float maxPoints) {
-        this.maxPoints = maxPoints;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getExamType() {
-        return examType;
+    public Date getNDate() {
+        return nDate;
     }
 
-    public void setExamType(String examType) {
-        this.examType = examType;
-    }
-
-    public Date getExamDateTime() {
-        return examDateTime;
-    }
-
-    public void setExamDateTime(Date examDateTime) {
-        this.examDateTime = examDateTime;
+    public void setNDate(Date nDate) {
+        this.nDate = nDate;
     }
 
     public Boolean getDeleted() {
@@ -120,13 +109,20 @@ public class Exam implements Serializable {
         this.courseId = courseId;
     }
 
-    @XmlTransient
-    public Collection<Subexam> getSubexamCollection() {
-        return subexamCollection;
+    public Class getClassId() {
+        return classId;
     }
 
-    public void setSubexamCollection(Collection<Subexam> subexamCollection) {
-        this.subexamCollection = subexamCollection;
+    public void setClassId(Class classId) {
+        this.classId = classId;
+    }
+
+    public Document getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Document documentId) {
+        this.documentId = documentId;
     }
 
     @Override
@@ -139,10 +135,10 @@ public class Exam implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Exam)) {
+        if (!(object instanceof Notification)) {
             return false;
         }
-        Exam other = (Exam) object;
+        Notification other = (Notification) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -151,7 +147,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Exam[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.Notification[ id=" + id + " ]";
     }
     
 }

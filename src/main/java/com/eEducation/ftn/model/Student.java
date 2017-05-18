@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Student.findByStudYear", query = "SELECT s FROM Student s WHERE s.studYear = :studYear")
     , @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email")
     , @NamedQuery(name = "Student.findBySPassword", query = "SELECT s FROM Student s WHERE s.sPassword = :sPassword")
+    , @NamedQuery(name = "Student.findByEspbPoints", query = "SELECT s FROM Student s WHERE s.espbPoints = :espbPoints")
     , @NamedQuery(name = "Student.findByDeleted", query = "SELECT s FROM Student s WHERE s.deleted = :deleted")})
 public class Student implements Serializable {
 
@@ -47,7 +50,7 @@ public class Student implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 8)
+    @Size(max = 15)
     @Column(name = "indexNumber")
     private String indexNumber;
     @Size(max = 20)
@@ -68,16 +71,21 @@ public class Student implements Serializable {
     @Size(max = 20)
     @Column(name = "sPassword")
     private String sPassword;
+    @Column(name = "espbPoints")
+    private Integer espbPoints;
     @Column(name = "deleted")
     private Boolean deleted;
-    @OneToMany(mappedBy = "studentId")
-    private Collection<ExamResult> examResultCollection;
+    @JoinColumn(name = "classId", referencedColumnName = "id")
+    @ManyToOne
+    private Class classId;
     @OneToMany(mappedBy = "studentId")
     private Collection<Document> documentCollection;
     @OneToMany(mappedBy = "studentId")
-    private Collection<Payment> paymentCollection;
-    @OneToMany(mappedBy = "studentId")
     private Collection<StudentAttendsCourse> studentAttendsCourseCollection;
+    @OneToMany(mappedBy = "studentId")
+    private Collection<SubexamResult> subexamResultCollection;
+    @OneToMany(mappedBy = "studentId")
+    private Collection<Grade> gradeCollection;
 
     public Student() {
     }
@@ -150,6 +158,14 @@ public class Student implements Serializable {
         this.sPassword = sPassword;
     }
 
+    public Integer getEspbPoints() {
+        return espbPoints;
+    }
+
+    public void setEspbPoints(Integer espbPoints) {
+        this.espbPoints = espbPoints;
+    }
+
     public Boolean getDeleted() {
         return deleted;
     }
@@ -158,13 +174,12 @@ public class Student implements Serializable {
         this.deleted = deleted;
     }
 
-    @XmlTransient
-    public Collection<ExamResult> getExamResultCollection() {
-        return examResultCollection;
+    public Class getClassId() {
+        return classId;
     }
 
-    public void setExamResultCollection(Collection<ExamResult> examResultCollection) {
-        this.examResultCollection = examResultCollection;
+    public void setClassId(Class classId) {
+        this.classId = classId;
     }
 
     @XmlTransient
@@ -177,21 +192,30 @@ public class Student implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Payment> getPaymentCollection() {
-        return paymentCollection;
-    }
-
-    public void setPaymentCollection(Collection<Payment> paymentCollection) {
-        this.paymentCollection = paymentCollection;
-    }
-
-    @XmlTransient
     public Collection<StudentAttendsCourse> getStudentAttendsCourseCollection() {
         return studentAttendsCourseCollection;
     }
 
     public void setStudentAttendsCourseCollection(Collection<StudentAttendsCourse> studentAttendsCourseCollection) {
         this.studentAttendsCourseCollection = studentAttendsCourseCollection;
+    }
+
+    @XmlTransient
+    public Collection<SubexamResult> getSubexamResultCollection() {
+        return subexamResultCollection;
+    }
+
+    public void setSubexamResultCollection(Collection<SubexamResult> subexamResultCollection) {
+        this.subexamResultCollection = subexamResultCollection;
+    }
+
+    @XmlTransient
+    public Collection<Grade> getGradeCollection() {
+        return gradeCollection;
+    }
+
+    public void setGradeCollection(Collection<Grade> gradeCollection) {
+        this.gradeCollection = gradeCollection;
     }
 
     @Override

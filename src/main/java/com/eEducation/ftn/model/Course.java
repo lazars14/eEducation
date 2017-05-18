@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c")
     , @NamedQuery(name = "Course.findById", query = "SELECT c FROM Course c WHERE c.id = :id")
     , @NamedQuery(name = "Course.findByCourseName", query = "SELECT c FROM Course c WHERE c.courseName = :courseName")
+    , @NamedQuery(name = "Course.findByEspbPoints", query = "SELECT c FROM Course c WHERE c.espbPoints = :espbPoints")
     , @NamedQuery(name = "Course.findByDeleted", query = "SELECT c FROM Course c WHERE c.deleted = :deleted")})
 public class Course implements Serializable {
 
@@ -46,17 +45,20 @@ public class Course implements Serializable {
     @Size(max = 50)
     @Column(name = "courseName")
     private String courseName;
+    @Column(name = "espbPoints")
+    private Integer espbPoints;
     @Column(name = "deleted")
     private Boolean deleted;
-    @OneToMany(mappedBy = "courseId")
-    private Collection<Exam> examCollection;
-    @JoinColumn(name = "courseTeacherId", referencedColumnName = "id")
-    @ManyToOne
-    private Teacher courseTeacherId;
     @OneToMany(mappedBy = "courseId")
     private Collection<StudentAttendsCourse> studentAttendsCourseCollection;
     @OneToMany(mappedBy = "courseId")
     private Collection<TeacherTeachesCourse> teacherTeachesCourseCollection;
+    @OneToMany(mappedBy = "courseId")
+    private Collection<Exam> examCollection;
+    @OneToMany(mappedBy = "courseId")
+    private Collection<Notification> notificationCollection;
+    @OneToMany(mappedBy = "courseId")
+    private Collection<Grade> gradeCollection;
 
     public Course() {
     }
@@ -81,29 +83,20 @@ public class Course implements Serializable {
         this.courseName = courseName;
     }
 
+    public Integer getEspbPoints() {
+        return espbPoints;
+    }
+
+    public void setEspbPoints(Integer espbPoints) {
+        this.espbPoints = espbPoints;
+    }
+
     public Boolean getDeleted() {
         return deleted;
     }
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-    }
-
-    @XmlTransient
-    public Collection<Exam> getExamCollection() {
-        return examCollection;
-    }
-
-    public void setExamCollection(Collection<Exam> examCollection) {
-        this.examCollection = examCollection;
-    }
-
-    public Teacher getCourseTeacherId() {
-        return courseTeacherId;
-    }
-
-    public void setCourseTeacherId(Teacher courseTeacherId) {
-        this.courseTeacherId = courseTeacherId;
     }
 
     @XmlTransient
@@ -122,6 +115,33 @@ public class Course implements Serializable {
 
     public void setTeacherTeachesCourseCollection(Collection<TeacherTeachesCourse> teacherTeachesCourseCollection) {
         this.teacherTeachesCourseCollection = teacherTeachesCourseCollection;
+    }
+
+    @XmlTransient
+    public Collection<Exam> getExamCollection() {
+        return examCollection;
+    }
+
+    public void setExamCollection(Collection<Exam> examCollection) {
+        this.examCollection = examCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
+    }
+
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
+    }
+
+    @XmlTransient
+    public Collection<Grade> getGradeCollection() {
+        return gradeCollection;
+    }
+
+    public void setGradeCollection(Collection<Grade> gradeCollection) {
+        this.gradeCollection = gradeCollection;
     }
 
     @Override

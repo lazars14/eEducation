@@ -22,7 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -31,16 +30,17 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Lazar Stijakovic
  */
 @Entity
-@Table(name = "exam")
+@Table(name = "subexam")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e")
-    , @NamedQuery(name = "Exam.findById", query = "SELECT e FROM Exam e WHERE e.id = :id")
-    , @NamedQuery(name = "Exam.findByMaxPoints", query = "SELECT e FROM Exam e WHERE e.maxPoints = :maxPoints")
-    , @NamedQuery(name = "Exam.findByExamType", query = "SELECT e FROM Exam e WHERE e.examType = :examType")
-    , @NamedQuery(name = "Exam.findByExamDateTime", query = "SELECT e FROM Exam e WHERE e.examDateTime = :examDateTime")
-    , @NamedQuery(name = "Exam.findByDeleted", query = "SELECT e FROM Exam e WHERE e.deleted = :deleted")})
-public class Exam implements Serializable {
+    @NamedQuery(name = "Subexam.findAll", query = "SELECT s FROM Subexam s")
+    , @NamedQuery(name = "Subexam.findById", query = "SELECT s FROM Subexam s WHERE s.id = :id")
+    , @NamedQuery(name = "Subexam.findByExamPercentage", query = "SELECT s FROM Subexam s WHERE s.examPercentage = :examPercentage")
+    , @NamedQuery(name = "Subexam.findByMaxPoints", query = "SELECT s FROM Subexam s WHERE s.maxPoints = :maxPoints")
+    , @NamedQuery(name = "Subexam.findByEDate", query = "SELECT s FROM Subexam s WHERE s.eDate = :eDate")
+    , @NamedQuery(name = "Subexam.findByDue", query = "SELECT s FROM Subexam s WHERE s.due = :due")
+    , @NamedQuery(name = "Subexam.findByDeleted", query = "SELECT s FROM Subexam s WHERE s.deleted = :deleted")})
+public class Subexam implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,26 +49,31 @@ public class Exam implements Serializable {
     @Column(name = "id")
     private Integer id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "examPercentage")
+    private Float examPercentage;
     @Column(name = "maxPoints")
     private Float maxPoints;
-    @Size(max = 30)
-    @Column(name = "examType")
-    private String examType;
-    @Column(name = "examDateTime")
+    @Column(name = "eDate")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date examDateTime;
+    private Date eDate;
+    @Column(name = "due")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date due;
     @Column(name = "deleted")
     private Boolean deleted;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @OneToMany(mappedBy = "subexamId")
+    private Collection<SubexamResult> subexamResultCollection;
+    @JoinColumn(name = "examId", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
-    @OneToMany(mappedBy = "examId")
-    private Collection<Subexam> subexamCollection;
+    private Exam examId;
+    @JoinColumn(name = "documentId", referencedColumnName = "id")
+    @ManyToOne
+    private Document documentId;
 
-    public Exam() {
+    public Subexam() {
     }
 
-    public Exam(Integer id) {
+    public Subexam(Integer id) {
         this.id = id;
     }
 
@@ -80,6 +85,14 @@ public class Exam implements Serializable {
         this.id = id;
     }
 
+    public Float getExamPercentage() {
+        return examPercentage;
+    }
+
+    public void setExamPercentage(Float examPercentage) {
+        this.examPercentage = examPercentage;
+    }
+
     public Float getMaxPoints() {
         return maxPoints;
     }
@@ -88,20 +101,20 @@ public class Exam implements Serializable {
         this.maxPoints = maxPoints;
     }
 
-    public String getExamType() {
-        return examType;
+    public Date getEDate() {
+        return eDate;
     }
 
-    public void setExamType(String examType) {
-        this.examType = examType;
+    public void setEDate(Date eDate) {
+        this.eDate = eDate;
     }
 
-    public Date getExamDateTime() {
-        return examDateTime;
+    public Date getDue() {
+        return due;
     }
 
-    public void setExamDateTime(Date examDateTime) {
-        this.examDateTime = examDateTime;
+    public void setDue(Date due) {
+        this.due = due;
     }
 
     public Boolean getDeleted() {
@@ -112,21 +125,29 @@ public class Exam implements Serializable {
         this.deleted = deleted;
     }
 
-    public Course getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
-    }
-
     @XmlTransient
-    public Collection<Subexam> getSubexamCollection() {
-        return subexamCollection;
+    public Collection<SubexamResult> getSubexamResultCollection() {
+        return subexamResultCollection;
     }
 
-    public void setSubexamCollection(Collection<Subexam> subexamCollection) {
-        this.subexamCollection = subexamCollection;
+    public void setSubexamResultCollection(Collection<SubexamResult> subexamResultCollection) {
+        this.subexamResultCollection = subexamResultCollection;
+    }
+
+    public Exam getExamId() {
+        return examId;
+    }
+
+    public void setExamId(Exam examId) {
+        this.examId = examId;
+    }
+
+    public Document getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Document documentId) {
+        this.documentId = documentId;
     }
 
     @Override
@@ -139,10 +160,10 @@ public class Exam implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Exam)) {
+        if (!(object instanceof Subexam)) {
             return false;
         }
-        Exam other = (Exam) object;
+        Subexam other = (Subexam) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -151,7 +172,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Exam[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.Subexam[ id=" + id + " ]";
     }
     
 }

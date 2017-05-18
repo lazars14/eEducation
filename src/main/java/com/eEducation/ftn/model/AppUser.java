@@ -23,17 +23,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Lazar Stijakovic
  */
 @Entity
-@Table(name = "admin")
+@Table(name = "appUser")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a")
-    , @NamedQuery(name = "Admin.findById", query = "SELECT a FROM Admin a WHERE a.id = :id")
-    , @NamedQuery(name = "Admin.findByFirstname", query = "SELECT a FROM Admin a WHERE a.firstname = :firstname")
-    , @NamedQuery(name = "Admin.findByLastname", query = "SELECT a FROM Admin a WHERE a.lastname = :lastname")
-    , @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a WHERE a.username = :username")
-    , @NamedQuery(name = "Admin.findByAPassword", query = "SELECT a FROM Admin a WHERE a.aPassword = :aPassword")
-    , @NamedQuery(name = "Admin.findByDeleted", query = "SELECT a FROM Admin a WHERE a.deleted = :deleted")})
-public class Admin implements Serializable {
+    @NamedQuery(name = "AppUser.findAll", query = "SELECT a FROM AppUser a")
+    , @NamedQuery(name = "AppUser.findById", query = "SELECT a FROM AppUser a WHERE a.id = :id")
+    , @NamedQuery(name = "AppUser.findByFirstname", query = "SELECT a FROM AppUser a WHERE a.firstname = :firstname")
+    , @NamedQuery(name = "AppUser.findByLastname", query = "SELECT a FROM AppUser a WHERE a.lastname = :lastname")
+    , @NamedQuery(name = "AppUser.findByUsername", query = "SELECT a FROM AppUser a WHERE a.username = :username")
+    , @NamedQuery(name = "AppUser.findByAPassword", query = "SELECT a FROM AppUser a WHERE a.aPassword = :aPassword")
+    , @NamedQuery(name = "AppUser.findByRole", query = "SELECT a FROM AppUser a WHERE a.role = :role")
+    , @NamedQuery(name = "AppUser.findByDeleted", query = "SELECT a FROM AppUser a WHERE a.deleted = :deleted")})
+public class AppUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,13 +54,16 @@ public class Admin implements Serializable {
     @Size(max = 20)
     @Column(name = "aPassword")
     private String aPassword;
+    @Size(max = 20)
+    @Column(name = "role")
+    private String role;
     @Column(name = "deleted")
     private Boolean deleted;
 
-    public Admin() {
+    public AppUser() {
     }
 
-    public Admin(Integer id) {
+    public AppUser(Integer id) {
         this.id = id;
     }
 
@@ -103,6 +107,14 @@ public class Admin implements Serializable {
         this.aPassword = aPassword;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public Boolean getDeleted() {
         return deleted;
     }
@@ -121,10 +133,10 @@ public class Admin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Admin)) {
+        if (!(object instanceof AppUser)) {
             return false;
         }
-        Admin other = (Admin) object;
+        AppUser other = (AppUser) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -133,7 +145,7 @@ public class Admin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Admin[ id=" + id + " ]";
+        return "com.eEducation.ftn.model.AppUser[ id=" + id + " ]";
     }
     
 }

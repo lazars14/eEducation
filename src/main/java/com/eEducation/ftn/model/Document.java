@@ -6,6 +6,7 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,9 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Document.findById", query = "SELECT d FROM Document d WHERE d.id = :id")
     , @NamedQuery(name = "Document.findByDocumentName", query = "SELECT d FROM Document d WHERE d.documentName = :documentName")
     , @NamedQuery(name = "Document.findByDocumentType", query = "SELECT d FROM Document d WHERE d.documentType = :documentType")
+    , @NamedQuery(name = "Document.findByDocumentURL", query = "SELECT d FROM Document d WHERE d.documentURL = :documentURL")
     , @NamedQuery(name = "Document.findByMimeType", query = "SELECT d FROM Document d WHERE d.mimeType = :mimeType")
     , @NamedQuery(name = "Document.findByDeleted", query = "SELECT d FROM Document d WHERE d.deleted = :deleted")})
 public class Document implements Serializable {
@@ -48,6 +52,9 @@ public class Document implements Serializable {
     @Size(max = 30)
     @Column(name = "documentType")
     private String documentType;
+    @Size(max = 200)
+    @Column(name = "documentURL")
+    private String documentURL;
     @Size(max = 30)
     @Column(name = "mimeType")
     private String mimeType;
@@ -56,6 +63,10 @@ public class Document implements Serializable {
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student studentId;
+    @OneToMany(mappedBy = "documentId")
+    private Collection<Notification> notificationCollection;
+    @OneToMany(mappedBy = "documentId")
+    private Collection<Subexam> subexamCollection;
 
     public Document() {
     }
@@ -88,6 +99,14 @@ public class Document implements Serializable {
         this.documentType = documentType;
     }
 
+    public String getDocumentURL() {
+        return documentURL;
+    }
+
+    public void setDocumentURL(String documentURL) {
+        this.documentURL = documentURL;
+    }
+
     public String getMimeType() {
         return mimeType;
     }
@@ -110,6 +129,24 @@ public class Document implements Serializable {
 
     public void setStudentId(Student studentId) {
         this.studentId = studentId;
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
+    }
+
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
+    }
+
+    @XmlTransient
+    public Collection<Subexam> getSubexamCollection() {
+        return subexamCollection;
+    }
+
+    public void setSubexamCollection(Collection<Subexam> subexamCollection) {
+        this.subexamCollection = subexamCollection;
     }
 
     @Override

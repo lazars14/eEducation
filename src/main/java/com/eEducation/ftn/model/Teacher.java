@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,7 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Teacher.findByLastname", query = "SELECT t FROM Teacher t WHERE t.lastname = :lastname")
     , @NamedQuery(name = "Teacher.findByEmail", query = "SELECT t FROM Teacher t WHERE t.email = :email")
     , @NamedQuery(name = "Teacher.findBySPassword", query = "SELECT t FROM Teacher t WHERE t.sPassword = :sPassword")
-    , @NamedQuery(name = "Teacher.findByRank", query = "SELECT t FROM Teacher t WHERE t.rank = :rank")
     , @NamedQuery(name = "Teacher.findByDeleted", query = "SELECT t FROM Teacher t WHERE t.deleted = :deleted")})
 public class Teacher implements Serializable {
 
@@ -58,15 +59,16 @@ public class Teacher implements Serializable {
     @Size(max = 20)
     @Column(name = "sPassword")
     private String sPassword;
-    @Size(max = 30)
-    @Column(name = "rank")
-    private String rank;
     @Column(name = "deleted")
     private Boolean deleted;
-    @OneToMany(mappedBy = "courseTeacherId")
-    private Collection<Course> courseCollection;
     @OneToMany(mappedBy = "teacherId")
     private Collection<TeacherTeachesCourse> teacherTeachesCourseCollection;
+    @JoinColumn(name = "rank", referencedColumnName = "id")
+    @ManyToOne
+    private Rank rank;
+    @JoinColumn(name = "classId", referencedColumnName = "id")
+    @ManyToOne
+    private Class classId;
 
     public Teacher() {
     }
@@ -115,14 +117,6 @@ public class Teacher implements Serializable {
         this.sPassword = sPassword;
     }
 
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
@@ -132,21 +126,28 @@ public class Teacher implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Course> getCourseCollection() {
-        return courseCollection;
-    }
-
-    public void setCourseCollection(Collection<Course> courseCollection) {
-        this.courseCollection = courseCollection;
-    }
-
-    @XmlTransient
     public Collection<TeacherTeachesCourse> getTeacherTeachesCourseCollection() {
         return teacherTeachesCourseCollection;
     }
 
     public void setTeacherTeachesCourseCollection(Collection<TeacherTeachesCourse> teacherTeachesCourseCollection) {
         this.teacherTeachesCourseCollection = teacherTeachesCourseCollection;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+
+    public Class getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Class classId) {
+        this.classId = classId;
     }
 
     @Override
