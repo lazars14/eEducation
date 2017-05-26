@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.eEducation.ftn.model.*;
-import com.eEducation.ftn.repository.*;
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.repository.CourseRepository;
 
 @Service
 public class CourseService {
