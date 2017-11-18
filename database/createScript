@@ -1,78 +1,64 @@
-create database students;
+create database eeducation;
 
-use students;
-
-create table appUser
-(
-	id integer primary key auto_increment not null,
-	firstname varchar(20),
-	lastname varchar(20),
-	username varchar(20),
-	aPassword varchar(20),
-	role varchar(20),
-	deleted bit
-);
+use eeducation;
 
 create table class
 (
-	id integer primary key auto_increment not null,
+	id int primary key auto_increment not null,
 	name varchar(50),
-	deleted bit
+	numOfYears int
 );
 
 create table student
 (
-	id integer primary key auto_increment not null,
+	id int primary key auto_increment not null,
 	indexNumber varchar(15),
 	firstname varchar(20),
 	lastname varchar(20),
 	accountNumber char(18) unique,
-	studYear integer,
+	studYear int,
+	studYearOrdNum int,
 	email varchar(30),
 	sPassword varchar(20),
-	classId integer,
-	espbPoints integer,
-	deleted bit,
+	classId int,
+	espbPoints int,
 
 	Foreign Key (classId) References class(id)
 );
 
 create table rank
 (
-	id integer primary key auto_increment not null,
-	name varchar(30),
-	deleted bit
+	id int primary key auto_increment not null,
+	name varchar(30)
 );
 
 create table teacher
 (
-	id integer primary key auto_increment not null,
+	id int primary key auto_increment not null,
 	firstname varchar(20),
 	lastname varchar(20),
 	email varchar(30),
 	sPassword varchar(20),
 	rank integer,
-	classId integer,
-	deleted bit,
 
-	Foreign Key (rank) References rank(id),
-	Foreign Key (classId) References class(id)
+	Foreign Key (rank) References rank(id)
 );
 
 create table course
 (
-	id integer primary key auto_increment not null,
+	id int primary key auto_increment not null,
 	courseName varchar(50),
-	espbPoints integer,
-	deleted bit
+	espbPoints int,
+	teacherId int,
+
+	Foreign Key (teacherId) References teacher(id)
 );
 
 create table studentAttendsCourse
 (
-	id integer primary key auto_increment not null,
-	studentId integer,
-	courseId integer,
-	deleted bit,
+	id int primary key auto_increment not null,
+	studentId int,
+	courseId int,
 
 	Foreign Key (studentId) References student(id),
 	Foreign Key (courseId) References course(id)
@@ -80,86 +66,87 @@ create table studentAttendsCourse
 
 create table teacherTeachesCourse
 (
-	id integer primary key auto_increment not null,
-	teacherId integer,
-	courseId integer,
-	deleted bit,
+	id int primary key auto_increment not null,
+	teacherId int,
+	courseId int,
 
 	Foreign Key (teacherId) References teacher(id),
 	Foreign Key (courseId) References course(id)
 );
 
-create table document
+create table courseLesson
 (
-	id integer primary key auto_increment not null,
+	id int primary key auto_increment not null,
+	name varchar(50),
+	description varchar(100),
+	courseId int,
+
+	Foreign Key (courseId) References course(id)	
+);
+
+create table studentDocument
+(
+	id int primary key auto_increment not null,
 	documentName varchar(30),
 	documentType varchar(30),
 	documentURL varchar(200),
 	mimeType varchar(30),
-	studentId integer,
-	deleted bit,
+	studentId int,
 	
 	Foreign Key (studentId) References student(id)
 );
 
+create table courseFile
+(
+	id int primary key auto_increment not null,
+	documentName varchar(30),
+	documentType varchar(30),
+	documentURL varchar(200),
+	mimeType varchar(30),
+	courseLessonId int,
+	
+	Foreign Key (courseLessonId) References courseLesson(id)
+);
+
 create table payment
 (
-	id integer primary key auto_increment not null,
+	id int primary key auto_increment not null,
 	accountNumber varchar(18),
 	amount float,
 	cause varchar(30),
 	paymentDate datetime,
-	owes bit,
-	deleted bit
+	owes bit
 );
 
-create table exam
+create table colloquium
 (
-	id integer primary key auto_increment not null,
-	courseId integer,
+	id int primary key auto_increment not null,
+	courseId int,
 	maxPoints float,
 	examType varchar(30),
 	examDateTime datetime,
-	deleted bit,
 
 	Foreign Key (courseId) References course(id)
 );
 
-create table subexam
+create table colloquiumResult
 (
-	id integer primary key auto_increment not null,
-	examId integer,
-	examPercentage float,
-	maxPoints float,
-	eDate datetime,
-	due datetime,
-	documentId integer,
-	deleted bit,
-
-	Foreign Key (examId) References exam(id),
-	Foreign Key (documentId) References document(id)
-);
-
-create table subexamResult
-(
-	id integer primary key auto_increment not null,
-	subexamId integer,
-	studentId integer,
+	id int primary key auto_increment not null,
 	points float,
-	passed bit,
-	deleted bit,
+	colloquiumId int,
+	studentId int,		
 
-	Foreign Key (subexamId) References subexam(id),
+	Foreign Key (colloquiumId) References colloquium(id),
 	Foreign Key (studentId) References student(id)
 );
 
 create table grade
 (
-	id integer primary key auto_increment not null,
-	grade integer,
-	courseId integer,
-	studentId integer,
-	deleted bit,
+	id int primary key auto_increment not null,
+	points float,
+	grade int,
+	courseId int,
+	studentId int,
 
 	Foreign Key (courseId) References course(id),
 	Foreign Key (studentId) References student(id)
@@ -167,23 +154,33 @@ create table grade
 
 create table examPeriod
 (
-	id integer primary key auto_increment not null,
+	id int primary key auto_increment not null,
+	name varchar(50),
 	startDate datetime,
-	endDate datetime,
-	deleted bit
+	endDate datetime
+);
+
+create table studentExamEntry
+(
+	id int primary key auto_increment not null,	
+	eDate datetime,
+	studentId int,
+	courseId int,
+	examPeriodId int,
+
+	Foreign Key (studentId) References student(id),
+	Foreign Key (courseId) References course(id),
+	Foreign Key (examPeriodId) References examPeriod(id)	
 );
 
 create table notification
 (
-	id integer primary key auto_increment not null,
-	message varchar(200),
-	courseId integer,
-	classId integer,
-	documentId integer,
-	nDate datetime,
-	deleted bit,
+	id int primary key auto_increment not null,
+	message varchar(300),
+    nDate datetime,
+	courseId int,
+	documentId int,
 
 	Foreign Key (courseId) References course(id),
-	Foreign Key (classId) References class(id),
-	Foreign Key (documentId) References document(id)
+	Foreign Key (documentId) References courseFile(id)
 );
