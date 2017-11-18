@@ -1,0 +1,186 @@
+create database eeducation;
+
+use eeducation;
+
+create table class
+(
+	id int primary key auto_increment not null,
+	name varchar(50),
+	numOfYears int
+);
+
+create table student
+(
+	id int primary key auto_increment not null,
+	indexNumber varchar(15),
+	firstname varchar(20),
+	lastname varchar(20),
+	accountNumber char(18) unique,
+	studYear int,
+	studYearOrdNum int,
+	email varchar(30),
+	sPassword varchar(20),
+	classId int,
+	espbPoints int,
+
+	Foreign Key (classId) References class(id)
+);
+
+create table rank
+(
+	id int primary key auto_increment not null,
+	name varchar(30)
+);
+
+create table teacher
+(
+	id int primary key auto_increment not null,
+	firstname varchar(20),
+	lastname varchar(20),
+	email varchar(30),
+	sPassword varchar(20),
+	rank integer,
+
+	Foreign Key (rank) References rank(id)
+);
+
+create table course
+(
+	id int primary key auto_increment not null,
+	courseName varchar(50),
+	espbPoints int,
+	teacherId int,
+
+	Foreign Key (teacherId) References teacher(id)
+);
+
+create table studentAttendsCourse
+(
+	id int primary key auto_increment not null,
+	studentId int,
+	courseId int,
+
+	Foreign Key (studentId) References student(id),
+	Foreign Key (courseId) References course(id)
+);
+
+create table teacherTeachesCourse
+(
+	id int primary key auto_increment not null,
+	teacherId int,
+	courseId int,
+
+	Foreign Key (teacherId) References teacher(id),
+	Foreign Key (courseId) References course(id)
+);
+
+create table courseLesson
+(
+	id int primary key auto_increment not null,
+	name varchar(50),
+	description varchar(100),
+	courseId int,
+
+	Foreign Key (courseId) References course(id)	
+);
+
+create table studentDocument
+(
+	id int primary key auto_increment not null,
+	documentName varchar(30),
+	documentType varchar(30),
+	documentURL varchar(200),
+	mimeType varchar(30),
+	studentId int,
+	
+	Foreign Key (studentId) References student(id)
+);
+
+create table courseFile
+(
+	id int primary key auto_increment not null,
+	documentName varchar(30),
+	documentType varchar(30),
+	documentURL varchar(200),
+	mimeType varchar(30),
+	courseLessonId int,
+	
+	Foreign Key (courseLessonId) References courseLesson(id)
+);
+
+create table payment
+(
+	id int primary key auto_increment not null,
+	accountNumber varchar(18),
+	amount float,
+	cause varchar(30),
+	paymentDate datetime,
+	owes bit
+);
+
+create table colloquium
+(
+	id int primary key auto_increment not null,
+	courseId int,
+	maxPoints float,
+	examType varchar(30),
+	examDateTime datetime,
+
+	Foreign Key (courseId) References course(id)
+);
+
+create table colloquiumResult
+(
+	id int primary key auto_increment not null,
+	points float,
+	colloquiumId int,
+	studentId int,		
+
+	Foreign Key (colloquiumId) References colloquium(id),
+	Foreign Key (studentId) References student(id)
+);
+
+create table grade
+(
+	id int primary key auto_increment not null,
+	points float,
+	grade int,
+	courseId int,
+	studentId int,
+
+	Foreign Key (courseId) References course(id),
+	Foreign Key (studentId) References student(id)
+);
+
+create table examPeriod
+(
+	id int primary key auto_increment not null,
+	name varchar(50),
+	startDate datetime,
+	endDate datetime
+);
+
+create table studentExamEntry
+(
+	id int primary key auto_increment not null,	
+	eDate datetime,
+	studentId int,
+	courseId int,
+	examPeriodId int,
+
+	Foreign Key (studentId) References student(id),
+	Foreign Key (courseId) References course(id),
+	Foreign Key (examPeriodId) References examPeriod(id)	
+);
+
+create table notification
+(
+	id int primary key auto_increment not null,
+	message varchar(300),
+    nDate datetime,
+	courseId int,
+	documentId int,
+
+	Foreign Key (courseId) References course(id),
+	Foreign Key (documentId) References courseFile(id)
+);
