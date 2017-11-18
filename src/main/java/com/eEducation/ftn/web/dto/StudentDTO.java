@@ -11,10 +11,10 @@ public class StudentDTO {
     private String lastname;
     private String accountNumber;
     private Integer studYear;
+    private Integer studYearOrdNum;
     private String email;
     private String sPassword;
     private Integer espbPoints;
-    private Boolean deleted;
     private Class classId;
 	
 	public StudentDTO() {}
@@ -26,10 +26,10 @@ public class StudentDTO {
 		this.lastname = student.getLastname();
 		this.accountNumber = student.getAccountNumber();
 		this.studYear = student.getStudYear();
+		this.studYearOrdNum = student.getStudYearOrdNum();
 		this.email = student.getEmail();
 		this.sPassword = student.getSPassword();
 		this.espbPoints = student.getEspbPoints();
-		this.deleted = student.getDeleted();
 		this.classId = student.getClassId();
 	}
 
@@ -105,19 +105,19 @@ public class StudentDTO {
 		this.espbPoints = espbPoints;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	public Class getClassId() {
 		return classId;
 	}
 
 	public void setClassId(Class classId) {
 		this.classId = classId;
+	}
+	
+	public Integer getStudYearOrdNum() {
+		return studYearOrdNum;
+	}
+
+	public void setStudYearOrdNum(Integer studYearOrdNum) {
+		this.studYearOrdNum = studYearOrdNum;
 	}
 }

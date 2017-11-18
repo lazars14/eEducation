@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.service.ClassService;
+import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseService;
-import com.eEducation.ftn.service.DocumentService;
 import com.eEducation.ftn.service.NotificationService;
 import com.eEducation.ftn.web.dto.NotificationDTO;
 
@@ -24,7 +24,7 @@ public class NotificationController {
 	NotificationService notificationService;
 	
 	@Autowired
-	DocumentService documentService;
+	CourseFileService courseFileService;
 	
 	@Autowired
 	CourseService courseService;

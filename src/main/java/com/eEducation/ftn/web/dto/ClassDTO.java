@@ -6,14 +6,14 @@ public class ClassDTO {
 	
 	private Integer id;
     private String name;
-    private Boolean deleted;
+    private Integer numOfYears;;
 	
 	public ClassDTO() {}
 
 	public ClassDTO(Class c) {
 		this.id = c.getId();
 		this.name = c.getName();
-		this.deleted = c.getDeleted();
+		this.numOfYears = c.getNumOfYears();
 	}
 
 	public Integer getId() {
@@ -32,11 +32,12 @@ public class ClassDTO {
 		this.name = name;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
+	public Integer getNumOfYears() {
+		return numOfYears;
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public void setNumOfYears(Integer numOfYears) {
+		this.numOfYears = numOfYears;
 	}
+
 }

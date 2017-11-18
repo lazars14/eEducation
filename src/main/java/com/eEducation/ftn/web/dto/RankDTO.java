@@ -6,14 +6,12 @@ public class RankDTO {
 	
 	private Integer id;
     private String name;
-    private Boolean deleted;
 	
 	public RankDTO() {}
 	
 	public RankDTO(Rank rank){
 		this.id = rank.getId();
 		this.name = rank.getName();
-		this.deleted = rank.getDeleted();
 	}
 
 	public Integer getId() {
@@ -30,13 +28,5 @@ public class RankDTO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
 	}
 }

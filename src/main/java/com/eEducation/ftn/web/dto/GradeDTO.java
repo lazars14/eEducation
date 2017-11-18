@@ -7,8 +7,8 @@ import com.eEducation.ftn.model.Grade;
 public class GradeDTO {
 	
 	private Integer id;
+	private Float points;
     private Integer grade;
-    private Boolean deleted;
     private Course courseId;
     private Student studentId;
 	
@@ -16,8 +16,8 @@ public class GradeDTO {
 
 	public GradeDTO(Grade grade) {
 		this.id = grade.getId();
+		this.points = grade.getPoints();
 		this.grade = grade.getGrade();
-		this.deleted = grade.getDeleted();
 		this.courseId = grade.getCourseId();
 		this.studentId = grade.getStudentId();
 	}
@@ -38,14 +38,6 @@ public class GradeDTO {
 		this.grade = grade;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	public Course getCourseId() {
 		return courseId;
 	}
@@ -60,5 +52,13 @@ public class GradeDTO {
 
 	public void setStudentId(Student studentId) {
 		this.studentId = studentId;
+	}
+
+	public Float getPoints() {
+		return points;
+	}
+
+	public void setPoints(Float points) {
+		this.points = points;
 	}
 }

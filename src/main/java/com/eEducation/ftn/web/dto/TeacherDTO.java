@@ -1,6 +1,5 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.Class;
 import com.eEducation.ftn.model.Rank;
 import com.eEducation.ftn.model.Teacher;
 
@@ -11,9 +10,7 @@ public class TeacherDTO {
     private String lastname;
     private String email;
     private String sPassword;
-    private Boolean deleted;
     private Rank rank;
-    private Class classId;
 	
 	public TeacherDTO() {}
 
@@ -23,9 +20,7 @@ public class TeacherDTO {
 		this.lastname = teacher.getLastname();
 		this.email = teacher.getEmail();
 		this.sPassword = teacher.getSPassword();
-		this.deleted = teacher.getDeleted();
 		this.rank = teacher.getRank();
-		this.classId = teacher.getClassId();
 	}
 
 	public Integer getId() {
@@ -68,14 +63,6 @@ public class TeacherDTO {
 		this.sPassword = sPassword;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	public Rank getRank() {
 		return rank;
 	}
@@ -84,11 +71,4 @@ public class TeacherDTO {
 		this.rank = rank;
 	}
 
-	public Class getClassId() {
-		return classId;
-	}
-
-	public void setClassId(Class classId) {
-		this.classId = classId;
-	}
 }

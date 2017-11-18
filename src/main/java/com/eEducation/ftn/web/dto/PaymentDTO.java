@@ -12,7 +12,6 @@ public class PaymentDTO {
     private String cause;
     private Date paymentDate;
     private Boolean owes;
-    private Boolean deleted;
 	
 	public PaymentDTO() {}
 
@@ -24,7 +23,6 @@ public class PaymentDTO {
 		this.cause = payment.getCause();
 		this.paymentDate = payment.getPaymentDate();
 		this.owes = payment.getOwes();
-		this.deleted = payment.getDeleted();
 	}
 
 	public Integer getId() {
@@ -75,11 +73,4 @@ public class PaymentDTO {
 		this.owes = owes;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
 }

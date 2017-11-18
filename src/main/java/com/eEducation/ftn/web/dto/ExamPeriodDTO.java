@@ -7,17 +7,17 @@ import com.eEducation.ftn.model.ExamPeriod;
 public class ExamPeriodDTO {
 	
 	private Integer id;
+	private String name;
     private Date startDate;
     private Date endDate;
-    private Boolean deleted;
 	
 	public ExamPeriodDTO() {}
 
 	public ExamPeriodDTO(ExamPeriod examPeriod) {
 		this.id = examPeriod.getId();
+		this.name = examPeriod.getName();
 		this.startDate = examPeriod.getStartDate();
 		this.endDate = examPeriod.getEndDate();
-		this.deleted = examPeriod.getDeleted();
 	}
 
 	public Integer getId() {
@@ -44,11 +44,12 @@ public class ExamPeriodDTO {
 		this.endDate = endDate;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
+	public String getName() {
+		return name;
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public void setName(String name) {
+		this.name = name;
 	}
+
 }

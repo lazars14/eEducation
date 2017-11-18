@@ -7,7 +7,6 @@ public class CourseDTO {
 	private Integer id;
     private String courseName;
     private Integer espbPoints;
-    private Boolean deleted;
 	
 	public CourseDTO() {}
 	
@@ -15,7 +14,6 @@ public class CourseDTO {
 		this.id = course.getId();
 		this.courseName = course.getCourseName();
 		this.espbPoints = course.getEspbPoints();
-		this.deleted = course.getDeleted();
 	}
 
 	public Integer getId() {
@@ -42,11 +40,4 @@ public class CourseDTO {
 		this.espbPoints = espbPoints;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
 }

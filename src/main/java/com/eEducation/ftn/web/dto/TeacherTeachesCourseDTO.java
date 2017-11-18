@@ -7,7 +7,6 @@ import com.eEducation.ftn.model.TeacherTeachesCourse;
 public class TeacherTeachesCourseDTO {
 	
 	private Integer id;
-    private Boolean deleted;
     private Teacher teacherId;
     private Course courseId;
 	
@@ -16,7 +15,6 @@ public class TeacherTeachesCourseDTO {
 	public TeacherTeachesCourseDTO(TeacherTeachesCourse ttc) {
 		super();
 		this.id = ttc.getId();
-		this.deleted = ttc.getDeleted();
 		this.teacherId = ttc.getTeacherId();
 		this.courseId = ttc.getCourseId();
 	}
@@ -27,14 +25,6 @@ public class TeacherTeachesCourseDTO {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
 	}
 
 	public Teacher getTeacherId() {
