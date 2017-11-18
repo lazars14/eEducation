@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,25 +19,23 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "teacher")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Teacher.findAll", query = "SELECT t FROM Teacher t")
-    , @NamedQuery(name = "Teacher.findById", query = "SELECT t FROM Teacher t WHERE t.id = :id")
-    , @NamedQuery(name = "Teacher.findByFirstname", query = "SELECT t FROM Teacher t WHERE t.firstname = :firstname")
-    , @NamedQuery(name = "Teacher.findByLastname", query = "SELECT t FROM Teacher t WHERE t.lastname = :lastname")
-    , @NamedQuery(name = "Teacher.findByEmail", query = "SELECT t FROM Teacher t WHERE t.email = :email")
-    , @NamedQuery(name = "Teacher.findBySPassword", query = "SELECT t FROM Teacher t WHERE t.sPassword = :sPassword")
-    , @NamedQuery(name = "Teacher.findByDeleted", query = "SELECT t FROM Teacher t WHERE t.deleted = :deleted")})
+    @NamedQuery(name = "Teacher.findAll", query = "SELECT t FROM Teacher t"),
+    @NamedQuery(name = "Teacher.findById", query = "SELECT t FROM Teacher t WHERE t.id = :id"),
+    @NamedQuery(name = "Teacher.findByFirstname", query = "SELECT t FROM Teacher t WHERE t.firstname = :firstname"),
+    @NamedQuery(name = "Teacher.findByLastname", query = "SELECT t FROM Teacher t WHERE t.lastname = :lastname"),
+    @NamedQuery(name = "Teacher.findByEmail", query = "SELECT t FROM Teacher t WHERE t.email = :email"),
+    @NamedQuery(name = "Teacher.findBySPassword", query = "SELECT t FROM Teacher t WHERE t.sPassword = :sPassword")})
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,29 +44,21 @@ public class Teacher implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 20)
     @Column(name = "firstname")
     private String firstname;
-    @Size(max = 20)
     @Column(name = "lastname")
     private String lastname;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 30)
     @Column(name = "email")
     private String email;
-    @Size(max = 20)
     @Column(name = "sPassword")
     private String sPassword;
-    @Column(name = "deleted")
-    private Boolean deleted;
     @OneToMany(mappedBy = "teacherId")
     private Collection<TeacherTeachesCourse> teacherTeachesCourseCollection;
     @JoinColumn(name = "rank", referencedColumnName = "id")
     @ManyToOne
     private Rank rank;
-    @JoinColumn(name = "classId", referencedColumnName = "id")
-    @ManyToOne
-    private Class classId;
+    @OneToMany(mappedBy = "teacherId")
+    private Collection<Course> courseCollection;
 
     public Teacher() {
     }
@@ -117,14 +107,6 @@ public class Teacher implements Serializable {
         this.sPassword = sPassword;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
     @XmlTransient
     public Collection<TeacherTeachesCourse> getTeacherTeachesCourseCollection() {
         return teacherTeachesCourseCollection;
@@ -142,12 +124,13 @@ public class Teacher implements Serializable {
         this.rank = rank;
     }
 
-    public Class getClassId() {
-        return classId;
+    @XmlTransient
+    public Collection<Course> getCourseCollection() {
+        return courseCollection;
     }
 
-    public void setClassId(Class classId) {
-        this.classId = classId;
+    public void setCourseCollection(Collection<Course> courseCollection) {
+        this.courseCollection = courseCollection;
     }
 
     @Override
@@ -172,7 +155,7 @@ public class Teacher implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Teacher[ id=" + id + " ]";
+        return "newpackage.Teacher[ id=" + id + " ]";
     }
     
 }

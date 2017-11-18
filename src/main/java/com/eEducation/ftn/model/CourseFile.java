@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,26 +19,24 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
-@Table(name = "document")
+@Table(name = "courseFile")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Document d")
-    , @NamedQuery(name = "Document.findById", query = "SELECT d FROM Document d WHERE d.id = :id")
-    , @NamedQuery(name = "Document.findByDocumentName", query = "SELECT d FROM Document d WHERE d.documentName = :documentName")
-    , @NamedQuery(name = "Document.findByDocumentType", query = "SELECT d FROM Document d WHERE d.documentType = :documentType")
-    , @NamedQuery(name = "Document.findByDocumentURL", query = "SELECT d FROM Document d WHERE d.documentURL = :documentURL")
-    , @NamedQuery(name = "Document.findByMimeType", query = "SELECT d FROM Document d WHERE d.mimeType = :mimeType")
-    , @NamedQuery(name = "Document.findByDeleted", query = "SELECT d FROM Document d WHERE d.deleted = :deleted")})
-public class Document implements Serializable {
+    @NamedQuery(name = "CourseFile.findAll", query = "SELECT c FROM CourseFile c"),
+    @NamedQuery(name = "CourseFile.findById", query = "SELECT c FROM CourseFile c WHERE c.id = :id"),
+    @NamedQuery(name = "CourseFile.findByDocumentName", query = "SELECT c FROM CourseFile c WHERE c.documentName = :documentName"),
+    @NamedQuery(name = "CourseFile.findByDocumentType", query = "SELECT c FROM CourseFile c WHERE c.documentType = :documentType"),
+    @NamedQuery(name = "CourseFile.findByDocumentURL", query = "SELECT c FROM CourseFile c WHERE c.documentURL = :documentURL"),
+    @NamedQuery(name = "CourseFile.findByMimeType", query = "SELECT c FROM CourseFile c WHERE c.mimeType = :mimeType")})
+public class CourseFile implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,32 +44,24 @@ public class Document implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 30)
     @Column(name = "documentName")
     private String documentName;
-    @Size(max = 30)
     @Column(name = "documentType")
     private String documentType;
-    @Size(max = 200)
     @Column(name = "documentURL")
     private String documentURL;
-    @Size(max = 30)
     @Column(name = "mimeType")
     private String mimeType;
-    @Column(name = "deleted")
-    private Boolean deleted;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "courseLessonId", referencedColumnName = "id")
     @ManyToOne
-    private Student studentId;
+    private CourseLesson courseLessonId;
     @OneToMany(mappedBy = "documentId")
     private Collection<Notification> notificationCollection;
-    @OneToMany(mappedBy = "documentId")
-    private Collection<Subexam> subexamCollection;
 
-    public Document() {
+    public CourseFile() {
     }
 
-    public Document(Integer id) {
+    public CourseFile(Integer id) {
         this.id = id;
     }
 
@@ -115,20 +105,12 @@ public class Document implements Serializable {
         this.mimeType = mimeType;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
+    public CourseLesson getCourseLessonId() {
+        return courseLessonId;
     }
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Student getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Student studentId) {
-        this.studentId = studentId;
+    public void setCourseLessonId(CourseLesson courseLessonId) {
+        this.courseLessonId = courseLessonId;
     }
 
     @XmlTransient
@@ -138,15 +120,6 @@ public class Document implements Serializable {
 
     public void setNotificationCollection(Collection<Notification> notificationCollection) {
         this.notificationCollection = notificationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Subexam> getSubexamCollection() {
-        return subexamCollection;
-    }
-
-    public void setSubexamCollection(Collection<Subexam> subexamCollection) {
-        this.subexamCollection = subexamCollection;
     }
 
     @Override
@@ -159,10 +132,10 @@ public class Document implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Document)) {
+        if (!(object instanceof CourseFile)) {
             return false;
         }
-        Document other = (Document) object;
+        CourseFile other = (CourseFile) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -171,7 +144,7 @@ public class Document implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Document[ id=" + id + " ]";
+        return "newpackage.CourseFile[ id=" + id + " ]";
     }
     
 }

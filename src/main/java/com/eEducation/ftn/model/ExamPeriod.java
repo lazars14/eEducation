@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,24 +16,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "examPeriod")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ExamPeriod.findAll", query = "SELECT e FROM ExamPeriod e")
-    , @NamedQuery(name = "ExamPeriod.findById", query = "SELECT e FROM ExamPeriod e WHERE e.id = :id")
-    , @NamedQuery(name = "ExamPeriod.findByStartDate", query = "SELECT e FROM ExamPeriod e WHERE e.startDate = :startDate")
-    , @NamedQuery(name = "ExamPeriod.findByEndDate", query = "SELECT e FROM ExamPeriod e WHERE e.endDate = :endDate")
-    , @NamedQuery(name = "ExamPeriod.findByDeleted", query = "SELECT e FROM ExamPeriod e WHERE e.deleted = :deleted")})
+    @NamedQuery(name = "ExamPeriod.findAll", query = "SELECT e FROM ExamPeriod e"),
+    @NamedQuery(name = "ExamPeriod.findById", query = "SELECT e FROM ExamPeriod e WHERE e.id = :id"),
+    @NamedQuery(name = "ExamPeriod.findByName", query = "SELECT e FROM ExamPeriod e WHERE e.name = :name"),
+    @NamedQuery(name = "ExamPeriod.findByStartDate", query = "SELECT e FROM ExamPeriod e WHERE e.startDate = :startDate"),
+    @NamedQuery(name = "ExamPeriod.findByEndDate", query = "SELECT e FROM ExamPeriod e WHERE e.endDate = :endDate")})
 public class ExamPeriod implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,14 +44,16 @@ public class ExamPeriod implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "name")
+    private String name;
     @Column(name = "startDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Column(name = "endDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @Column(name = "deleted")
-    private Boolean deleted;
+    @OneToMany(mappedBy = "examPeriodId")
+    private Collection<StudentExamEntry> studentExamEntryCollection;
 
     public ExamPeriod() {
     }
@@ -63,6 +68,14 @@ public class ExamPeriod implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getStartDate() {
@@ -81,12 +94,13 @@ public class ExamPeriod implements Serializable {
         this.endDate = endDate;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
+    @XmlTransient
+    public Collection<StudentExamEntry> getStudentExamEntryCollection() {
+        return studentExamEntryCollection;
     }
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
+    public void setStudentExamEntryCollection(Collection<StudentExamEntry> studentExamEntryCollection) {
+        this.studentExamEntryCollection = studentExamEntryCollection;
     }
 
     @Override
@@ -111,7 +125,7 @@ public class ExamPeriod implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.ExamPeriod[ id=" + id + " ]";
+        return "newpackage.ExamPeriod[ id=" + id + " ]";
     }
     
 }

@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,12 +27,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lazar
  */
 @Entity
-@Table(name = "teacherTeachesCourse")
+@Table(name = "studentExamEntry")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TeacherTeachesCourse.findAll", query = "SELECT t FROM TeacherTeachesCourse t"),
-    @NamedQuery(name = "TeacherTeachesCourse.findById", query = "SELECT t FROM TeacherTeachesCourse t WHERE t.id = :id")})
-public class TeacherTeachesCourse implements Serializable {
+    @NamedQuery(name = "StudentExamEntry.findAll", query = "SELECT s FROM StudentExamEntry s"),
+    @NamedQuery(name = "StudentExamEntry.findById", query = "SELECT s FROM StudentExamEntry s WHERE s.id = :id"),
+    @NamedQuery(name = "StudentExamEntry.findByEDate", query = "SELECT s FROM StudentExamEntry s WHERE s.eDate = :eDate")})
+public class StudentExamEntry implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,17 +41,23 @@ public class TeacherTeachesCourse implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "teacherId", referencedColumnName = "id")
+    @Column(name = "eDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date eDate;
+    @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
-    private Teacher teacherId;
+    private Student studentId;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
     private Course courseId;
+    @JoinColumn(name = "examPeriodId", referencedColumnName = "id")
+    @ManyToOne
+    private ExamPeriod examPeriodId;
 
-    public TeacherTeachesCourse() {
+    public StudentExamEntry() {
     }
 
-    public TeacherTeachesCourse(Integer id) {
+    public StudentExamEntry(Integer id) {
         this.id = id;
     }
 
@@ -59,12 +69,20 @@ public class TeacherTeachesCourse implements Serializable {
         this.id = id;
     }
 
-    public Teacher getTeacherId() {
-        return teacherId;
+    public Date getEDate() {
+        return eDate;
     }
 
-    public void setTeacherId(Teacher teacherId) {
-        this.teacherId = teacherId;
+    public void setEDate(Date eDate) {
+        this.eDate = eDate;
+    }
+
+    public Student getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Student studentId) {
+        this.studentId = studentId;
     }
 
     public Course getCourseId() {
@@ -73,6 +91,14 @@ public class TeacherTeachesCourse implements Serializable {
 
     public void setCourseId(Course courseId) {
         this.courseId = courseId;
+    }
+
+    public ExamPeriod getExamPeriodId() {
+        return examPeriodId;
+    }
+
+    public void setExamPeriodId(ExamPeriod examPeriodId) {
+        this.examPeriodId = examPeriodId;
     }
 
     @Override
@@ -85,10 +111,10 @@ public class TeacherTeachesCourse implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TeacherTeachesCourse)) {
+        if (!(object instanceof StudentExamEntry)) {
             return false;
         }
-        TeacherTeachesCourse other = (TeacherTeachesCourse) object;
+        StudentExamEntry other = (StudentExamEntry) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +123,7 @@ public class TeacherTeachesCourse implements Serializable {
 
     @Override
     public String toString() {
-        return "newpackage.TeacherTeachesCourse[ id=" + id + " ]";
+        return "newpackage.StudentExamEntry[ id=" + id + " ]";
     }
     
 }

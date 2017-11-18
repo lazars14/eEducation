@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -22,25 +22,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
-@Table(name = "exam")
+@Table(name = "colloquium")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e")
-    , @NamedQuery(name = "Exam.findById", query = "SELECT e FROM Exam e WHERE e.id = :id")
-    , @NamedQuery(name = "Exam.findByMaxPoints", query = "SELECT e FROM Exam e WHERE e.maxPoints = :maxPoints")
-    , @NamedQuery(name = "Exam.findByExamType", query = "SELECT e FROM Exam e WHERE e.examType = :examType")
-    , @NamedQuery(name = "Exam.findByExamDateTime", query = "SELECT e FROM Exam e WHERE e.examDateTime = :examDateTime")
-    , @NamedQuery(name = "Exam.findByDeleted", query = "SELECT e FROM Exam e WHERE e.deleted = :deleted")})
-public class Exam implements Serializable {
+    @NamedQuery(name = "Colloquium.findAll", query = "SELECT c FROM Colloquium c"),
+    @NamedQuery(name = "Colloquium.findById", query = "SELECT c FROM Colloquium c WHERE c.id = :id"),
+    @NamedQuery(name = "Colloquium.findByMaxPoints", query = "SELECT c FROM Colloquium c WHERE c.maxPoints = :maxPoints"),
+    @NamedQuery(name = "Colloquium.findByExamType", query = "SELECT c FROM Colloquium c WHERE c.examType = :examType"),
+    @NamedQuery(name = "Colloquium.findByExamDateTime", query = "SELECT c FROM Colloquium c WHERE c.examDateTime = :examDateTime")})
+public class Colloquium implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,24 +49,21 @@ public class Exam implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "maxPoints")
     private Float maxPoints;
-    @Size(max = 30)
     @Column(name = "examType")
     private String examType;
     @Column(name = "examDateTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date examDateTime;
-    @Column(name = "deleted")
-    private Boolean deleted;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
     private Course courseId;
-    @OneToMany(mappedBy = "examId")
-    private Collection<Subexam> subexamCollection;
+    @OneToMany(mappedBy = "colloquiumId")
+    private Collection<ColloquiumResult> colloquiumResultCollection;
 
-    public Exam() {
+    public Colloquium() {
     }
 
-    public Exam(Integer id) {
+    public Colloquium(Integer id) {
         this.id = id;
     }
 
@@ -104,14 +99,6 @@ public class Exam implements Serializable {
         this.examDateTime = examDateTime;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
     public Course getCourseId() {
         return courseId;
     }
@@ -121,12 +108,12 @@ public class Exam implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Subexam> getSubexamCollection() {
-        return subexamCollection;
+    public Collection<ColloquiumResult> getColloquiumResultCollection() {
+        return colloquiumResultCollection;
     }
 
-    public void setSubexamCollection(Collection<Subexam> subexamCollection) {
-        this.subexamCollection = subexamCollection;
+    public void setColloquiumResultCollection(Collection<ColloquiumResult> colloquiumResultCollection) {
+        this.colloquiumResultCollection = colloquiumResultCollection;
     }
 
     @Override
@@ -139,10 +126,10 @@ public class Exam implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Exam)) {
+        if (!(object instanceof Colloquium)) {
             return false;
         }
-        Exam other = (Exam) object;
+        Colloquium other = (Colloquium) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -151,7 +138,7 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Exam[ id=" + id + " ]";
+        return "newpackage.Colloquium[ id=" + id + " ]";
     }
     
 }

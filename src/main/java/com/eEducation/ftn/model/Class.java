@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,22 +17,21 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "class")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Class.findAll", query = "SELECT c FROM Class c")
-    , @NamedQuery(name = "Class.findById", query = "SELECT c FROM Class c WHERE c.id = :id")
-    , @NamedQuery(name = "Class.findByName", query = "SELECT c FROM Class c WHERE c.name = :name")
-    , @NamedQuery(name = "Class.findByDeleted", query = "SELECT c FROM Class c WHERE c.deleted = :deleted")})
+    @NamedQuery(name = "Class.findAll", query = "SELECT c FROM Class c"),
+    @NamedQuery(name = "Class.findById", query = "SELECT c FROM Class c WHERE c.id = :id"),
+    @NamedQuery(name = "Class.findByName", query = "SELECT c FROM Class c WHERE c.name = :name"),
+    @NamedQuery(name = "Class.findByNumOfYears", query = "SELECT c FROM Class c WHERE c.numOfYears = :numOfYears")})
 public class Class implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,17 +40,12 @@ public class Class implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
     @Column(name = "name")
     private String name;
-    @Column(name = "deleted")
-    private Boolean deleted;
+    @Column(name = "numOfYears")
+    private Integer numOfYears;
     @OneToMany(mappedBy = "classId")
     private Collection<Student> studentCollection;
-    @OneToMany(mappedBy = "classId")
-    private Collection<Notification> notificationCollection;
-    @OneToMany(mappedBy = "classId")
-    private Collection<Teacher> teacherCollection;
 
     public Class() {
     }
@@ -76,12 +70,12 @@ public class Class implements Serializable {
         this.name = name;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
+    public Integer getNumOfYears() {
+        return numOfYears;
     }
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
+    public void setNumOfYears(Integer numOfYears) {
+        this.numOfYears = numOfYears;
     }
 
     @XmlTransient
@@ -91,24 +85,6 @@ public class Class implements Serializable {
 
     public void setStudentCollection(Collection<Student> studentCollection) {
         this.studentCollection = studentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
-    }
-
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Teacher> getTeacherCollection() {
-        return teacherCollection;
-    }
-
-    public void setTeacherCollection(Collection<Teacher> teacherCollection) {
-        this.teacherCollection = teacherCollection;
     }
 
     @Override
@@ -133,7 +109,7 @@ public class Class implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Class[ id=" + id + " ]";
+        return "newpackage.Class[ id=" + id + " ]";
     }
     
 }

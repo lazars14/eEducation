@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -21,15 +21,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "studentAttendsCourse")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "StudentAttendsCourse.findAll", query = "SELECT s FROM StudentAttendsCourse s")
-    , @NamedQuery(name = "StudentAttendsCourse.findById", query = "SELECT s FROM StudentAttendsCourse s WHERE s.id = :id")
-    , @NamedQuery(name = "StudentAttendsCourse.findByDeleted", query = "SELECT s FROM StudentAttendsCourse s WHERE s.deleted = :deleted")})
+    @NamedQuery(name = "StudentAttendsCourse.findAll", query = "SELECT s FROM StudentAttendsCourse s"),
+    @NamedQuery(name = "StudentAttendsCourse.findById", query = "SELECT s FROM StudentAttendsCourse s WHERE s.id = :id")})
 public class StudentAttendsCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,8 +37,6 @@ public class StudentAttendsCourse implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "deleted")
-    private Boolean deleted;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student studentId;
@@ -60,14 +57,6 @@ public class StudentAttendsCourse implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     public Student getStudentId() {
@@ -108,7 +97,7 @@ public class StudentAttendsCourse implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.StudentAttendsCourse[ id=" + id + " ]";
+        return "newpackage.StudentAttendsCourse[ id=" + id + " ]";
     }
     
 }

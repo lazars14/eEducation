@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,25 +18,23 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "payment")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p")
-    , @NamedQuery(name = "Payment.findById", query = "SELECT p FROM Payment p WHERE p.id = :id")
-    , @NamedQuery(name = "Payment.findByAccountNumber", query = "SELECT p FROM Payment p WHERE p.accountNumber = :accountNumber")
-    , @NamedQuery(name = "Payment.findByAmount", query = "SELECT p FROM Payment p WHERE p.amount = :amount")
-    , @NamedQuery(name = "Payment.findByCause", query = "SELECT p FROM Payment p WHERE p.cause = :cause")
-    , @NamedQuery(name = "Payment.findByPaymentDate", query = "SELECT p FROM Payment p WHERE p.paymentDate = :paymentDate")
-    , @NamedQuery(name = "Payment.findByOwes", query = "SELECT p FROM Payment p WHERE p.owes = :owes")
-    , @NamedQuery(name = "Payment.findByDeleted", query = "SELECT p FROM Payment p WHERE p.deleted = :deleted")})
+    @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p"),
+    @NamedQuery(name = "Payment.findById", query = "SELECT p FROM Payment p WHERE p.id = :id"),
+    @NamedQuery(name = "Payment.findByAccountNumber", query = "SELECT p FROM Payment p WHERE p.accountNumber = :accountNumber"),
+    @NamedQuery(name = "Payment.findByAmount", query = "SELECT p FROM Payment p WHERE p.amount = :amount"),
+    @NamedQuery(name = "Payment.findByCause", query = "SELECT p FROM Payment p WHERE p.cause = :cause"),
+    @NamedQuery(name = "Payment.findByPaymentDate", query = "SELECT p FROM Payment p WHERE p.paymentDate = :paymentDate"),
+    @NamedQuery(name = "Payment.findByOwes", query = "SELECT p FROM Payment p WHERE p.owes = :owes")})
 public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,13 +43,11 @@ public class Payment implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 18)
     @Column(name = "accountNumber")
     private String accountNumber;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Float amount;
-    @Size(max = 30)
     @Column(name = "cause")
     private String cause;
     @Column(name = "paymentDate")
@@ -59,8 +55,6 @@ public class Payment implements Serializable {
     private Date paymentDate;
     @Column(name = "owes")
     private Boolean owes;
-    @Column(name = "deleted")
-    private Boolean deleted;
 
     public Payment() {
     }
@@ -117,14 +111,6 @@ public class Payment implements Serializable {
         this.owes = owes;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -147,7 +133,7 @@ public class Payment implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Payment[ id=" + id + " ]";
+        return "newpackage.Payment[ id=" + id + " ]";
     }
     
 }

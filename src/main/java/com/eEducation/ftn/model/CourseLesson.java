@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,20 +17,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author lazar
  */
 @Entity
-@Table(name = "teacherTeachesCourse")
+@Table(name = "courseLesson")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TeacherTeachesCourse.findAll", query = "SELECT t FROM TeacherTeachesCourse t"),
-    @NamedQuery(name = "TeacherTeachesCourse.findById", query = "SELECT t FROM TeacherTeachesCourse t WHERE t.id = :id")})
-public class TeacherTeachesCourse implements Serializable {
+    @NamedQuery(name = "CourseLesson.findAll", query = "SELECT c FROM CourseLesson c"),
+    @NamedQuery(name = "CourseLesson.findById", query = "SELECT c FROM CourseLesson c WHERE c.id = :id"),
+    @NamedQuery(name = "CourseLesson.findByName", query = "SELECT c FROM CourseLesson c WHERE c.name = :name"),
+    @NamedQuery(name = "CourseLesson.findByDescription", query = "SELECT c FROM CourseLesson c WHERE c.description = :description")})
+public class CourseLesson implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,17 +42,20 @@ public class TeacherTeachesCourse implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "teacherId", referencedColumnName = "id")
-    @ManyToOne
-    private Teacher teacherId;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "description")
+    private String description;
+    @OneToMany(mappedBy = "courseLessonId")
+    private Collection<CourseFile> courseFileCollection;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
     private Course courseId;
 
-    public TeacherTeachesCourse() {
+    public CourseLesson() {
     }
 
-    public TeacherTeachesCourse(Integer id) {
+    public CourseLesson(Integer id) {
         this.id = id;
     }
 
@@ -59,12 +67,29 @@ public class TeacherTeachesCourse implements Serializable {
         this.id = id;
     }
 
-    public Teacher getTeacherId() {
-        return teacherId;
+    public String getName() {
+        return name;
     }
 
-    public void setTeacherId(Teacher teacherId) {
-        this.teacherId = teacherId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @XmlTransient
+    public Collection<CourseFile> getCourseFileCollection() {
+        return courseFileCollection;
+    }
+
+    public void setCourseFileCollection(Collection<CourseFile> courseFileCollection) {
+        this.courseFileCollection = courseFileCollection;
     }
 
     public Course getCourseId() {
@@ -85,10 +110,10 @@ public class TeacherTeachesCourse implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TeacherTeachesCourse)) {
+        if (!(object instanceof CourseLesson)) {
             return false;
         }
-        TeacherTeachesCourse other = (TeacherTeachesCourse) object;
+        CourseLesson other = (CourseLesson) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +122,7 @@ public class TeacherTeachesCourse implements Serializable {
 
     @Override
     public String toString() {
-        return "newpackage.TeacherTeachesCourse[ id=" + id + " ]";
+        return "newpackage.CourseLesson[ id=" + id + " ]";
     }
     
 }

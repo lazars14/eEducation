@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -21,18 +21,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
-@Table(name = "subexamResult")
+@Table(name = "colloquiumResult")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "SubexamResult.findAll", query = "SELECT s FROM SubexamResult s")
-    , @NamedQuery(name = "SubexamResult.findById", query = "SELECT s FROM SubexamResult s WHERE s.id = :id")
-    , @NamedQuery(name = "SubexamResult.findByPoints", query = "SELECT s FROM SubexamResult s WHERE s.points = :points")
-    , @NamedQuery(name = "SubexamResult.findByPassed", query = "SELECT s FROM SubexamResult s WHERE s.passed = :passed")
-    , @NamedQuery(name = "SubexamResult.findByDeleted", query = "SELECT s FROM SubexamResult s WHERE s.deleted = :deleted")})
-public class SubexamResult implements Serializable {
+    @NamedQuery(name = "ColloquiumResult.findAll", query = "SELECT c FROM ColloquiumResult c"),
+    @NamedQuery(name = "ColloquiumResult.findById", query = "SELECT c FROM ColloquiumResult c WHERE c.id = :id"),
+    @NamedQuery(name = "ColloquiumResult.findByPoints", query = "SELECT c FROM ColloquiumResult c WHERE c.points = :points")})
+public class ColloquiumResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,21 +41,17 @@ public class SubexamResult implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "points")
     private Float points;
-    @Column(name = "passed")
-    private Boolean passed;
-    @Column(name = "deleted")
-    private Boolean deleted;
-    @JoinColumn(name = "subexamId", referencedColumnName = "id")
+    @JoinColumn(name = "colloquiumId", referencedColumnName = "id")
     @ManyToOne
-    private Subexam subexamId;
+    private Colloquium colloquiumId;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student studentId;
 
-    public SubexamResult() {
+    public ColloquiumResult() {
     }
 
-    public SubexamResult(Integer id) {
+    public ColloquiumResult(Integer id) {
         this.id = id;
     }
 
@@ -77,28 +71,12 @@ public class SubexamResult implements Serializable {
         this.points = points;
     }
 
-    public Boolean getPassed() {
-        return passed;
+    public Colloquium getColloquiumId() {
+        return colloquiumId;
     }
 
-    public void setPassed(Boolean passed) {
-        this.passed = passed;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Subexam getSubexamId() {
-        return subexamId;
-    }
-
-    public void setSubexamId(Subexam subexamId) {
-        this.subexamId = subexamId;
+    public void setColloquiumId(Colloquium colloquiumId) {
+        this.colloquiumId = colloquiumId;
     }
 
     public Student getStudentId() {
@@ -119,10 +97,10 @@ public class SubexamResult implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SubexamResult)) {
+        if (!(object instanceof ColloquiumResult)) {
             return false;
         }
-        SubexamResult other = (SubexamResult) object;
+        ColloquiumResult other = (ColloquiumResult) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -131,7 +109,7 @@ public class SubexamResult implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.SubexamResult[ id=" + id + " ]";
+        return "newpackage.ColloquiumResult[ id=" + id + " ]";
     }
     
 }

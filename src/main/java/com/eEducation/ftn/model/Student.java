@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,29 +19,28 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "student")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s")
-    , @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id")
-    , @NamedQuery(name = "Student.findByIndexNumber", query = "SELECT s FROM Student s WHERE s.indexNumber = :indexNumber")
-    , @NamedQuery(name = "Student.findByFirstname", query = "SELECT s FROM Student s WHERE s.firstname = :firstname")
-    , @NamedQuery(name = "Student.findByLastname", query = "SELECT s FROM Student s WHERE s.lastname = :lastname")
-    , @NamedQuery(name = "Student.findByAccountNumber", query = "SELECT s FROM Student s WHERE s.accountNumber = :accountNumber")
-    , @NamedQuery(name = "Student.findByStudYear", query = "SELECT s FROM Student s WHERE s.studYear = :studYear")
-    , @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email")
-    , @NamedQuery(name = "Student.findBySPassword", query = "SELECT s FROM Student s WHERE s.sPassword = :sPassword")
-    , @NamedQuery(name = "Student.findByEspbPoints", query = "SELECT s FROM Student s WHERE s.espbPoints = :espbPoints")
-    , @NamedQuery(name = "Student.findByDeleted", query = "SELECT s FROM Student s WHERE s.deleted = :deleted")})
+    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
+    @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
+    @NamedQuery(name = "Student.findByIndexNumber", query = "SELECT s FROM Student s WHERE s.indexNumber = :indexNumber"),
+    @NamedQuery(name = "Student.findByFirstname", query = "SELECT s FROM Student s WHERE s.firstname = :firstname"),
+    @NamedQuery(name = "Student.findByLastname", query = "SELECT s FROM Student s WHERE s.lastname = :lastname"),
+    @NamedQuery(name = "Student.findByAccountNumber", query = "SELECT s FROM Student s WHERE s.accountNumber = :accountNumber"),
+    @NamedQuery(name = "Student.findByStudYear", query = "SELECT s FROM Student s WHERE s.studYear = :studYear"),
+    @NamedQuery(name = "Student.findByStudYearOrdNum", query = "SELECT s FROM Student s WHERE s.studYearOrdNum = :studYearOrdNum"),
+    @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),
+    @NamedQuery(name = "Student.findBySPassword", query = "SELECT s FROM Student s WHERE s.sPassword = :sPassword"),
+    @NamedQuery(name = "Student.findByEspbPoints", query = "SELECT s FROM Student s WHERE s.espbPoints = :espbPoints")})
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,40 +49,35 @@ public class Student implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 15)
     @Column(name = "indexNumber")
     private String indexNumber;
-    @Size(max = 20)
     @Column(name = "firstname")
     private String firstname;
-    @Size(max = 20)
     @Column(name = "lastname")
     private String lastname;
-    @Size(max = 18)
     @Column(name = "accountNumber")
     private String accountNumber;
     @Column(name = "studYear")
     private Integer studYear;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 30)
+    @Column(name = "studYearOrdNum")
+    private Integer studYearOrdNum;
     @Column(name = "email")
     private String email;
-    @Size(max = 20)
     @Column(name = "sPassword")
     private String sPassword;
     @Column(name = "espbPoints")
     private Integer espbPoints;
-    @Column(name = "deleted")
-    private Boolean deleted;
+    @OneToMany(mappedBy = "studentId")
+    private Collection<StudentExamEntry> studentExamEntryCollection;
     @JoinColumn(name = "classId", referencedColumnName = "id")
     @ManyToOne
     private Class classId;
     @OneToMany(mappedBy = "studentId")
-    private Collection<Document> documentCollection;
-    @OneToMany(mappedBy = "studentId")
     private Collection<StudentAttendsCourse> studentAttendsCourseCollection;
     @OneToMany(mappedBy = "studentId")
-    private Collection<SubexamResult> subexamResultCollection;
+    private Collection<StudentDocument> studentDocumentCollection;
+    @OneToMany(mappedBy = "studentId")
+    private Collection<ColloquiumResult> colloquiumResultCollection;
     @OneToMany(mappedBy = "studentId")
     private Collection<Grade> gradeCollection;
 
@@ -142,6 +136,14 @@ public class Student implements Serializable {
         this.studYear = studYear;
     }
 
+    public Integer getStudYearOrdNum() {
+        return studYearOrdNum;
+    }
+
+    public void setStudYearOrdNum(Integer studYearOrdNum) {
+        this.studYearOrdNum = studYearOrdNum;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -166,12 +168,13 @@ public class Student implements Serializable {
         this.espbPoints = espbPoints;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
+    @XmlTransient
+    public Collection<StudentExamEntry> getStudentExamEntryCollection() {
+        return studentExamEntryCollection;
     }
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
+    public void setStudentExamEntryCollection(Collection<StudentExamEntry> studentExamEntryCollection) {
+        this.studentExamEntryCollection = studentExamEntryCollection;
     }
 
     public Class getClassId() {
@@ -180,15 +183,6 @@ public class Student implements Serializable {
 
     public void setClassId(Class classId) {
         this.classId = classId;
-    }
-
-    @XmlTransient
-    public Collection<Document> getDocumentCollection() {
-        return documentCollection;
-    }
-
-    public void setDocumentCollection(Collection<Document> documentCollection) {
-        this.documentCollection = documentCollection;
     }
 
     @XmlTransient
@@ -201,12 +195,21 @@ public class Student implements Serializable {
     }
 
     @XmlTransient
-    public Collection<SubexamResult> getSubexamResultCollection() {
-        return subexamResultCollection;
+    public Collection<StudentDocument> getStudentDocumentCollection() {
+        return studentDocumentCollection;
     }
 
-    public void setSubexamResultCollection(Collection<SubexamResult> subexamResultCollection) {
-        this.subexamResultCollection = subexamResultCollection;
+    public void setStudentDocumentCollection(Collection<StudentDocument> studentDocumentCollection) {
+        this.studentDocumentCollection = studentDocumentCollection;
+    }
+
+    @XmlTransient
+    public Collection<ColloquiumResult> getColloquiumResultCollection() {
+        return colloquiumResultCollection;
+    }
+
+    public void setColloquiumResultCollection(Collection<ColloquiumResult> colloquiumResultCollection) {
+        this.colloquiumResultCollection = colloquiumResultCollection;
     }
 
     @XmlTransient
@@ -240,7 +243,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Student[ id=" + id + " ]";
+        return "newpackage.Student[ id=" + id + " ]";
     }
     
 }

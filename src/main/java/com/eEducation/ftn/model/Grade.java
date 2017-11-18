@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -21,16 +21,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "grade")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Grade.findAll", query = "SELECT g FROM Grade g")
-    , @NamedQuery(name = "Grade.findById", query = "SELECT g FROM Grade g WHERE g.id = :id")
-    , @NamedQuery(name = "Grade.findByGrade", query = "SELECT g FROM Grade g WHERE g.grade = :grade")
-    , @NamedQuery(name = "Grade.findByDeleted", query = "SELECT g FROM Grade g WHERE g.deleted = :deleted")})
+    @NamedQuery(name = "Grade.findAll", query = "SELECT g FROM Grade g"),
+    @NamedQuery(name = "Grade.findById", query = "SELECT g FROM Grade g WHERE g.id = :id"),
+    @NamedQuery(name = "Grade.findByPoints", query = "SELECT g FROM Grade g WHERE g.points = :points"),
+    @NamedQuery(name = "Grade.findByGrade", query = "SELECT g FROM Grade g WHERE g.grade = :grade")})
 public class Grade implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,10 +39,11 @@ public class Grade implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "points")
+    private Float points;
     @Column(name = "grade")
     private Integer grade;
-    @Column(name = "deleted")
-    private Boolean deleted;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
     private Course courseId;
@@ -65,20 +66,20 @@ public class Grade implements Serializable {
         this.id = id;
     }
 
+    public Float getPoints() {
+        return points;
+    }
+
+    public void setPoints(Float points) {
+        this.points = points;
+    }
+
     public Integer getGrade() {
         return grade;
     }
 
     public void setGrade(Integer grade) {
         this.grade = grade;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     public Course getCourseId() {
@@ -119,7 +120,7 @@ public class Grade implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Grade[ id=" + id + " ]";
+        return "newpackage.Grade[ id=" + id + " ]";
     }
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eEducation.ftn.model;
+package model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,22 +17,20 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lazar Stijakovic
+ * @author lazar
  */
 @Entity
 @Table(name = "rank")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rank.findAll", query = "SELECT r FROM Rank r")
-    , @NamedQuery(name = "Rank.findById", query = "SELECT r FROM Rank r WHERE r.id = :id")
-    , @NamedQuery(name = "Rank.findByName", query = "SELECT r FROM Rank r WHERE r.name = :name")
-    , @NamedQuery(name = "Rank.findByDeleted", query = "SELECT r FROM Rank r WHERE r.deleted = :deleted")})
+    @NamedQuery(name = "Rank.findAll", query = "SELECT r FROM Rank r"),
+    @NamedQuery(name = "Rank.findById", query = "SELECT r FROM Rank r WHERE r.id = :id"),
+    @NamedQuery(name = "Rank.findByName", query = "SELECT r FROM Rank r WHERE r.name = :name")})
 public class Rank implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,11 +39,8 @@ public class Rank implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 30)
     @Column(name = "name")
     private String name;
-    @Column(name = "deleted")
-    private Boolean deleted;
     @OneToMany(mappedBy = "rank")
     private Collection<Teacher> teacherCollection;
 
@@ -70,14 +65,6 @@ public class Rank implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     @XmlTransient
@@ -111,7 +98,7 @@ public class Rank implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eEducation.ftn.model.Rank[ id=" + id + " ]";
+        return "newpackage.Rank[ id=" + id + " ]";
     }
     
 }
