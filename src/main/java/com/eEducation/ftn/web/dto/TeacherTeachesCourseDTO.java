@@ -1,22 +1,19 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.Course;
-import com.eEducation.ftn.model.Teacher;
-import com.eEducation.ftn.model.TeacherTeachesCourse;
-
 public class TeacherTeachesCourseDTO {
 	
 	private Integer id;
-    private Teacher teacherId;
-    private Course courseId;
+    private TeacherDTO teacherId;
+    private CourseDTO courseId;
 	
 	public TeacherTeachesCourseDTO() {}
 
-	public TeacherTeachesCourseDTO(TeacherTeachesCourse ttc) {
+	public TeacherTeachesCourseDTO(Integer id, TeacherDTO teacherId,
+			CourseDTO courseId) {
 		super();
-		this.id = ttc.getId();
-		this.teacherId = ttc.getTeacherId();
-		this.courseId = ttc.getCourseId();
+		this.id = id;
+		this.teacherId = teacherId;
+		this.courseId = courseId;
 	}
 
 	public Integer getId() {
@@ -27,19 +24,19 @@ public class TeacherTeachesCourseDTO {
 		this.id = id;
 	}
 
-	public Teacher getTeacherId() {
+	public TeacherDTO getTeacherId() {
 		return teacherId;
 	}
 
-	public void setTeacherId(Teacher teacherId) {
+	public void setTeacherId(TeacherDTO teacherId) {
 		this.teacherId = teacherId;
 	}
 
-	public Course getCourseId() {
+	public CourseDTO getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(Course courseId) {
+	public void setCourseId(CourseDTO courseId) {
 		this.courseId = courseId;
 	}
 }

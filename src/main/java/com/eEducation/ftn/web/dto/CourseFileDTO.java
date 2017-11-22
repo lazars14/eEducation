@@ -1,7 +1,5 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.CourseLesson;
-
 public class CourseFileDTO {
 	
 	private Integer id;
@@ -9,12 +7,12 @@ public class CourseFileDTO {
     private String documentType;
     private String documentURL;
     private String mimeType;
-    private CourseLesson courseLessonId;
+    private CourseLessonDTO courseLessonId;
     
     public CourseFileDTO() {}
 
 	public CourseFileDTO(Integer id, String documentName, String documentType, String documentURL, String mimeType,
-			CourseLesson courseLessonId) {
+			CourseLessonDTO courseLessonId) {
 		super();
 		this.id = id;
 		this.documentName = documentName;
@@ -64,11 +62,11 @@ public class CourseFileDTO {
 		this.mimeType = mimeType;
 	}
 
-	public CourseLesson getCourseLessonId() {
+	public CourseLessonDTO getCourseLessonId() {
 		return courseLessonId;
 	}
 
-	public void setCourseLessonId(CourseLesson courseLessonId) {
+	public void setCourseLessonId(CourseLessonDTO courseLessonId) {
 		this.courseLessonId = courseLessonId;
 	}
     

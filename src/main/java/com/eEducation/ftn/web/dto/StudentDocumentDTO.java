@@ -1,7 +1,5 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.Student;
-
 public class StudentDocumentDTO {
 
 	private Integer id;
@@ -9,12 +7,12 @@ public class StudentDocumentDTO {
     private String documentType;
     private String documentURL;
     private String mimeType;
-    private Student studentId;
+    private StudentDTO studentId;
 
     public StudentDocumentDTO() {}
 
 	public StudentDocumentDTO(Integer id, String documentName, String documentType, String documentURL, String mimeType,
-			Student studentId) {
+			StudentDTO studentId) {
 		super();
 		this.id = id;
 		this.documentName = documentName;
@@ -64,11 +62,11 @@ public class StudentDocumentDTO {
 		this.mimeType = mimeType;
 	}
 
-	public Student getStudentId() {
+	public StudentDTO getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(Student studentId) {
+	public void setStudentId(StudentDTO studentId) {
 		this.studentId = studentId;
 	}
     

@@ -1,22 +1,20 @@
 package com.eEducation.ftn.web.dto;
 
-import java.util.Date;
 
-import com.eEducation.ftn.model.Course;
-import com.eEducation.ftn.model.ExamPeriod;
-import com.eEducation.ftn.model.Student;
+import java.util.Date;
 
 public class StudentExamEntryDTO {
 	
 	private Integer id;
     private Date eDate;
-    private Student studentId;
-    private Course courseId;
-    private ExamPeriod examPeriodId;
+    private StudentDTO studentId;
+    private CourseDTO courseId;
+    private ExamPeriodDTO examPeriodId;
     
     public StudentExamEntryDTO() {}
 
-	public StudentExamEntryDTO(Integer id, Date eDate, Student studentId, Course courseId, ExamPeriod examPeriodId) {
+	public StudentExamEntryDTO(Integer id, Date eDate, StudentDTO studentId, CourseDTO courseId,
+			ExamPeriodDTO examPeriodId) {
 		super();
 		this.id = id;
 		this.eDate = eDate;
@@ -41,28 +39,28 @@ public class StudentExamEntryDTO {
 		this.eDate = eDate;
 	}
 
-	public Student getStudentId() {
+	public StudentDTO getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(Student studentId) {
+	public void setStudentId(StudentDTO studentId) {
 		this.studentId = studentId;
 	}
 
-	public Course getCourseId() {
+	public CourseDTO getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(Course courseId) {
+	public void setCourseId(CourseDTO courseId) {
 		this.courseId = courseId;
 	}
 
-	public ExamPeriod getExamPeriodId() {
+	public ExamPeriodDTO getExamPeriodId() {
 		return examPeriodId;
 	}
 
-	public void setExamPeriodId(ExamPeriod examPeriodId) {
+	public void setExamPeriodId(ExamPeriodDTO examPeriodId) {
 		this.examPeriodId = examPeriodId;
 	}
-    
+
 }

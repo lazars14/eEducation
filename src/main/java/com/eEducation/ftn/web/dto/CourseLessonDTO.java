@@ -1,18 +1,16 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.Course;
-
 public class CourseLessonDTO {
 
 	private Integer id;
 	private String name;
 	private String description;
-	private Course courseId;
+	private CourseDTO courseId;
 
 	public CourseLessonDTO() {
 	}
 
-	public CourseLessonDTO(Integer id, String name, String description, Course courseId) {
+	public CourseLessonDTO(Integer id, String name, String description, CourseDTO courseId) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -44,11 +42,11 @@ public class CourseLessonDTO {
 		this.description = description;
 	}
 
-	public Course getCourseId() {
+	public CourseDTO getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(Course courseId) {
+	public void setCourseId(CourseDTO courseId) {
 		this.courseId = courseId;
 	}
 

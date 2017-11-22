@@ -2,19 +2,17 @@ package com.eEducation.ftn.web.dto;
 
 import java.util.Date;
 
-import com.eEducation.ftn.model.Course;
-
 public class ColloquiumDTO {
 	
 	private Integer id;
 	private Float maxPoints;
     private String examType;
     private Date examDateTime;
-    private Course courseId;
+    private CourseDTO courseId;
     
     public ColloquiumDTO() {}
 
-	public ColloquiumDTO(Integer id, Float maxPoints, String examType, Date examDateTime, Course courseId) {
+	public ColloquiumDTO(Integer id, Float maxPoints, String examType, Date examDateTime, CourseDTO courseId) {
 		super();
 		this.id = id;
 		this.maxPoints = maxPoints;
@@ -55,11 +53,11 @@ public class ColloquiumDTO {
 		this.examDateTime = examDateTime;
 	}
 
-	public Course getCourseId() {
+	public CourseDTO getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(Course courseId) {
+	public void setCourseId(CourseDTO courseId) {
 		this.courseId = courseId;
 	}
     

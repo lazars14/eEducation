@@ -1,8 +1,5 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.Class;
-import com.eEducation.ftn.model.Student;
-
 public class StudentDTO {
 	
 	private Integer id;
@@ -15,22 +12,25 @@ public class StudentDTO {
     private String email;
     private String sPassword;
     private Integer espbPoints;
-    private Class classId;
+    private ClassDTO classId;
 	
 	public StudentDTO() {}
 
-	public StudentDTO(Student student) {
-		this.id = student.getId();
-		this.indexNumber = student.getIndexNumber();
-		this.firstname = student.getFirstname();
-		this.lastname = student.getLastname();
-		this.accountNumber = student.getAccountNumber();
-		this.studYear = student.getStudYear();
-		this.studYearOrdNum = student.getStudYearOrdNum();
-		this.email = student.getEmail();
-		this.sPassword = student.getSPassword();
-		this.espbPoints = student.getEspbPoints();
-		this.classId = student.getClassId();
+	public StudentDTO(Integer id, String indexNumber, String firstname,
+			String lastname, String accountNumber, Integer studYear, 
+			Integer studYearOrdNum, String email, String sPassword,
+			Integer espbPoints, ClassDTO classId) {
+		this.id = id;
+		this.indexNumber = indexNumber;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.accountNumber = accountNumber;
+		this.studYear = studYear;
+		this.studYearOrdNum = studYearOrdNum;
+		this.email = email;
+		this.sPassword = sPassword;
+		this.espbPoints = espbPoints;
+		this.classId = classId;
 	}
 
 	public Integer getId() {
@@ -105,11 +105,11 @@ public class StudentDTO {
 		this.espbPoints = espbPoints;
 	}
 
-	public Class getClassId() {
+	public ClassDTO getClassId() {
 		return classId;
 	}
 
-	public void setClassId(Class classId) {
+	public void setClassId(ClassDTO classId) {
 		this.classId = classId;
 	}
 	

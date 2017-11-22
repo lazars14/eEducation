@@ -1,18 +1,15 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.Colloquium;
-import com.eEducation.ftn.model.Student;
-
 public class ColloquiumResultDTO {
 	
 	private Integer id;
     private Float points;
-    private Colloquium colloquiumId;
-    private Student studentId;
+    private ColloquiumDTO colloquiumId;
+    private StudentDTO studentId;
     
     public ColloquiumResultDTO() {}
 
-	public ColloquiumResultDTO(Integer id, Float points, Colloquium colloquiumId, Student studentId) {
+	public ColloquiumResultDTO(Integer id, Float points, ColloquiumDTO colloquiumId, StudentDTO studentId) {
 		super();
 		this.id = id;
 		this.points = points;
@@ -36,19 +33,19 @@ public class ColloquiumResultDTO {
 		this.points = points;
 	}
 
-	public Colloquium getColloquiumId() {
+	public ColloquiumDTO getColloquiumId() {
 		return colloquiumId;
 	}
 
-	public void setColloquiumId(Colloquium colloquiumId) {
+	public void setColloquiumId(ColloquiumDTO colloquiumId) {
 		this.colloquiumId = colloquiumId;
 	}
 
-	public Student getStudentId() {
+	public StudentDTO getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(Student studentId) {
+	public void setStudentId(StudentDTO studentId) {
 		this.studentId = studentId;
 	}
     

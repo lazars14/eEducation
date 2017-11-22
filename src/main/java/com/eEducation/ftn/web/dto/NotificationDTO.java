@@ -2,26 +2,23 @@ package com.eEducation.ftn.web.dto;
 
 import java.util.Date;
 
-import com.eEducation.ftn.model.Course;
-import com.eEducation.ftn.model.CourseFile;
-import com.eEducation.ftn.model.Notification;
-
 public class NotificationDTO {
 	
 	private Integer id;
     private String message;
     private Date nDate;
-    private Course courseId;
-    private CourseFile documentId;
+    private CourseDTO courseId;
+    private CourseFileDTO documentId;
 	
 	public NotificationDTO() {}
 
-	public NotificationDTO(Notification notification) {
-		this.id = notification.getId();
-		this.message = notification.getMessage();
-		this.nDate = notification.getNDate();
-		this.courseId = notification.getCourseId();
-		this.documentId = notification.getDocumentId();
+	public NotificationDTO(Integer id, String message, Date nDate,
+			CourseDTO courseId, CourseFileDTO documentId) {
+		this.id = id;
+		this.message = message;
+		this.nDate = nDate;
+		this.courseId = courseId;
+		this.documentId = documentId;
 	}
 
 	public Integer getId() {
@@ -48,19 +45,19 @@ public class NotificationDTO {
 		this.nDate = nDate;
 	}
 
-	public Course getCourseId() {
+	public CourseDTO getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(Course courseId) {
+	public void setCourseId(CourseDTO courseId) {
 		this.courseId = courseId;
 	}
 
-	public CourseFile getDocumentId() {
+	public CourseFileDTO getDocumentId() {
 		return documentId;
 	}
 
-	public void setDocumentId(CourseFile documentId) {
+	public void setDocumentId(CourseFileDTO documentId) {
 		this.documentId = documentId;
 	}
 	
