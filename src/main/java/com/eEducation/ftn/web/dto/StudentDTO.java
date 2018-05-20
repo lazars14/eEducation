@@ -16,21 +16,18 @@ public class StudentDTO {
 	
 	public StudentDTO() {}
 
-	public StudentDTO(Integer id, String indexNumber, String firstname,
-			String lastname, String accountNumber, Integer studYear, 
-			Integer studYearOrdNum, String email, String sPassword,
-			Integer espbPoints, ClassDTO classId) {
-		this.id = id;
-		this.indexNumber = indexNumber;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.accountNumber = accountNumber;
-		this.studYear = studYear;
-		this.studYearOrdNum = studYearOrdNum;
-		this.email = email;
-		this.sPassword = sPassword;
-		this.espbPoints = espbPoints;
-		this.classId = classId;
+	public StudentDTO(Student student) {
+		this.id = student.getId();
+		this.indexNumber = student.getIndexNumber();
+		this.firstname = student.getFirstname();
+		this.lastname = student.getLastname();
+		this.accountNumber = student.getAccountNumber();
+		this.studYear = student.getStudYear();
+		this.studYearOrdNum = student.getStudYearOrdNum();
+		this.email = student.getEmail();
+		this.sPassword = student.getSPassword();
+		this.espbPoints = student.getEspbPoints();
+		this.classId = new ClassDTO(student.getClassId());
 	}
 
 	public Integer getId() {

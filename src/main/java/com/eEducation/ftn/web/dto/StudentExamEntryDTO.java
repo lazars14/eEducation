@@ -13,14 +13,13 @@ public class StudentExamEntryDTO {
     
     public StudentExamEntryDTO() {}
 
-	public StudentExamEntryDTO(Integer id, Date eDate, StudentDTO studentId, CourseDTO courseId,
-			ExamPeriodDTO examPeriodId) {
+	public StudentExamEntryDTO(StudentExamEntry see) {
 		super();
-		this.id = id;
-		this.eDate = eDate;
-		this.studentId = studentId;
-		this.courseId = courseId;
-		this.examPeriodId = examPeriodId;
+		this.id = see.getId();
+		this.eDate = see.getEDate();
+		this.studentId = new StudentDTO(see.getStudentId());
+		this.courseId = new CourseDTO(see.getCourseId());
+		this.examPeriodId = new ExamPeriodDTO(see.getExamPeriodId());
 	}
 
 	public Integer getId() {

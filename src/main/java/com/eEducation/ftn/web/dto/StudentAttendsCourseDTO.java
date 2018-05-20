@@ -8,10 +8,10 @@ public class StudentAttendsCourseDTO {
 	
 	public StudentAttendsCourseDTO() {}
 
-	public StudentAttendsCourseDTO(Integer id, StudentDTO studentId, CourseDTO courseId) {
-		this.id = id;
-		this.studentId = studentId;
-		this.courseId = courseId;
+	public StudentAttendsCourseDTO(StudentAttendsCourse sac) {
+		this.id = sac.getId();
+		this.studentId = new StudentDTO(sac.getStudentId());
+		this.courseId = new CourseDTO(sac.getCourseId());
 	}
 
 	public Integer getId() {

@@ -11,14 +11,13 @@ public class TeacherDTO {
 	
 	public TeacherDTO() {}
 
-	public TeacherDTO(Integer id, String firstname, String lastname,
-			String email, String sPassword, RankDTO rank) {
-		this.id = id;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.email = email;
-		this.sPassword = sPassword;
-		this.rank = rank;
+	public TeacherDTO(Teacher teacher) {
+		this.id = teacher.getId();
+		this.firstname = teacher.getFirstname();
+		this.lastname = teacher.getLastname();
+		this.email = teacher.getEmail();
+		this.sPassword = teacher.getsPassword();
+		this.rank = new RankDTO(teacher.getRank());
 	}
 
 	public Integer getId() {

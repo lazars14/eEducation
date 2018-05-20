@@ -10,12 +10,12 @@ public class CourseLessonDTO {
 	public CourseLessonDTO() {
 	}
 
-	public CourseLessonDTO(Integer id, String name, String description, CourseDTO courseId) {
+	public CourseLessonDTO(CourseLesson cl) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.courseId = courseId;
+		this.id = cl.getId();
+		this.name = cl.getName();
+		this.description = cl.getDescription();
+		this.courseId = new CourseDTO(cl.getCourseId());
 	}
 
 	public Integer getId() {

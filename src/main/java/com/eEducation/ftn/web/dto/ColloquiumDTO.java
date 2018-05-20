@@ -12,13 +12,13 @@ public class ColloquiumDTO {
     
     public ColloquiumDTO() {}
 
-	public ColloquiumDTO(Integer id, Float maxPoints, String examType, Date examDateTime, CourseDTO courseId) {
+	public ColloquiumDTO(Colloquium colloquium) {
 		super();
-		this.id = id;
-		this.maxPoints = maxPoints;
-		this.examType = examType;
-		this.examDateTime = examDateTime;
-		this.courseId = courseId;
+		this.id = colloquium.getId();
+		this.maxPoints = colloquium.getMaxPoints();
+		this.examType = colloquium.getExamType();
+		this.examDateTime = colloquium.getExamDateTime();
+		this.courseId = new CourseDTO(colloquium.getCourseId());
 	}
 
 	public Integer getId() {

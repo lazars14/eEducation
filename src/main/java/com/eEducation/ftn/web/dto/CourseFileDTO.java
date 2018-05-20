@@ -11,15 +11,14 @@ public class CourseFileDTO {
     
     public CourseFileDTO() {}
 
-	public CourseFileDTO(Integer id, String documentName, String documentType, String documentURL, String mimeType,
-			CourseLessonDTO courseLessonId) {
+	public CourseFileDTO(CourseFile courseFile) {
 		super();
-		this.id = id;
-		this.documentName = documentName;
-		this.documentType = documentType;
-		this.documentURL = documentURL;
-		this.mimeType = mimeType;
-		this.courseLessonId = courseLessonId;
+		this.id = courseFile.getId();
+		this.documentName = courseFile.getDocumentName();
+		this.documentType = courseFile.getDocumentType();
+		this.documentURL = courseFile.getDocumentURL();
+		this.mimeType = courseFile.getMimeType();
+		this.courseLessonId = new CourseLesson(courseFile.getCourseLessonId());
 	}
 
 	public Integer getId() {

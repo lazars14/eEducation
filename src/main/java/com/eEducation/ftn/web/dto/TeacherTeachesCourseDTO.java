@@ -8,12 +8,11 @@ public class TeacherTeachesCourseDTO {
 	
 	public TeacherTeachesCourseDTO() {}
 
-	public TeacherTeachesCourseDTO(Integer id, TeacherDTO teacherId,
-			CourseDTO courseId) {
+	public TeacherTeachesCourseDTO(TeacherTeachesCourse ttc) {
 		super();
-		this.id = id;
-		this.teacherId = teacherId;
-		this.courseId = courseId;
+		this.id = ttc.getId();
+		this.teacherId = new TeacherDTO(ttc.getTeacherId());
+		this.courseId = new CourseDTO(ttc.getCourseId());
 	}
 
 	public Integer getId() {

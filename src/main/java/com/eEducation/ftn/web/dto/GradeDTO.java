@@ -10,12 +10,12 @@ public class GradeDTO {
 	
 	public GradeDTO() {}
 
-	public GradeDTO(Integer id, Float points, Integer grade, CourseDTO courseId, StudentDTO studentId) {
-		this.id = id;
-		this.points = points;
-		this.grade = grade;
-		this.courseId = courseId;
-		this.studentId = studentId;
+	public GradeDTO(Grade grade) {
+		this.id = grade.getId();
+		this.points = grade.getPoints();
+		this.grade = grade.getGrade();
+		this.courseId = new CourseDTO(grade.getCourseId());
+		this.studentId = new StudentDTO(grade.getStudentId());
 	}
 
 	public Integer getId() {

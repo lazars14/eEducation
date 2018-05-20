@@ -11,15 +11,14 @@ public class StudentDocumentDTO {
 
     public StudentDocumentDTO() {}
 
-	public StudentDocumentDTO(Integer id, String documentName, String documentType, String documentURL, String mimeType,
-			StudentDTO studentId) {
+	public StudentDocumentDTO(StudentDocument studDoc) {
 		super();
-		this.id = id;
-		this.documentName = documentName;
-		this.documentType = documentType;
-		this.documentURL = documentURL;
-		this.mimeType = mimeType;
-		this.studentId = studentId;
+		this.id = studDoc.getId();
+		this.documentName = studDoc.getDocumentName();
+		this.documentType = studDoc.getDocumentType();
+		this.documentURL = studDoc.getDocumentURL();
+		this.mimeType = studDoc.getMimeType();
+		this.studentId = new StudentDTO(studDoc.getStudentId());
 	}
 
 	public Integer getId() {

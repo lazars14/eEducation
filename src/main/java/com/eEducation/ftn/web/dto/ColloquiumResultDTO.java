@@ -9,12 +9,12 @@ public class ColloquiumResultDTO {
     
     public ColloquiumResultDTO() {}
 
-	public ColloquiumResultDTO(Integer id, Float points, ColloquiumDTO colloquiumId, StudentDTO studentId) {
+	public ColloquiumResultDTO(ColloquiumResult cr) {
 		super();
-		this.id = id;
-		this.points = points;
-		this.colloquiumId = colloquiumId;
-		this.studentId = studentId;
+		this.id = cr.getId();
+		this.points = cr.getPoints();
+		this.colloquiumId = new ColloquiumDTO(cr.getColloquiumId());
+		this.studentId = new StudentDTO(cr.getStudentId());
 	}
 
 	public Integer getId() {

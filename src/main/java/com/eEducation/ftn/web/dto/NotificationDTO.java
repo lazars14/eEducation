@@ -12,13 +12,12 @@ public class NotificationDTO {
 	
 	public NotificationDTO() {}
 
-	public NotificationDTO(Integer id, String message, Date nDate,
-			CourseDTO courseId, CourseFileDTO documentId) {
-		this.id = id;
-		this.message = message;
-		this.nDate = nDate;
-		this.courseId = courseId;
-		this.documentId = documentId;
+	public NotificationDTO(Notification notification) {
+		this.id = notification.getId();
+		this.message = notification.getMessage();
+		this.nDate = notification.getNDate();
+		this.courseId = new CourseDTO(notification.getCourseId());
+		this.documentId = new CourseFile(notification.getDocumentId());
 	}
 
 	public Integer getId() {
