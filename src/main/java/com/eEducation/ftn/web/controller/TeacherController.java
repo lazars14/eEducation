@@ -35,7 +35,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Long id){
+	public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Integer id){
 		return null;
 	
 	}
@@ -52,7 +52,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteTeacher(@PathVariable Long id){
+	public ResponseEntity<Void> deleteTeacher(@PathVariable Integer id){
 		return null;
 		
 	}

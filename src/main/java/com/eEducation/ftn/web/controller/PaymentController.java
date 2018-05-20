@@ -31,7 +31,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<PaymentDTO> getPayment(@PathVariable Long id){
+	public ResponseEntity<PaymentDTO> getPayment(@PathVariable Integer id){
 		return null;
 	
 	}
@@ -48,7 +48,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deletePayment(@PathVariable Long id){
+	public ResponseEntity<Void> deletePayment(@PathVariable Integer id){
 		return null;
 		
 	}

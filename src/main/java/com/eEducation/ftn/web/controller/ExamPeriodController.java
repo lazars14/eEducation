@@ -27,7 +27,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ExamPeriodDTO> getExamPeriod(@PathVariable Long id){
+	public ResponseEntity<ExamPeriodDTO> getExamPeriod(@PathVariable Integer id){
 		return null;
 	
 	}
@@ -44,7 +44,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteExamPeriod(@PathVariable Long id){
+	public ResponseEntity<Void> deleteExamPeriod(@PathVariable Integer id){
 		return null;
 		
 	}

@@ -27,7 +27,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<RankDTO> getRank(@PathVariable Long id){
+	public ResponseEntity<RankDTO> getRank(@PathVariable Integer id){
 		return null;
 	
 	}
@@ -44,7 +44,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteRank(@PathVariable Long id){
+	public ResponseEntity<Void> deleteRank(@PathVariable Integer id){
 		return null;
 		
 	}

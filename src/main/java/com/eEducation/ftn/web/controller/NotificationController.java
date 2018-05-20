@@ -39,7 +39,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<NotificationDTO> getNotification(@PathVariable Long id){
+	public ResponseEntity<NotificationDTO> getNotification(@PathVariable Integer id){
 		return null;
 	
 	}
@@ -56,7 +56,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteNotification(@PathVariable Long id){
+	public ResponseEntity<Void> deleteNotification(@PathVariable Integer id){
 		return null;
 		
 	}

@@ -22,31 +22,59 @@ public class ClassController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ClassDTO>> getClasses(){
-		return null;
+		List<Class> classes = classService.findAll();
+		List<ClassDTO> classDTOs = new ArrayList<>();
 		
+		for(Class c : classes){
+			classDTOs.add(new ClassDTO(c));
+		}
+		
+		return new ResponseEntity(classDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ClassDTO> getClass(@PathVariable Long id){
-		return null;
-	
+	public ResponseEntity<ClassDTO> getClass(@PathVariable Integer id){
+		Class found = classService.findOne(id);
+		if(found == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<ClassDTO> saveClass(@RequestBody ClassDTO classs){
-		return null;
-
+		Class newClass = new Class();
+		newClass.setName(classs.getName());
+		newClass.setNumOfYears(classs.getNumOfYears());
+		
+		classService.save(newClass);
+		return new ResponseEntity<>(new ClassDTO(newClass), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<ClassDTO> updateClass(@RequestBody ClassDTO classs){
-		return null;
+		Class found = classService.findOne(classs.getId());
+		if(found == null){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		found.setName(classs.getName());
+		found.setNumOfYears(classs.getNumOfYears());
+		
+		classService.save(found);
+		return new ResponseEntity<>(new ClassDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteClass(@PathVariable Long id){
-		return null;
-		
+	public ResponseEntity<Void> deleteClass(@PathVariable Integer id){
+		Class found = classService.findOne(classs.getId());
+		if(found != null){
+			classService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	// collection methods

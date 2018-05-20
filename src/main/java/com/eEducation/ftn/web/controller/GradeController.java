@@ -35,7 +35,7 @@ public class GradeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<GradeDTO> getGrade(@PathVariable Long id){
+	public ResponseEntity<GradeDTO> getGrade(@PathVariable Integer id){
 		return null;
 	
 	}
@@ -52,7 +52,7 @@ public class GradeController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteGrade(@PathVariable Long id){
+	public ResponseEntity<Void> deleteGrade(@PathVariable Integer id){
 		return null;
 		
 	}
