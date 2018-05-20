@@ -15,7 +15,7 @@ public class PaymentService {
 	@Autowired
 	PaymentRepository paymentRepository;
 	
-	public Payment findOne(Long id) {
+	public Payment findOne(Integer id) {
 		return paymentRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class PaymentService {
 		return paymentRepository.save(payment);
 	}
 
-	public void remove(Long id) {
+	public void remove(Integer id) {
 		paymentRepository.delete(id);
 	}
 }

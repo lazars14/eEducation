@@ -15,7 +15,7 @@ public class CourseLessonService {
 	@Autowired
 	CourseLessonRepository courseLessonRepository;
 	
-	public CourseLesson findOne(Long id) {
+	public CourseLesson findOne(Integer id) {
 		return courseLessonRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class CourseLessonService {
 		return courseLessonRepository.save(courseLesson);
 	}
 
-	public void remove(Long id) {
+	public void remove(Integer id) {
 		courseLessonRepository.delete(id);
 	}
 }

@@ -15,7 +15,7 @@ public class GradeService {
 	@Autowired
 	GradeRepository gradeRepository;
 	
-	public Grade findOne(Long id) {
+	public Grade findOne(Integer id) {
 		return gradeRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class GradeService {
 		return gradeRepository.save(grade);
 	}
 
-	public void remove(Long id) {
+	public void remove(Integer id) {
 		gradeRepository.delete(id);
 	}
 }

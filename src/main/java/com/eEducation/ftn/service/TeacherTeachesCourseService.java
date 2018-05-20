@@ -15,7 +15,7 @@ public class TeacherTeachesCourseService {
 	@Autowired
 	TeacherTeachesCourseRepository ttcRepository;
 	
-	public TeacherTeachesCourse findOne(Long id) {
+	public TeacherTeachesCourse findOne(Integer id) {
 		return ttcRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class TeacherTeachesCourseService {
 		return ttcRepository.save(ttc);
 	}
 
-	public void remove(Long id) {
+	public void remove(Integer id) {
 		ttcRepository.delete(id);
 	}
 }
