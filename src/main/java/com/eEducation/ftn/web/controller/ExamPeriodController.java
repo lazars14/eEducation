@@ -22,31 +22,61 @@ public class ExamPeriodController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ExamPeriodDTO>> getExamPeriods(){
-		return null;
+		List<ExamPeriod> examPeriods = examPeriodService.findAll();
+		List<ExamPeriodDTO> examPeriodDTOs = new ArrayList<>();
 		
+		for(ExamPeriod ep : examPeriods){
+			examPeriodDTOs.add(new ExamPeriodDTO(ep));
+		}
+		
+		return new ResponseEntity<>(examPeriodDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	public ResponseEntity<ExamPeriodDTO> getExamPeriod(@PathVariable Integer id){
-		return null;
-	
+		ExamPeriod found = examPeriodService.findOne(id);
+		if(found == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(new ExamPeriodDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<ExamPeriodDTO> saveExamPeriod(@RequestBody ExamPeriodDTO examPeriod){
-		return null;
-
+		ExamPeriod newExamPeriod = new ExamPeriod();
+		newExamPeriod.setName(examPeriod.getName());
+		newExamPeriod.setStartDate(examPeriod.getStartDate());
+		newExamPeriod.setEndDate(examPeriod.getEndDate());
+		
+		examPeriodService.save(newExamPeriod);
+		return ResponseEntity<>(new ExamPeriodDTO(newExamPeriod), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<ExamPeriodDTO> updateExamPeriod(@RequestBody ExamPeriodDTO examPeriod){
-		return null;
+		ExamPeriod found = examPeriodService.findOne(examPeriod.getId());
+		if(found == null){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		found.setName(examPeriod.getName());
+		found.setStartDate(examPeriod.getStartDate());
+		found.setEndDate(examPeriod.getEndDate());
+		
+		examPeriodService.save(newExamPeriod);
+		return ResponseEntity<>(new ExamPeriodDTO(newExamPeriod), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteExamPeriod(@PathVariable Integer id){
-		return null;
-		
+		ExamPeriod found = examPeriodService.findOne(id);
+		if(found != null){
+			examPeriodService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	// collection methods

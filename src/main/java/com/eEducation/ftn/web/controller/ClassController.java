@@ -39,7 +39,7 @@ public class ClassController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(new ClassDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
@@ -68,7 +68,7 @@ public class ClassController {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteClass(@PathVariable Integer id){
-		Class found = classService.findOne(classs.getId());
+		Class found = classService.findOne(id);
 		if(found != null){
 			classService.remove(id);
 			return new ResponseEntity<>(HttpStatus.OK);
