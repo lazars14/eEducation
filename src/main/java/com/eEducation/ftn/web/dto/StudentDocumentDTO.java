@@ -8,6 +8,7 @@ public class StudentDocumentDTO {
     private String documentURL;
     private String mimeType;
     private StudentDTO studentId;
+    private CourseDTO courseId;
 
     public StudentDocumentDTO() {}
 
@@ -19,6 +20,7 @@ public class StudentDocumentDTO {
 		this.documentURL = studDoc.getDocumentURL();
 		this.mimeType = studDoc.getMimeType();
 		this.studentId = new StudentDTO(studDoc.getStudentId());
+		this.courseId = new CourseDTO(studDoc.getCourseId());
 	}
 
 	public Integer getId() {
@@ -67,6 +69,14 @@ public class StudentDocumentDTO {
 
 	public void setStudentId(StudentDTO studentId) {
 		this.studentId = studentId;
+	}
+	
+	public CourseDTO getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(CourseDTO courseId) {
+		this.courseId = courseId;
 	}
     
 }

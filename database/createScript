@@ -92,8 +92,10 @@ create table studentDocument
 	documentURL varchar(200),
 	mimeType varchar(30),
 	studentId int,
+	courseId int,
 	
-	Foreign Key (studentId) References student(id)
+	Foreign Key (studentId) References student(id),
+	Foreign Key (courseId) References course(id)
 );
 
 create table courseFile

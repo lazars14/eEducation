@@ -52,6 +52,9 @@ public class StudentDocument implements Serializable {
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student studentId;
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @ManyToOne
+    private Course courseId;
 
     public StudentDocument() {
     }
@@ -106,6 +109,14 @@ public class StudentDocument implements Serializable {
 
     public void setStudentId(Student studentId) {
         this.studentId = studentId;
+    }
+    
+    public Course getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
     }
 
     @Override
