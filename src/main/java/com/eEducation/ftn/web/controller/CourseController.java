@@ -22,31 +22,59 @@ public class CourseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CourseDTO>> getCourses(){
-		return null;
+		List<Course> courses = courseService.findAll();
+		List<CourseDTO> courseDTOs = new ArrayList<>();
 		
+		for(Course c : courses) {
+			courseDTOs.add(new CourseDTO(c));
+		}
+		
+		return new ResponseEntity<>(courseDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	public ResponseEntity<CourseDTO> getCourse(@PathVariable Integer id){
-		return null;
+		Course found = courseService.findOne(id);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	
+		return new ResponseEntity<>(new CourseDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<CourseDTO> saveCourse(@RequestBody CourseDTO course){
-		return null;
-
+		Course newCourse = new Course();
+		newCourse.setCourseName(course.getCourseName());
+		newCourse.setEspbPoints(course.getEspbPoints());
+		
+		courseService.save(newCourse);
+		return new ResponseEntity<>(new CourseDTO(newCourse), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO course){
-		return null;
+		Course found = courseService.findOne(course.getId());
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		found.setCourseName(course.getCourseName());
+		found.setEspbPoints(course.getEspbPoints());
+		
+		courseService.save(found);
+		return new ResponseEntity<>(new CourseDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteCourse(@PathVariable Integer id){
-		return null;
-		
+		Course found = courseService.findOne(id);
+		if(found != null) {
+			courseService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	// collection methods

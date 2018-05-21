@@ -25,36 +25,87 @@ public class TeacherController {
 	@Autowired
 	RankService rankService;
 	
-	@Autowired
-	ClassService classService;
-	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<TeacherDTO>> getTeachers(){
-		return null;
+		List<Teacher> teachers = teacherService.findAll();
+		List<TeacherDTO> teacherDTOs = new ArrayList<>();
 		
+		for(Teacher t : teachers) {
+			teacherDTOs.add(new TeacherDTO(t));
+		}
+		
+		return new ResponseEntity<>(teacherDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Integer id){
-		return null;
-	
+		Teacher found = teacherService.findOne(id);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(new TeacherDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<TeacherDTO> saveTeacher(@RequestBody TeacherDTO teacher){
-		return null;
-
+		Teacher newTeacher = new Teacher();
+		newTeacher.setFirstname(teacher.getFirstname());
+		newTeacher.setLastname(teacher.getLastname());
+		newTeacher.setEmail(teacher.getEmail());
+		newTeacher.setSPassword(teacher.getSPassword());
+		
+		if(teacher.getRank() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Rank rank = rankService.findOne(teacher.getRank().getId());
+		if(rank == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		newTeacher.setRank(rank);
+		
+		teacherService.save(newTeacher);
+		return new ResponseEntity<>(new TeacherDTO(newTeacher), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacher){
-		return null;
+		Teacher found = teacherService.findOne(teacher.getId());
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		found.setFirstname(teacher.getFirstname());
+		found.setLastname(teacher.getLastname());
+		found.setEmail(teacher.getEmail());
+		found.setSPassword(teacher.getSPassword());
+		
+		if(teacher.getRank() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Rank rank = rankService.findOne(teacher.getRank().getId());
+		if(rank == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		found.setRank(rank);
+		
+		teacherService.save(found);
+		return new ResponseEntity<>(new TeacherDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteTeacher(@PathVariable Integer id){
-		return null;
-		
+		Teacher found = teacherService.findOne(id);
+		if(found != null) {
+			teacherService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	// collection methods

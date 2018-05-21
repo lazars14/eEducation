@@ -30,31 +30,70 @@ public class GradeController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<GradeDTO>> getGrades(){
-		return null;
+		List<Grade> grades = gradeService.findAll();
+		List<GradeDTO> gradeDTOs = new ArrayList<>();
 		
+		for(Grade g : grades) {
+			gradeDTOs.add(new GradeDTO(g));
+		}
+		
+		return new ResponseEntity<>(gradeDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	public ResponseEntity<GradeDTO> getGrade(@PathVariable Integer id){
-		return null;
-	
+		Grade found = gradeService.findOne(id);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(new GradeDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<GradeDTO> saveGrade(@RequestBody GradeDTO grade){
-		return null;
-
+		Grade newGrade = new Grade();
+		newGrade.setPoints(grade.getPoints());
+		newGrade.setGrade(grade.getGrade());
+		
+		if(grade.getCourseId() == null || grade.getStudentId() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Course course = courseService.findOne(grade.getCourseId().getId());
+		Student student = studentService.findOne(grade.getStudentId().getId());
+		
+		if(course == null || student == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		newGrade.setCourseId(grade.getCourseId());
+		newGrade.setStudentId(grade.getStudentId());
+		
+		gradeService.save(newGrade);
+		return new ResponseEntity<>(new GradeDTO(newGrade), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<GradeDTO> updateGrade(@RequestBody GradeDTO grade){
-		return null;
+		Grade found = gradeService.findOne(grade.getId());
+		found.setPoints(grade.getPoints());
+		found.setGrade(grade.getGrade());
+		// not allowed to change course or student
+		
+		gradeService.save(found);
+		return new ResponseEntity<>(new GradeDTO(newGrade), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteGrade(@PathVariable Integer id){
-		return null;
-		
+		Grade found = gradeService.findOne(id);
+		if(found != null) {
+			gradeService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	// collection methods
