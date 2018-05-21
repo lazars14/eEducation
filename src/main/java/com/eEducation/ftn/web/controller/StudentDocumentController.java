@@ -27,7 +27,7 @@ public class StudentDocumentController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseDTO>> getStudentDocuments(){
+	public ResponseEntity<List<StudentDocumentDTO>> getAll(){
 		List<StudentDocument> studentDocuments = studentDocumentService.findAll();
 		List<StudentDocumentDTO> StudentDocumentDTOs = new ArrayList<>();
 		
@@ -39,7 +39,7 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseDTO> getStudentDocument(@PathVariable Integer id){
+	public ResponseEntity<StudentDocumentDTO> getById(@PathVariable Integer id){
 		StudentDocument found = studentDocumentService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,21 +50,21 @@ public class StudentDocumentController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseDTO> saveStudentDocument(@RequestBody StudentDocumentDTO studentDocument){
+	public ResponseEntity<StudentDocumentDTO> save(@RequestBody StudentDocumentDTO studentDocument){
 		StudentDocument newStudentDocument = new StudentDocument();
 		
-		if(studentDocument.getCourseId() == null || studentDocument.getStudentId() == null) {
+		if(studentDocument.getCourse() == null || studentDocument.getStudent() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Course course = courseService.findOne(studentDocument.getCourseId().getId());
-		Student student = studentService.findOne(studentDocument.getStudentId().getId());
+		Course course = courseService.findOne(studentDocument.getCourse().getId());
+		Student student = studentService.findOne(studentDocument.getStudent().getId());
 		if(course == null || student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newStudentDocument.setCourseId(course);
-		newStudentDocument.setStudentId(student);
+		newStudentDocument.setCourse(course);
+		newStudentDocument.setStudent(student);
 		newStudentDocument.setDocumentName(studentDocument.getDocumentName());
 		newStudentDocument.setDocumentType(studentDocument.getDocumentType());
 		newStudentDocument.setDocumentUrl(studentDocument.getDocumentUrl());
@@ -75,7 +75,7 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseDTO> updateStudentDocument(@RequestBody StudentDocumentDTO studentDocument){
+	public ResponseEntity<StudentDocumentDTO> update(@RequestBody StudentDocumentDTO studentDocument){
 		StudentDocument found = studentDocumentService.findOne(studentDocument.getId());
 		
 		// not allowed to change course and student
@@ -90,7 +90,7 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteStudentDocument(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		StudentDocument found = studentDocumentService.findOne(id);
 		if(found != null) {
 			studentDocumentService.remove(id);

@@ -25,7 +25,7 @@ public class CourseLessonController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseDTO>> getCourseLessons(){
+	public ResponseEntity<List<CourseLessonDTO>> getAll(){
 		List<CourseLesson> courseLessons = courseLessonService.findAll();
 		List<CourseLessonDTO> courseLessonDTOs = new ArrayList<>();
 		
@@ -37,7 +37,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseDTO> getCourseLesson(@PathVariable Integer id){
+	public ResponseEntity<CourseLessonDTO> getById(@PathVariable Integer id){
 		CourseLesson found = courseLessonService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,19 +47,19 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseDTO> saveCourseLesson(@RequestBody CourseLessonDTO courseLesson){
+	public ResponseEntity<CourseLessonDTO> save(@RequestBody CourseLessonDTO courseLesson){
 		CourseLesson newCourseLesson = new CourseLesson();
 		
-		if(courseLesson.getCourseId() == null) {
+		if(courseLesson.getCourse() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Course course = courseService.findOne(courseLesson.getCourseId().getId());
+		Course course = courseService.findOne(courseLesson.getCourse().getId());
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newCourseLesson.setCourseId(course);
+		newCourseLesson.setCourse(course);
 		newCourseLesson.setName(courseLesson.getName());
 		newCourseLesson.setDescription(course.getDescription());
 		
@@ -68,7 +68,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseDTO> updateCourseLesson(@RequestBody CourseLessonDTO courseLesson){
+	public ResponseEntity<CourseLessonDTO> update(@RequestBody CourseLessonDTO courseLesson){
 		CourseLesson found = courseLessonService.findOne(courseLesson.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -84,7 +84,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteCourseLesson(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		CourseLesson found = courseLessonService.findOne(id);
 		if(found != null) {
 			courseLessonService.remove(id);

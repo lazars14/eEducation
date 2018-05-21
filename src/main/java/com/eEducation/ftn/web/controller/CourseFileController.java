@@ -25,7 +25,7 @@ public class CourseController {
 	CourseLessonService courseLessonService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseDTO>> getCourseFiles(){
+	public ResponseEntity<List<CourseFileDTO>> getAll(){
 		List<CourseFile> courseFiles = courseFileService.findAll();
 		List<CourseFileDTO> courseFileDTOs = new ArrayList<>();
 		
@@ -37,7 +37,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseDTO> getCourseFile(@PathVariable Integer id){
+	public ResponseEntity<CourseFileDTO> getById(@PathVariable Integer id){
 		CourseFile found = courseFileService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -48,19 +48,19 @@ public class CourseController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseDTO> saveCourseFile(@RequestBody CourseFileDTO courseFile){
+	public ResponseEntity<CourseFileDTO> save(@RequestBody CourseFileDTO courseFile){
 		CourseFile newCourseFile = new CourseFile();
 		
-		if(courseFile.getCourseLessonId() == null) {
+		if(courseFile.getCourseLesson() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		CourseLesson courseLesson = courseLessonService.findOne(courseFile.getCourseLessonId().getId());
+		CourseLesson courseLesson = courseLessonService.findOne(courseFile.getCourseLesson().getId());
 		if(courseLesson == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newCourseFile.setCourseLessonId(courseLesson);
+		newCourseFile.setCourseLesson(courseLesson);
 		newCourseFile.setDocumentName(courseFile.getDocumentName());
 		newCourseFile.setDocumentType(courseFile.getDocumentType());
 		newCourseFile.setDocumentUrl(courseFile.getDocumentUrl());
@@ -71,7 +71,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseDTO> updateCourseFile(@RequestBody CourseFileDTO courseFile){
+	public ResponseEntity<CourseFileDTO> update(@RequestBody CourseFileDTO courseFile){
 		CourseFile found = courseFileService.findOne(courseFile.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -89,7 +89,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteCourseFile(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		CourseFile found = courseFileService.findOne(id);
 		if(found != null) {
 			courseFileService.remove(id);

@@ -29,7 +29,7 @@ public class TeacherTeachesCourseController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<TeacherTeachesCourseDTO>> getTtcs(){
+	public ResponseEntity<List<TeacherTeachesCourseDTO>> getAll(){
 		List<TeacherTeachesCourse> ttcS = ttcService.findAll();
 		List<TeacherTeachesCourseDTO> ttcDTOs = new ArrayList<>();
 		
@@ -41,7 +41,7 @@ public class TeacherTeachesCourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<TeacherTeachesCourseDTO> getTtc(@PathVariable Integer id){
+	public ResponseEntity<TeacherTeachesCourseDTO> getById(@PathVariable Integer id){
 		TeacherTeachesCourse found = ttcService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -51,54 +51,54 @@ public class TeacherTeachesCourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<TeacherTeachesCourseDTO> saveTtc(@RequestBody TeacherTeachesCourseDTO ttc){
+	public ResponseEntity<TeacherTeachesCourseDTO> save(@RequestBody TeacherTeachesCourseDTO ttc){
 		TeacherTeachesCourse newTtc = new TeacherTeachesCourse();
 		
-		if(ttc.getTeacherId() == null || ttc.getCourseId() == null) {
+		if(ttc.getTeacher() == null || ttc.getCourse() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Teacher teacher = teacherService.findOne(ttc.getTeacherId().getId());
-		Course course = courseService.findOne(ttc.getCourseId().getId());
+		Teacher teacher = teacherService.findOne(ttc.getTeacher().getId());
+		Course course = courseService.findOne(ttc.getCourse().getId());
 		
 		if(teacher == null || course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newTtc.setTeacherId(teacher);
-		newTtc.setCourseId(course);
+		newTtc.setTeacher(teacher);
+		newTtc.setCourse(course);
 		
 		ttcService.save(newTtc);
 		return new ResponseEntity<>(new TeacherTeachesCourseDTO(newTtc), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<TeacherTeachesCourseDTO> updateTtc(@RequestBody TeacherTeachesCourseDTO ttc){
+	public ResponseEntity<TeacherTeachesCourseDTO> update(@RequestBody TeacherTeachesCourseDTO ttc){
 		TeacherTeachesCourse found = ttcService.findOne(ttc.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(ttc.getTeacherId() == null || ttc.getCourseId() == null) {
+		if(ttc.getTeacher() == null || ttc.getCourse() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Teacher teacher = teacherService.findOne(ttc.getTeacherId().getId());
-		Course course = courseService.findOne(ttc.getCourseId().getId());
+		Teacher teacher = teacherService.findOne(ttc.getTeacher().getId());
+		Course course = courseService.findOne(ttc.getCourse().getId());
 		
 		if(teacher == null || course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setTeacherId(teacher);
-		found.setCourseId(course);
+		found.setTeacher(teacher);
+		found.setCourse(course);
 		
 		ttcService.save(found);
 		return new ResponseEntity<>(new TeacherTeachesCourseDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteTtc(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		TeacherTeachesCourse found = ttcService.findOne(id);
 		if(found != null) {
 			ttcService.remove(id);

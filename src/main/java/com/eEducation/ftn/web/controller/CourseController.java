@@ -20,8 +20,11 @@ public class CourseController {
 	@Autowired
 	CourseService courseService;
 	
+	@Autowired
+	TeacherService teacherService;
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseDTO>> getCourses(){
+	public ResponseEntity<List<CourseDTO>> getAll(){
 		List<Course> courses = courseService.findAll();
 		List<CourseDTO> courseDTOs = new ArrayList<>();
 		
@@ -33,7 +36,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseDTO> getCourse(@PathVariable Integer id){
+	public ResponseEntity<CourseDTO> getById(@PathVariable Integer id){
 		Course found = courseService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -43,8 +46,20 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseDTO> saveCourse(@RequestBody CourseDTO course){
+	public ResponseEntity<CourseDTO> save(@RequestBody CourseDTO course){
 		Course newCourse = new Course();
+		
+		if(course.getTeacher() == null){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Teacher teacher = teacherService.findOne(course.getTeacher().getId())
+		
+		if(teacher == null){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}		
+				
+		newCourse.setTeacher(teacher);
 		newCourse.setCourseName(course.getCourseName());
 		newCourse.setEspbPoints(course.getEspbPoints());
 		
@@ -53,12 +68,23 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO course){
+	public ResponseEntity<CourseDTO> update(@RequestBody CourseDTO course){
 		Course found = courseService.findOne(course.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		if(course.getTeacher() == null){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Teacher teacher = teacherService.findOne(course.getTeacher().getId())
+		
+		if(teacher == null){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}		
+				
+		found.setTeacher(teacher);
 		found.setCourseName(course.getCourseName());
 		found.setEspbPoints(course.getEspbPoints());
 		
@@ -67,7 +93,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteCourse(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Course found = courseService.findOne(id);
 		if(found != null) {
 			courseService.remove(id);

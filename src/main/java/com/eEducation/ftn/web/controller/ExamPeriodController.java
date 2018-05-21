@@ -21,7 +21,7 @@ public class ExamPeriodController {
 	ExamPeriodService examPeriodService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ExamPeriodDTO>> getExamPeriods(){
+	public ResponseEntity<List<ExamPeriodDTO>> getAll(){
 		List<ExamPeriod> examPeriods = examPeriodService.findAll();
 		List<ExamPeriodDTO> examPeriodDTOs = new ArrayList<>();
 		
@@ -33,7 +33,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ExamPeriodDTO> getExamPeriod(@PathVariable Integer id){
+	public ResponseEntity<ExamPeriodDTO> getById(@PathVariable Integer id){
 		ExamPeriod found = examPeriodService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -43,7 +43,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ExamPeriodDTO> saveExamPeriod(@RequestBody ExamPeriodDTO examPeriod){
+	public ResponseEntity<ExamPeriodDTO> save(@RequestBody ExamPeriodDTO examPeriod){
 		ExamPeriod newExamPeriod = new ExamPeriod();
 		newExamPeriod.setName(examPeriod.getName());
 		newExamPeriod.setStartDate(examPeriod.getStartDate());
@@ -54,7 +54,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ExamPeriodDTO> updateExamPeriod(@RequestBody ExamPeriodDTO examPeriod){
+	public ResponseEntity<ExamPeriodDTO> update(@RequestBody ExamPeriodDTO examPeriod){
 		ExamPeriod found = examPeriodService.findOne(examPeriod.getId());
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -69,7 +69,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteExamPeriod(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		ExamPeriod found = examPeriodService.findOne(id);
 		if(found != null){
 			examPeriodService.remove(id);

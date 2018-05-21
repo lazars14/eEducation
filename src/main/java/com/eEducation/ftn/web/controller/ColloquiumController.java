@@ -15,7 +15,7 @@ import com.eEducation.ftn.service.ColloquiumService;
 import com.eEducation.ftn.web.dto.ColloquiumDTO;
 
 @RestController
-@RequestMapping(value="api/classes")
+@RequestMapping(value="api/colloquiums")
 public class ColloquiumController {
 	@Autowired
 	ColloquiumService colloquiumService;
@@ -24,7 +24,7 @@ public class ColloquiumController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ClassDTO>> getColloquiums(){
+	public ResponseEntity<List<ColloquiumDTO>> getAll(){
 		List<Colloquium> colloquiums = colloquiumService.findAll();
 		List<ColloquiumDTO> colloquiumDTOs = new ArrayList<>();
 		
@@ -36,7 +36,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ClassDTO> getColloquium(@PathVariable Integer id){
+	public ResponseEntity<ColloquiumDTO> getById(@PathVariable Integer id){
 		Colloquium found = colloquiumService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -46,19 +46,19 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ClassDTO> saveColloquium(@RequestBody ColloquiumDTO colloquium){
+	public ResponseEntity<ColloquiumDTO> save(@RequestBody ColloquiumDTO colloquium){
 		Colloquium newColloquium = new Colloquium();
 		
-		if(colloquium.getCourseId() == null) {
+		if(colloquium.getCourse() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Course course = courseService.findOne(colloquium.getCourseId().getId());
+		Course course = courseService.findOne(colloquium.getCourse().getId());
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newColloquium.setCourseId(course);
+		newColloquium.setCourse(course);
 		newColloquium.setMaxPoints(colloquium.getMaxPoints());
 		newColloquium.setExamType(colloquium.getExamType());
 		newColloquium.setExamDateTime(colloquium.getExamDateTime());
@@ -68,7 +68,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ClassDTO> updateColloquium(@RequestBody ColloquiumDTO colloquium){
+	public ResponseEntity<ColloquiumDTO> update(@RequestBody ColloquiumDTO colloquium){
 		Colloquium found = colloquiumService.findOne(colloquium.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -85,7 +85,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteColloquium(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Colloquium found = colloquiumService.findOne(id);
 		if(found != null){
 			colloquiumService.remove(id);

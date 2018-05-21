@@ -25,7 +25,7 @@ public class PaymentController {
 	StudentService studentService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<PaymentDTO>> getPayments(){
+	public ResponseEntity<List<PaymentDTO>> getAll(){
 		List<Payment> payments = paymentService.findAll();
 		List<ParmentDTO> paymentDTOs = new ArrayList<>();
 		
@@ -37,7 +37,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<PaymentDTO> getPayment(@PathVariable Integer id){
+	public ResponseEntity<PaymentDTO> getById(@PathVariable Integer id){
 		Payment found = paymentService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,7 +47,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<PaymentDTO> savePayment(@RequestBody PaymentDTO payment){
+	public ResponseEntity<PaymentDTO> save(@RequestBody PaymentDTO payment){
 		Payment newPayment = new Payment();
 		
 		if(payment.getAccountNumber() == null) {
@@ -70,7 +70,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<PaymentDTO> updatePayment(@RequestBody PaymentDTO payment){
+	public ResponseEntity<PaymentDTO> update(@RequestBody PaymentDTO payment){
 		Payment found = paymentService.findOne(payment.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -87,7 +87,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deletePayment(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Payment found = paymentService.findOne(id);
 		if(found != null) {
 			paymentService.remove(id);

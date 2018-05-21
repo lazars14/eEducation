@@ -25,7 +25,7 @@ public class StudentController {
 	ClassService classService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<StudentDTO>> getStudents(){
+	public ResponseEntity<List<StudentDTO>> getAll(){
 		List<Student> students = studentService.findAll();
 		List<StudentDTO> studentDTOs = new ArrayList<>();
 		
@@ -37,7 +37,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<StudentDTO> getStudent(@PathVariable Integer id){
+	public ResponseEntity<StudentDTO> getById(@PathVariable Integer id){
 		Student found = studentService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,19 +47,19 @@ public class StudentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentDTO> saveStudent(@RequestBody StudentDTO student){
+	public ResponseEntity<StudentDTO> save(@RequestBody StudentDTO student){
 		Student newStudent = new Student();
 		
-		if(student.getClassId() == null) {
+		if(student.getClass() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Class classs = classService.findOne(student.getClassId().getId());
+		Class classs = classService.findOne(student.getClass().getId());
 		if(classs == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newStudent.setClassId(classs);
+		newStudent.setClass(classs);
 		
 		if(student.getIndexNumber() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -96,22 +96,22 @@ public class StudentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO student){
+	public ResponseEntity<StudentDTO> update(@RequestBody StudentDTO student){
 		Student found = studentService.findOne(student.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(student.getClassId() == null) {
+		if(student.getClass() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Class classs = classService.findOne(student.getClassId().getId());
+		Class classs = classService.findOne(student.getClass().getId());
 		if(classs == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setClassId(classs);
+		found.setClass(classs);
 		
 		if(student.getIndexNumber() == null ) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -149,7 +149,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteStudent(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Student found = studentService.findOne(id);
 		if(found != null) {
 			studentService.remove(id);

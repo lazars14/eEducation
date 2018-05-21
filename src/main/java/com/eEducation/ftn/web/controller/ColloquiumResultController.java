@@ -30,19 +30,19 @@ public class ColloquiumResult.Controller {
 	StudentDocumentService studentDocumentService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ClassDTO>> getColloquiumResulta(){
+	public ResponseEntity<List<ColloquiumResultDTO>> getAll(){
 		List<ColloquiumResult> results = ColloquiumResultService.findAll();
 		List<ClassDTO> resultDTOs = new ArrayList<>();
 		
 		for(ColloquiumResult c : collo){
-			resultDTOs.add(new ClassDTO(c));
+			resultDTOs.add(new ColloquiumResultDTO(c));
 		}
 		
 		return new ResponseEntity(resultDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ClassDTO> getColloquiumResult(@PathVariable Integer id){
+	public ResponseEntity<ColloquiumResultDTO> getById(@PathVariable Integer id){
 		ColloquiumResult found = colloquiumResultService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -52,33 +52,33 @@ public class ColloquiumResult.Controller {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ClassDTO> saveColloquiumResult(@RequestBody ColloquiumResultDTO colloquiumResult){
+	public ResponseEntity<ColloquiumResultDTO> save(@RequestBody ColloquiumResultDTO colloquiumResult){
 		ColloquiumResult newColloquiumResult = new ColloquiumResult();
 		newColloquiumResult.setPoints(colloquiumResult.getPoints());
 		
-		if(colloquiumResult.getColloquiumId() == null || colloquiumResult.getStudentId() == null ||
-				colloquiumResult.getDocumentId() == null) {
+		if(colloquiumResult.getColloquium() == null || colloquiumResult.getStudent() == null ||
+				colloquiumResult.getDocument() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Colloquium colloquium = colloquiumService.findOne(colloquiumResult.getColloquiumId().getId());
-		Student student = studentService.findOne(colloquiumResult.getStudentId().getId());
-		StudentDocument studDoc = studentDocumentService.findOne(colloquiumResult.getDocumentId().getId());
+		Colloquium colloquium = colloquiumService.findOne(colloquiumResult.getColloquium().getId());
+		Student student = studentService.findOne(colloquiumResult.getStudent().getId());
+		StudentDocument studDoc = studentDocumentService.findOne(colloquiumResult.getDocument().getId());
 		
 		if(colloquium == null || student == null || studDoc == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newColloquiumResult.setColloquiumId(colloquium);
-		newColloquiumResult.setStudentId(student);
-		newColloquiumResult.setDocumentId(studDoc);
+		newColloquiumResult.setColloquium(colloquium);
+		newColloquiumResult.setStudent(student);
+		newColloquiumResult.setDocument(studDoc);
 		
 		colloquiumResultService.save(newColloquiumResult);
 		return new ResponseEntity<>(new ColloquiumResultDTO(newColloquiumResult), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ClassDTO> updateColloquiumResult(@RequestBody ColloquiumResultDTO colloquiumResult){
+	public ResponseEntity<ColloquiumResultDTO> update(@RequestBody ColloquiumResultDTO colloquiumResult){
 		ColloquiumResult found = colloquiumResultService.findOne(colloquiumResult.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -86,17 +86,17 @@ public class ColloquiumResult.Controller {
 		
 		found.setPoints(colloquiumResult.getPoints());
 		
-		if(colloquiumResult.getDocumentId() == null) {
+		if(colloquiumResult.getDocument() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		StudentDocument studDoc = studentDocumentService.findOne(colloquiumResult.getDocumentId().getId());
+		StudentDocument studDoc = studentDocumentService.findOne(colloquiumResult.getDocument().getId());
 		
 		if(studDoc == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setDocumentId(studDoc);
+		found.setDocument(studDoc);
 		
 		// not allowed to change colloquium and student
 		
@@ -105,10 +105,10 @@ public class ColloquiumResult.Controller {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteClass(@PathVariable Integer id){
-		Class found = classService.findOne(id);
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
+		ColloquiumResult found = colloquiumResultService.findOne(id);
 		if(found != null){
-			classService.remove(id);
+			colloquiumResultService.remove(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

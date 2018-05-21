@@ -26,7 +26,7 @@ public class TeacherController {
 	RankService rankService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<TeacherDTO>> getTeachers(){
+	public ResponseEntity<List<TeacherDTO>> getAll(){
 		List<Teacher> teachers = teacherService.findAll();
 		List<TeacherDTO> teacherDTOs = new ArrayList<>();
 		
@@ -38,7 +38,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Integer id){
+	public ResponseEntity<TeacherDTO> getById(@PathVariable Integer id){
 		Teacher found = teacherService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -48,7 +48,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<TeacherDTO> saveTeacher(@RequestBody TeacherDTO teacher){
+	public ResponseEntity<TeacherDTO> save(@RequestBody TeacherDTO teacher){
 		Teacher newTeacher = new Teacher();
 		newTeacher.setFirstname(teacher.getFirstname());
 		newTeacher.setLastname(teacher.getLastname());
@@ -71,7 +71,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacher){
+	public ResponseEntity<TeacherDTO> update(@RequestBody TeacherDTO teacher){
 		Teacher found = teacherService.findOne(teacher.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -98,7 +98,7 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteTeacher(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Teacher found = teacherService.findOne(id);
 		if(found != null) {
 			teacherService.remove(id);

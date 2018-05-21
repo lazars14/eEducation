@@ -21,7 +21,7 @@ public class ClassController {
 	ClassService classService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ClassDTO>> getClasses(){
+	public ResponseEntity<List<ClassDTO>> getAll(){
 		List<Class> classes = classService.findAll();
 		List<ClassDTO> classDTOs = new ArrayList<>();
 		
@@ -33,7 +33,7 @@ public class ClassController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ClassDTO> getClass(@PathVariable Integer id){
+	public ResponseEntity<ClassDTO> getById(@PathVariable Integer id){
 		Class found = classService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -43,7 +43,7 @@ public class ClassController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ClassDTO> saveClass(@RequestBody ClassDTO classs){
+	public ResponseEntity<ClassDTO> save(@RequestBody ClassDTO classs){
 		Class newClass = new Class();
 		newClass.setName(classs.getName());
 		newClass.setNumOfYears(classs.getNumOfYears());
@@ -53,7 +53,7 @@ public class ClassController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ClassDTO> updateClass(@RequestBody ClassDTO classs){
+	public ResponseEntity<ClassDTO> update(@RequestBody ClassDTO classs){
 		Class found = classService.findOne(classs.getId());
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -67,7 +67,7 @@ public class ClassController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteClass(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Class found = classService.findOne(id);
 		if(found != null){
 			classService.remove(id);

@@ -30,7 +30,7 @@ public class NotificationController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<NotificationDTO>> getNotifications(){
+	public ResponseEntity<List<NotificationDTO>> getAll(){
 		List<Notification> notifications = notificationService.findAll();
 		List<NotificationDTO> notificationDTOs = new ArrayList<>();
 		
@@ -42,7 +42,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<NotificationDTO> getNotification(@PathVariable Integer id){
+	public ResponseEntity<NotificationDTO> getById(@PathVariable Integer id){
 		Notification found = notificationService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -51,61 +51,56 @@ public class NotificationController {
 		return new ResponseEntity<>(new NotificationDTO(found), HttpStatus.OK);
 	}
 	
-//	private String message;
-//  private Date nDate;
-//  private CourseDTO courseId;
-//  private CourseFileDTO documentId;
-	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<NotificationDTO> saveNotification(@RequestBody NotificationDTO notification){
+	public ResponseEntity<NotificationDTO> save(@RequestBody NotificationDTO notification){
 		Notification newNotification = new Notification();
 		newNotification.setMessage(notification.getMessage());
 		newNotification.setNDate(notification.getNDate());
 		
-		if(notification.getCourseId() == null || notification.getDocumentId() == null) {
+		if(notification.getCourse() == null || notification.getDocument() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Course course = courseService.findOne(notification.getCourseId().getId());
-		CourseFile courseFile = courseFileService.findOne(notification.getDocumentId().getId());
+		Course course = courseService.findOne(notification.getCourse().getId());
+		CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
 		
 		if(course == null || courseFile == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newNotification.setCourseId(course);
-		newNotification.setDocumentId(courseFile);
+		newNotification.setCourse(course);
+		newNotification.setDocument(courseFile);
 		
 		notificationService.save(newNotification);
 		return new ResponseEntity<>(new NotificationDTO(newNotification), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<NotificationDTO> updateNotification(@RequestBody NotificationDTO notification){
+	public ResponseEntity<NotificationDTO> update(@RequestBody NotificationDTO notification){
 		Notification found = notificationService.findOne(notification.getId());
 		found.setMessage(notification.getMessage());
 		found.setNDate(notification.getNDate());
 		
 		// not allowed to change course
 		
-		if(notification.getDocumentId() == null) {
+		if(notification.getDocument() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		CourseFile courseFile = courseFileService.findOne(notification.getDocumentId().getId());
+		CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
 		
 		if(courseFile == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setDocumentId(courseFile);
+		found.setDocument(courseFile);
 		
 		notificationService.save(found);
 		return new ResponseEntity<>(new NotificationDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteNotification(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Notification found = notificationService.findOne(id);
 		if(found != null) {
 			notificationService.remove(id);

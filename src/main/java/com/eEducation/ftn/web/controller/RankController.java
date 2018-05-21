@@ -21,7 +21,7 @@ public class RankController {
 	RankService rankService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<RankDTO>> getRanks(){
+	public ResponseEntity<List<RankDTO>> getAll(){
 		List<Rank> ranks = rankService.findAll();
 		List<RankDTO> rankDTOs = new ArrayList<>();
 		
@@ -33,7 +33,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<RankDTO> getRank(@PathVariable Integer id){
+	public ResponseEntity<RankDTO> getById(@PathVariable Integer id){
 		Rank found = rankService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -43,7 +43,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<RankDTO> saveRank(@RequestBody RankDTO rank){
+	public ResponseEntity<RankDTO> save(@RequestBody RankDTO rank){
 		Rank newRank = new Rank();
 		rank.setName(rank.getName());
 		
@@ -52,7 +52,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<RankDTO> updateRank(@RequestBody RankDTO rank){
+	public ResponseEntity<RankDTO> update(@RequestBody RankDTO rank){
 		Rank found = rankService.findOne(rank.getId());
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -64,7 +64,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteRank(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		Rank found = rankService.findOne(id);
 		if(found != null){
 			return new ResponseEntity<>(HttpStatus.OK);

@@ -29,7 +29,7 @@ public class StudentAttendsCourseController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<StudentAttendsCourseDTO>> getSacs(){
+	public ResponseEntity<List<StudentAttendsCourseDTO>> getAll(){
 		List<StudentAttendsCourse> sacS = sacService.findAll();
 		List<StudentAttendsCourseDTO> sacDTOs = new ArrayList<>();
 		
@@ -41,7 +41,7 @@ public class StudentAttendsCourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<StudentAttendsCourseDTO> getSat(@PathVariable Integer id){
+	public ResponseEntity<StudentAttendsCourseDTO> getById(@PathVariable Integer id){
 		StudentAttendsCourse found = sacService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -51,54 +51,54 @@ public class StudentAttendsCourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentAttendsCourseDTO> saveSac(@RequestBody StudentAttendsCourseDTO sac){
+	public ResponseEntity<StudentAttendsCourseDTO> save(@RequestBody StudentAttendsCourseDTO sac){
 		StudentAttendsCourse newSac = new StudentAttendsCourse();
 		
-		if(sac.getStudentId() == null || sac.getCourseId() == null) {
+		if(sac.getStudent() == null || sac.getCourse() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student student = studentService.findOne(sac.getStudentId().getId());
-		Course course = courseService.findOne(sac.getCourseId().getId());
+		Student student = studentService.findOne(sac.getStudent().getId());
+		Course course = courseService.findOne(sac.getCourse().getId());
 		
 		if(student == null || course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newSac.setStudentId(student);
-		newSac.setCourseId(course);
+		newSac.setStudent(student);
+		newSac.setCourse(course);
 		
 		sacService.save(newSac);
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(newSac), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<StudentAttendsCourseDTO> updateSac(@RequestBody StudentAttendsCourseDTO sac){
+	public ResponseEntity<StudentAttendsCourseDTO> update(@RequestBody StudentAttendsCourseDTO sac){
 		StudentAttendsCourse found = sacService.findOne(sac.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(sac.getStudentId() == null || sac.getCourseId() == null) {
+		if(sac.getStudent() == null || sac.getCourse() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student student = studentService.findOne(sac.getStudentId().getId());
-		Course course = courseService.findOne(sac.getCourseId().getId());
+		Student student = studentService.findOne(sac.getStudent().getId());
+		Course course = courseService.findOne(sac.getCourse().getId());
 		
 		if(student == null || course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setStudentId(student);
-		found.setCourseId(course);
+		found.setStudent(student);
+		found.setCourse(course);
 		
 		sacService.save(found);
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteSac(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		StudentAttendsCourse found = sacService.findOne(id);
 		if(found != null) {
 			sacService.remove(id);
