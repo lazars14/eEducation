@@ -7,9 +7,9 @@ public class StudentExamEntryDTO {
 	
 	private Integer id;
     private Date eDate;
-    private StudentDTO studentId;
-    private CourseDTO courseId;
-    private ExamPeriodDTO examPeriodId;
+    private StudentDTO student;
+    private CourseDTO course;
+    private ExamPeriodDTO examPeriod;
     
     public StudentExamEntryDTO() {}
 
@@ -17,9 +17,9 @@ public class StudentExamEntryDTO {
 		super();
 		this.id = see.getId();
 		this.eDate = see.getEDate();
-		this.studentId = new StudentDTO(see.getStudentId());
-		this.courseId = new CourseDTO(see.getCourseId());
-		this.examPeriodId = new ExamPeriodDTO(see.getExamPeriodId());
+		this.student = new StudentDTO(see.getStudent());
+		this.course = new CourseDTO(see.getCourse());
+		this.examPeriod = new ExamPeriodDTO(see.getExamPeriod());
 	}
 
 	public Integer getId() {
@@ -38,28 +38,28 @@ public class StudentExamEntryDTO {
 		this.eDate = eDate;
 	}
 
-	public StudentDTO getStudentId() {
-		return studentId;
+	public StudentDTO getStudent() {
+		return student;
 	}
 
-	public void setStudentId(StudentDTO studentId) {
-		this.studentId = studentId;
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 
-	public CourseDTO getCourseId() {
-		return courseId;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setCourseId(CourseDTO courseId) {
-		this.courseId = courseId;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
 
-	public ExamPeriodDTO getExamPeriodId() {
-		return examPeriodId;
+	public ExamPeriodDTO getExamPeriod() {
+		return examPeriod;
 	}
 
-	public void setExamPeriodId(ExamPeriodDTO examPeriodId) {
-		this.examPeriodId = examPeriodId;
+	public void setExamPeriod(ExamPeriodDTO examPeriod) {
+		this.examPeriod = examPeriod;
 	}
 
 }

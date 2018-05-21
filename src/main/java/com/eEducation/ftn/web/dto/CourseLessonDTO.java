@@ -5,7 +5,7 @@ public class CourseLessonDTO {
 	private Integer id;
 	private String name;
 	private String description;
-	private CourseDTO courseId;
+	private CourseDTO course;
 
 	public CourseLessonDTO() {
 	}
@@ -15,7 +15,7 @@ public class CourseLessonDTO {
 		this.id = cl.getId();
 		this.name = cl.getName();
 		this.description = cl.getDescription();
-		this.courseId = new CourseDTO(cl.getCourseId());
+		this.course = new CourseDTO(cl.getCourse());
 	}
 
 	public Integer getId() {
@@ -42,12 +42,12 @@ public class CourseLessonDTO {
 		this.description = description;
 	}
 
-	public CourseDTO getCourseId() {
-		return courseId;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setCourseId(CourseDTO courseId) {
-		this.courseId = courseId;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
 
 }

@@ -56,7 +56,7 @@ public class Colloquium implements Serializable {
     private Date examDateTime;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
+    private Course course;
     @OneToMany(mappedBy = "colloquiumId")
     private Collection<ColloquiumResult> colloquiumResultCollection;
 
@@ -99,12 +99,12 @@ public class Colloquium implements Serializable {
         this.examDateTime = examDateTime;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @XmlTransient

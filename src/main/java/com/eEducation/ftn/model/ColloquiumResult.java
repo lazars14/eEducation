@@ -43,13 +43,13 @@ public class ColloquiumResult implements Serializable {
     private Float points;
     @JoinColumn(name = "colloquiumId", referencedColumnName = "id")
     @ManyToOne
-    private Colloquium colloquiumId;
+    private Colloquium colloquium;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
-    private Student studentId;
+    private Student student;
     @JoinColumn(name = "documentId", referencedColumnName = "id")
     @ManyToOne
-    private StudentDocument documentId;
+    private StudentDocument document;
 
     public ColloquiumResult() {
     }
@@ -74,28 +74,28 @@ public class ColloquiumResult implements Serializable {
         this.points = points;
     }
 
-    public Colloquium getColloquiumId() {
-        return colloquiumId;
+    public Colloquium getColloquium() {
+        return colloquium;
     }
 
-    public void setColloquiumId(Colloquium colloquiumId) {
-        this.colloquiumId = colloquiumId;
+    public void setColloquium(Colloquium colloquium) {
+        this.colloquium = colloquium;
     }
 
-    public Student getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Student studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
     
-    public StudentDocument getDocumentId() {
-        return documentId;
+    public StudentDocument getDocument() {
+        return document;
     }
 
-    public void setDocumentId(StudentDocument documentId) {
-        this.documentId = documentId;
+    public void setDocument(StudentDocument document) {
+        this.document = document;
     }
 
     @Override

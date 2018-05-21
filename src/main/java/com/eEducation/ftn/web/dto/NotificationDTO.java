@@ -7,8 +7,8 @@ public class NotificationDTO {
 	private Integer id;
     private String message;
     private Date nDate;
-    private CourseDTO courseId;
-    private CourseFileDTO documentId;
+    private CourseDTO course;
+    private CourseFileDTO document;
 	
 	public NotificationDTO() {}
 
@@ -16,8 +16,8 @@ public class NotificationDTO {
 		this.id = notification.getId();
 		this.message = notification.getMessage();
 		this.nDate = notification.getNDate();
-		this.courseId = new CourseDTO(notification.getCourseId());
-		this.documentId = new CourseFile(notification.getDocumentId());
+		this.course = new CourseDTO(notification.getCourse());
+		this.document = new CourseFile(notification.getDocument());
 	}
 
 	public Integer getId() {
@@ -44,20 +44,20 @@ public class NotificationDTO {
 		this.nDate = nDate;
 	}
 
-	public CourseDTO getCourseId() {
-		return courseId;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setCourseId(CourseDTO courseId) {
-		this.courseId = courseId;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
 
-	public CourseFileDTO getDocumentId() {
-		return documentId;
+	public CourseFileDTO getDocument() {
+		return document;
 	}
 
-	public void setDocumentId(CourseFileDTO documentId) {
-		this.documentId = documentId;
+	public void setDocument(CourseFileDTO document) {
+		this.document = document;
 	}
 	
 }

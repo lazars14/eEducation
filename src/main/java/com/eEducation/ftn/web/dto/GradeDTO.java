@@ -5,8 +5,8 @@ public class GradeDTO {
 	private Integer id;
 	private Float points;
     private Integer grade;
-    private CourseDTO courseId;
-    private StudentDTO studentId;
+    private CourseDTO course;
+    private StudentDTO student;
 	
 	public GradeDTO() {}
 
@@ -14,8 +14,8 @@ public class GradeDTO {
 		this.id = grade.getId();
 		this.points = grade.getPoints();
 		this.grade = grade.getGrade();
-		this.courseId = new CourseDTO(grade.getCourseId());
-		this.studentId = new StudentDTO(grade.getStudentId());
+		this.course = new CourseDTO(grade.getCourse());
+		this.student = new StudentDTO(grade.getStudent());
 	}
 
 	public Integer getId() {
@@ -34,20 +34,20 @@ public class GradeDTO {
 		this.grade = grade;
 	}
 
-	public CourseDTO getCourseId() {
-		return courseId;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setCourseId(CourseDTO courseId) {
-		this.courseId = courseId;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
 
-	public StudentDTO getStudentId() {
-		return studentId;
+	public StudentDTO getStudent() {
+		return student;
 	}
 
-	public void setStudentId(StudentDTO studentId) {
-		this.studentId = studentId;
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 
 	public Float getPoints() {

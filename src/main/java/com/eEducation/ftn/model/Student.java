@@ -71,7 +71,7 @@ public class Student implements Serializable {
     private Collection<StudentExamEntry> studentExamEntryCollection;
     @JoinColumn(name = "classId", referencedColumnName = "id")
     @ManyToOne
-    private Class classId;
+    private Class classs;
     @OneToMany(mappedBy = "studentId")
     private Collection<StudentAttendsCourse> studentAttendsCourseCollection;
     @OneToMany(mappedBy = "studentId")
@@ -177,12 +177,12 @@ public class Student implements Serializable {
         this.studentExamEntryCollection = studentExamEntryCollection;
     }
 
-    public Class getClassId() {
-        return classId;
+    public Class getClass() {
+        return classs;
     }
 
-    public void setClassId(Class classId) {
-        this.classId = classId;
+    public void setClass(Class classs) {
+        this.classs = classs;
     }
 
     @XmlTransient

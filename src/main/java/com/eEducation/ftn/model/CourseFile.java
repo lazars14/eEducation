@@ -54,7 +54,7 @@ public class CourseFile implements Serializable {
     private String mimeType;
     @JoinColumn(name = "courseLessonId", referencedColumnName = "id")
     @ManyToOne
-    private CourseLesson courseLessonId;
+    private CourseLesson courseLesson;
     @OneToMany(mappedBy = "documentId")
     private Collection<Notification> notificationCollection;
 
@@ -105,12 +105,12 @@ public class CourseFile implements Serializable {
         this.mimeType = mimeType;
     }
 
-    public CourseLesson getCourseLessonId() {
-        return courseLessonId;
+    public CourseLesson getCourseLesson() {
+        return courseLesson;
     }
 
-    public void setCourseLessonId(CourseLesson courseLessonId) {
-        this.courseLessonId = courseLessonId;
+    public void setCourseLesson(CourseLesson courseLesson) {
+        this.courseLesson = courseLesson;
     }
 
     @XmlTransient

@@ -7,8 +7,8 @@ public class StudentDocumentDTO {
     private String documentType;
     private String documentURL;
     private String mimeType;
-    private StudentDTO studentId;
-    private CourseDTO courseId;
+    private StudentDTO student;
+    private CourseDTO course;
 
     public StudentDocumentDTO() {}
 
@@ -19,8 +19,8 @@ public class StudentDocumentDTO {
 		this.documentType = studDoc.getDocumentType();
 		this.documentURL = studDoc.getDocumentURL();
 		this.mimeType = studDoc.getMimeType();
-		this.studentId = new StudentDTO(studDoc.getStudentId());
-		this.courseId = new CourseDTO(studDoc.getCourseId());
+		this.student = new StudentDTO(studDoc.getStudent());
+		this.course = new CourseDTO(studDoc.getCourse());
 	}
 
 	public Integer getId() {
@@ -63,20 +63,20 @@ public class StudentDocumentDTO {
 		this.mimeType = mimeType;
 	}
 
-	public StudentDTO getStudentId() {
-		return studentId;
+	public StudentDTO getStudent() {
+		return student;
 	}
 
-	public void setStudentId(StudentDTO studentId) {
-		this.studentId = studentId;
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 	
-	public CourseDTO getCourseId() {
-		return courseId;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setCourseId(CourseDTO courseId) {
-		this.courseId = courseId;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
     
 }

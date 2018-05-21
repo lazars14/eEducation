@@ -4,9 +4,9 @@ public class ColloquiumResultDTO {
 	
 	private Integer id;
     private Float points;
-    private ColloquiumDTO colloquiumId;
-    private StudentDTO studentId;
-    private StudentDocumentDTO documentId;
+    private ColloquiumDTO colloquium;
+    private StudentDTO student;
+    private StudentDocumentDTO document;
     
     public ColloquiumResultDTO() {}
 
@@ -14,9 +14,9 @@ public class ColloquiumResultDTO {
 		super();
 		this.id = cr.getId();
 		this.points = cr.getPoints();
-		this.colloquiumId = new ColloquiumDTO(cr.getColloquiumId());
-		this.studentId = new StudentDTO(cr.getStudentId());
-		this.documentId = new StudentDocument(cr.getDocumentId());
+		this.colloquium = new ColloquiumDTO(cr.getColloquium());
+		this.student = new StudentDTO(cr.getStudent());
+		this.document = new StudentDocument(cr.getDocument());
 	}
 
 	public Integer getId() {
@@ -35,28 +35,28 @@ public class ColloquiumResultDTO {
 		this.points = points;
 	}
 
-	public ColloquiumDTO getColloquiumId() {
-		return colloquiumId;
+	public ColloquiumDTO getColloquium() {
+		return colloquium;
 	}
 
-	public void setColloquiumId(ColloquiumDTO colloquiumId) {
-		this.colloquiumId = colloquiumId;
+	public void setColloquium(ColloquiumDTO colloquium) {
+		this.colloquium = colloquium;
 	}
 
-	public StudentDTO getStudentId() {
-		return studentId;
+	public StudentDTO getStudent() {
+		return student;
 	}
 
-	public void setStudentId(StudentDTO studentId) {
-		this.studentId = studentId;
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 	
-	public StudentDocumentDTO getDocumentId() {
-		return documentId;
+	public StudentDocumentDTO getDocument() {
+		return document;
 	}
 
-	public void setDocumentId(StudentDocumentDTO documentId) {
-		this.documentId = documentId;
+	public void setDocument(StudentDocumentDTO document) {
+		this.document = document;
 	}
     
 }

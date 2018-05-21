@@ -8,7 +8,7 @@ public class ColloquiumDTO {
 	private Float maxPoints;
     private String examType;
     private Date examDateTime;
-    private CourseDTO courseId;
+    private CourseDTO course;
     
     public ColloquiumDTO() {}
 
@@ -18,7 +18,7 @@ public class ColloquiumDTO {
 		this.maxPoints = colloquium.getMaxPoints();
 		this.examType = colloquium.getExamType();
 		this.examDateTime = colloquium.getExamDateTime();
-		this.courseId = new CourseDTO(colloquium.getCourseId());
+		this.course = new CourseDTO(colloquium.getCourse());
 	}
 
 	public Integer getId() {
@@ -53,12 +53,12 @@ public class ColloquiumDTO {
 		this.examDateTime = examDateTime;
 	}
 
-	public CourseDTO getCourseId() {
-		return courseId;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setCourseId(CourseDTO courseId) {
-		this.courseId = courseId;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
     
 }

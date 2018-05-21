@@ -62,7 +62,7 @@ public class Course implements Serializable {
     private Collection<Grade> gradeCollection;
     @JoinColumn(name = "teacherId", referencedColumnName = "id")
     @ManyToOne
-    private Teacher teacherId;
+    private Teacher teacher;
 
     public Course() {
     }
@@ -158,12 +158,12 @@ public class Course implements Serializable {
         this.gradeCollection = gradeCollection;
     }
 
-    public Teacher getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(Teacher teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     @Override

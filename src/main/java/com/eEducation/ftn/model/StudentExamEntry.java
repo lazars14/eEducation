@@ -46,13 +46,13 @@ public class StudentExamEntry implements Serializable {
     private Date eDate;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
-    private Student studentId;
+    private Student student;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
+    private Course course;
     @JoinColumn(name = "examPeriodId", referencedColumnName = "id")
     @ManyToOne
-    private ExamPeriod examPeriodId;
+    private ExamPeriod examPeriod;
 
     public StudentExamEntry() {
     }
@@ -77,28 +77,28 @@ public class StudentExamEntry implements Serializable {
         this.eDate = eDate;
     }
 
-    public Student getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Student studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public ExamPeriod getExamPeriodId() {
-        return examPeriodId;
+    public ExamPeriod getExamPeriod() {
+        return examPeriod;
     }
 
-    public void setExamPeriodId(ExamPeriod examPeriodId) {
-        this.examPeriodId = examPeriodId;
+    public void setExamPeriod(ExamPeriod examPeriod) {
+        this.examPeriod = examPeriod;
     }
 
     @Override

@@ -3,15 +3,15 @@ package com.eEducation.ftn.web.dto;
 public class StudentAttendsCourseDTO {
 	
 	private Integer id;
-    private StudentDTO studentId;
-    private CourseDTO courseId;
+    private StudentDTO student;
+    private CourseDTO course;
 	
 	public StudentAttendsCourseDTO() {}
 
 	public StudentAttendsCourseDTO(StudentAttendsCourse sac) {
 		this.id = sac.getId();
-		this.studentId = new StudentDTO(sac.getStudentId());
-		this.courseId = new CourseDTO(sac.getCourseId());
+		this.student = new StudentDTO(sac.getStudent());
+		this.course = new CourseDTO(sac.getCourse());
 	}
 
 	public Integer getId() {
@@ -22,19 +22,19 @@ public class StudentAttendsCourseDTO {
 		this.id = id;
 	}
 
-	public StudentDTO getStudentId() {
-		return studentId;
+	public StudentDTO getStudent() {
+		return student;
 	}
 
-	public void setStudentId(StudentDTO studentId) {
-		this.studentId = studentId;
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 
-	public CourseDTO getCourseId() {
-		return courseId;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setCourseId(CourseDTO courseId) {
-		this.courseId = courseId;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
 }

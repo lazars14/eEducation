@@ -46,10 +46,10 @@ public class Grade implements Serializable {
     private Integer grade;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
+    private Course course;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
-    private Student studentId;
+    private Student student;
 
     public Grade() {
     }
@@ -82,20 +82,20 @@ public class Grade implements Serializable {
         this.grade = grade;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public Student getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Student studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Override

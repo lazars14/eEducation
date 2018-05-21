@@ -39,10 +39,10 @@ public class TeacherTeachesCourse implements Serializable {
     private Integer id;
     @JoinColumn(name = "teacherId", referencedColumnName = "id")
     @ManyToOne
-    private Teacher teacherId;
+    private Teacher teacher;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
+    private Course course;
 
     public TeacherTeachesCourse() {
     }
@@ -59,20 +59,20 @@ public class TeacherTeachesCourse implements Serializable {
         this.id = id;
     }
 
-    public Teacher getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(Teacher teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override

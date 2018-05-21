@@ -49,10 +49,10 @@ public class Notification implements Serializable {
     private Date nDate;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
+    private Course course;
     @JoinColumn(name = "documentId", referencedColumnName = "id")
     @ManyToOne
-    private CourseFile documentId;
+    private CourseFile document;
 
     public Notification() {
     }
@@ -85,20 +85,20 @@ public class Notification implements Serializable {
         this.nDate = nDate;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public CourseFile getDocumentId() {
-        return documentId;
+    public CourseFile getDocument() {
+        return document;
     }
 
-    public void setDocumentId(CourseFile documentId) {
-        this.documentId = documentId;
+    public void setDocument(CourseFile document) {
+        this.document = document;
     }
 
     @Override

@@ -50,7 +50,7 @@ public class CourseLesson implements Serializable {
     private Collection<CourseFile> courseFileCollection;
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
+    private Course course;
 
     public CourseLesson() {
     }
@@ -92,12 +92,12 @@ public class CourseLesson implements Serializable {
         this.courseFileCollection = courseFileCollection;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override

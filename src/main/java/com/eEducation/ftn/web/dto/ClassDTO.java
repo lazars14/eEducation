@@ -6,7 +6,7 @@ public class ClassDTO {
 	
 	private Integer id;
     private String name;
-    private Integer numOfYears;;
+    private Integer numOfYears;
 	
 	public ClassDTO() {}
 
