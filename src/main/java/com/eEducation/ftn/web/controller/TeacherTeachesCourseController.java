@@ -30,31 +30,82 @@ public class TeacherTeachesCourseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<TeacherTeachesCourseDTO>> getTtcs(){
-		return null;
+		List<TeacherTeachesCourse> ttcS = ttcService.findAll();
+		List<TeacherTeachesCourseDTO> ttcDTOs = new ArrayList<>();
 		
+		for(TeacherTeachesCourse ttc : ttcS) {
+			ttcDTOs.add(new TeacherTeachesCourseDTO(ttc));
+		}
+		
+		return new ResponseEntity<>(ttcDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	public ResponseEntity<TeacherTeachesCourseDTO> getTtc(@PathVariable Integer id){
-		return null;
-	
+		TeacherTeachesCourse found = ttcService.findOne(id);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(new TeacherTeachesCourseDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<TeacherTeachesCourseDTO> saveTtc(@RequestBody TeacherTeachesCourseDTO ttc){
-		return null;
-
+		TeacherTeachesCourse newTtc = new TeacherTeachesCourse();
+		
+		if(ttc.getTeacherId() == null || ttc.getCourseId() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Teacher teacher = teacherService.findOne(ttc.getTeacherId().getId());
+		Course course = courseService.findOne(ttc.getCourseId().getId());
+		
+		if(teacher == null || course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		newTtc.setTeacherId(teacher);
+		newTtc.setCourseId(course);
+		
+		ttcService.save(newTtc);
+		return new ResponseEntity<>(new TeacherTeachesCourseDTO(newTtc), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<TeacherTeachesCourseDTO> updateTtc(@RequestBody TeacherTeachesCourseDTO ttc){
-		return null;
+		TeacherTeachesCourse found = ttcService.findOne(ttc.getId());
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(ttc.getTeacherId() == null || ttc.getCourseId() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Teacher teacher = teacherService.findOne(ttc.getTeacherId().getId());
+		Course course = courseService.findOne(ttc.getCourseId().getId());
+		
+		if(teacher == null || course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		found.setTeacherId(teacher);
+		found.setCourseId(course);
+		
+		ttcService.save(found);
+		return new ResponseEntity<>(new TeacherTeachesCourseDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteTtc(@PathVariable Integer id){
-		return null;
-		
+		TeacherTeachesCourse found = ttcService.findOne(id);
+		if(found != null) {
+			ttcService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	// collection methods
