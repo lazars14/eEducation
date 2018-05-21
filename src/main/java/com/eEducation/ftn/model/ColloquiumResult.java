@@ -47,6 +47,9 @@ public class ColloquiumResult implements Serializable {
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student studentId;
+    @JoinColumn(name = "documentId", referencedColumnName = "id")
+    @ManyToOne
+    private StudentDocument documentId;
 
     public ColloquiumResult() {
     }
@@ -85,6 +88,14 @@ public class ColloquiumResult implements Serializable {
 
     public void setStudentId(Student studentId) {
         this.studentId = studentId;
+    }
+    
+    public StudentDocument getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(StudentDocument documentId) {
+        this.documentId = documentId;
     }
 
     @Override

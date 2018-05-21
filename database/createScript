@@ -12,13 +12,13 @@ create table class
 create table student
 (
 	id int primary key auto_increment not null,
-	indexNumber varchar(15),
+	indexNumber varchar(15) unique,
 	firstname varchar(20),
 	lastname varchar(20),
 	accountNumber char(18) unique,
 	studYear int,
 	studYearOrdNum int,
-	email varchar(30),
+	email varchar(30) unique,
 	sPassword varchar(20),
 	classId int,
 	espbPoints int,
@@ -37,7 +37,7 @@ create table teacher
 	id int primary key auto_increment not null,
 	firstname varchar(20),
 	lastname varchar(20),
-	email varchar(30),
+	email varchar(30) unique,
 	sPassword varchar(20),
 	rank integer,
 
@@ -134,10 +134,12 @@ create table colloquiumResult
 	id int primary key auto_increment not null,
 	points float,
 	colloquiumId int,
-	studentId int,		
+	studentId int,
+	documentId int,		
 
 	Foreign Key (colloquiumId) References colloquium(id),
-	Foreign Key (studentId) References student(id)
+	Foreign Key (studentId) References student(id),
+	Foreign Key (documentId) References studentDocument(id)
 );
 
 create table grade
