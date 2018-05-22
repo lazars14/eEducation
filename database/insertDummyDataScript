@@ -1,22 +1,5 @@
-insert into class (name, numOfYears) values ('Softverske i informacione tehnologije', 3), ('Graficko inzenjerstvo i dizajn', 5), ('Arhitektura i gradjevinarstvo', 5), ('Softversko inzenjestvo', 5);
-
-
-create table student
-(
-	id int primary key auto_increment not null,
-	indexNumber varchar(15) unique,
-	firstname varchar(20),
-	lastname varchar(20),
-	accountNumber char(18) unique,
-	studYear int,
-	studYearOrdNum int,
-	email varchar(30) unique,
-	sPassword varchar(20),
-	classId int,
-	espbPoints int,
-
-	Foreign Key (classId) References class(id)
-);
+insert into class (name, numOfYears) values
+('Softverske i informacione tehnologije', 3), ('Graficko inzenjerstvo i dizajn', 5), ('Arhitektura i gradjevinarstvo', 5), ('Softversko inzenjestvo', 5);
 
 insert into student (indexNumber, firstname, lastname, accountNumber, studYear, studYearOrdNum, email, sPassword, classId, espbPoints) values
 ('sf01-2018', 'Matija', 'Popovic', '1', 1, 1, 'matijaPopovic@gmail.com', 'matijaPopovic', 1, 0),
@@ -71,25 +54,8 @@ insert into student (indexNumber, firstname, lastname, accountNumber, studYear, 
 ('ag11-2018', 'Nikola', 'Pavlovic', '1', 1, 1, 'nikolaPavlovic@gmail.com', 'nikolaPavlovic', 4, 0),
 ('ag12-2018', 'Stefan', 'Djordjevic', '1', 1, 1, 'stefanDjordjevic@gmail.com', 'stefanDjordjevic', 4, 0);
 
-create table rank
-(
-	id int primary key auto_increment not null,
-	name varchar(30)
-);
-
-insert into rank (name) values ('Teacher', 'Assistant');
-
-create table teacher
-(
-	id int primary key auto_increment not null,
-	firstname varchar(20),
-	lastname varchar(20),
-	email varchar(30) unique,
-	sPassword varchar(20),
-	rank integer,
-
-	Foreign Key (rank) References rank(id)
-);
+insert into rank (name) values
+('Teacher'), ('Assistant');
 
 insert into teacher (firstname, lastname, email, sPassword, rank) values
 ('Filip', 'Zekavcic', 'filipZekavcic@gmail.com', 'filipZekavcic', 1),
@@ -118,32 +84,16 @@ insert into teacher (firstname, lastname, email, sPassword, rank) values
 ('Aleksa', 'Birovljev', 'aleksaBirovljev@gmail.com', 'aleksaBirovljev', 2),
 ('Danilo', 'Matovic', 'daniloMatovic@gmail.com', 'daniloMatovic', 2);
 
-create table course
-(
-	id int primary key auto_increment not null,
-	courseName varchar(50),
-	espbPoints int,
-	teacherId int,
-
-	Foreign Key (teacherId) References teacher(id)
-);
-
 insert into course (courseName, espbPoints, teacherId) values
-('Osnove programiranja', 8, 1), ('Web programiranje', 8, 2),
-('Web dizajn', 8, 3), ('Osnove grafickog dizajna', 8, 4),
-('Mehanika', 8, 5), ('Arhitektonska fizika', 8, 6),
-('Objektno orijentisano programiranje', 8, 7), ('Algoritmi', 8, 8);
+('Osnove programiranja', 8, 1),
+('Web programiranje', 8, 2),
+('Web dizajn', 8, 3),
+('Osnove grafickog dizajna', 8, 4),
+('Mehanika', 8, 5),
+('Arhitektonska fizika', 8, 6),
+('Objektno orijentisano programiranje', 8, 7),
+('Algoritmi', 8, 8);
 
-
-create table studentAttendsCourse
-(
-	id int primary key auto_increment not null,
-	studentId int,
-	courseId int,
-
-	Foreign Key (studentId) References student(id),
-	Foreign Key (courseId) References course(id)
-);
 
 insert into studentAttendsCourse (courseId, studentId) values 
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12),
@@ -151,29 +101,9 @@ insert into studentAttendsCourse (courseId, studentId) values
 (3, 25), (3, 26), (3, 27), (3, 28), (3, 29), (3, 30), (3, 31), (3, 32), (3, 33), (3, 34), (3, 35), (3, 36),
 (4, 37), (4, 38), (4, 39), (4, 40), (4, 41), (4, 42), (4, 43), (4, 44), (4, 45), (4, 46), (4, 47), (4, 48);
 
-create table teacherTeachesCourse
-(
-	id int primary key auto_increment not null,
-	teacherId int,
-	courseId int,
-
-	Foreign Key (teacherId) References teacher(id),
-	Foreign Key (courseId) References course(id)
-);
-
 insert into teacherTeachesCourse (courseId, teacherId) values
 (1, 9), (1, 10), (2, 11), (2, 12), (3, 13), (3, 14), (4, 15), (4, 16),
 (5, 17), (5, 18), (6, 19), (6, 20), (7, 21), (7, 22), (8, 23), (8, 24);
-
-create table courseLesson
-(
-	id int primary key auto_increment not null,
-	name varchar(50),
-	description varchar(100),
-	courseId int,
-
-	Foreign Key (courseId) References course(id)	
-);
 
 insert into courseLesson (name, description, courseId) values
 ('Lesson number 1', 'Description', 1), ('Lesson number 2', 'Description', 1), ('Lesson number 3', 'Description', 1), ('Lesson number 4', 'Description', 1),
@@ -185,6 +115,7 @@ insert into courseLesson (name, description, courseId) values
 ('Lesson number 1', 'Description', 7), ('Lesson number 2', 'Description', 7), ('Lesson number 3', 'Description', 7), ('Lesson number 4', 'Description', 7),
 ('Lesson number 1', 'Description', 8), ('Lesson number 2', 'Description', 8), ('Lesson number 3', 'Description', 8), ('Lesson number 4', 'Description', 8);
 
+/*
 create table studentDocument
 (
 	id int primary key auto_increment not null,
@@ -207,8 +138,10 @@ create table courseFile
 	documentURL varchar(200),
 	mimeType varchar(30),
 	courseLessonId int,
+    courseId int,
 	
-	Foreign Key (courseLessonId) References courseLesson(id)
+	Foreign Key (courseLessonId) References courseLesson(id),
+    Foreign Key (courseId) References course(id)
 );
 
 create table payment
@@ -289,3 +222,4 @@ create table notification
 	Foreign Key (courseId) References course(id),
 	Foreign Key (documentId) References courseFile(id)
 );
+*/

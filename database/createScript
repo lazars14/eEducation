@@ -106,8 +106,10 @@ create table courseFile
 	documentURL varchar(200),
 	mimeType varchar(30),
 	courseLessonId int,
+    courseId int,
 	
-	Foreign Key (courseLessonId) References courseLesson(id)
+	Foreign Key (courseLessonId) References courseLesson(id),
+    Foreign Key (courseId) References course(id)
 );
 
 create table payment

@@ -78,6 +78,16 @@ public class CourseController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		if(courseFile.getCourse() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Course course = courseService.findOne(course.getCourse().getId());
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		newCourseFile.setCourse(course);
 		newCourseFile.setCourseLesson(courseLesson);
 		newCourseFile.setDocumentName(courseFile.getDocumentName());
 		newCourseFile.setDocumentType(courseFile.getDocumentType());
@@ -100,7 +110,7 @@ public class CourseController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		// not allowed to change courseLesson
+		// not allowed to change courseLesson and course
 		
 		found.setDocumentName(courseFile.getDocumentName());
 		found.setDocumentType(courseFile.getDocumentType());

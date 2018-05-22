@@ -8,6 +8,7 @@ public class CourseFileDTO {
     private String documentURL;
     private String mimeType;
     private CourseLessonDTO courseLesson;
+    private CourseDTO course;
     
     public CourseFileDTO() {}
 
@@ -18,7 +19,8 @@ public class CourseFileDTO {
 		this.documentType = courseFile.getDocumentType();
 		this.documentURL = courseFile.getDocumentURL();
 		this.mimeType = courseFile.getMimeType();
-		this.courseLesson = new CourseLesson(courseFile.getCourseLesson());
+		this.courseLesson = new CourseLessonDTO(courseFile.getCourseLesson());
+		this.course = new CourseDTO(courseFile.getCourse());
 	}
 
 	public Integer getId() {
@@ -69,4 +71,11 @@ public class CourseFileDTO {
 		this.courseLesson = courseLesson;
 	}
     
+	public CourseDTO getCourse() {
+		return course;
+	}
+
+	public void setCourse(CourseDTO course) {
+		this.course = course;
+	}
 }

@@ -55,6 +55,9 @@ public class CourseFile implements Serializable {
     @JoinColumn(name = "courseLessonId", referencedColumnName = "id")
     @ManyToOne
     private CourseLesson courseLesson;
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @ManyToOne
+    private Course course;
     @OneToMany(mappedBy = "documentId")
     private Collection<Notification> notificationCollection;
 
@@ -111,6 +114,14 @@ public class CourseFile implements Serializable {
 
     public void setCourseLesson(CourseLesson courseLesson) {
         this.courseLesson = courseLesson;
+    }
+    
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @XmlTransient
