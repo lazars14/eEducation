@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Colloquium;
+import com.eEducation.ftn.model.ColloquiumResult;
+import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.model.StudentDocument;
 import com.eEducation.ftn.service.ColloquiumResultService;
+import com.eEducation.ftn.service.ColloquiumService;
+import com.eEducation.ftn.service.StudentDocumentService;
+import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.ColloquiumResultDTO;
 
 @RestController
 @RequestMapping(value="api/colloquiumResults")
-public class ColloquiumResult.Controller {
+public class ColloquiumResultController {
 	@Autowired
 	ColloquiumResultService colloquiumResultService;
 	
@@ -31,14 +39,14 @@ public class ColloquiumResult.Controller {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ColloquiumResultDTO>> getAll(){
-		List<ColloquiumResult> results = ColloquiumResultService.findAll();
-		List<ClassDTO> resultDTOs = new ArrayList<>();
+		List<ColloquiumResult> results = colloquiumResultService.findAll();
+		List<ColloquiumResultDTO> resultDTOs = new ArrayList<>();
 		
-		for(ColloquiumResult c : collo){
+		for(ColloquiumResult c : results){
 			resultDTOs.add(new ColloquiumResultDTO(c));
 		}
 		
-		return new ResponseEntity(resultDTOs, HttpStatus.OK);
+		return new ResponseEntity<>(resultDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")

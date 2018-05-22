@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.Teacher;
 import com.eEducation.ftn.service.CourseService;
+import com.eEducation.ftn.service.TeacherService;
 import com.eEducation.ftn.web.dto.CourseDTO;
 
 @RestController
@@ -53,7 +57,7 @@ public class CourseController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Teacher teacher = teacherService.findOne(course.getTeacher().getId())
+		Teacher teacher = teacherService.findOne(course.getTeacher().getId());
 		
 		if(teacher == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -78,7 +82,7 @@ public class CourseController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Teacher teacher = teacherService.findOne(course.getTeacher().getId())
+		Teacher teacher = teacherService.findOne(course.getTeacher().getId());
 		
 		if(teacher == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

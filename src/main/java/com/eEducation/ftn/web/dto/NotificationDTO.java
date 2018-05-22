@@ -2,6 +2,8 @@ package com.eEducation.ftn.web.dto;
 
 import java.util.Date;
 
+import com.eEducation.ftn.model.Notification;
+
 public class NotificationDTO {
 	
 	private Integer id;
@@ -17,7 +19,7 @@ public class NotificationDTO {
 		this.message = notification.getMessage();
 		this.nDate = notification.getNDate();
 		this.course = new CourseDTO(notification.getCourse());
-		this.document = new CourseFile(notification.getDocument());
+		this.document = new CourseFileDTO(notification.getDocument());
 	}
 
 	public Integer getId() {

@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Payment;
+import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.repository.StudentRepository;
 import com.eEducation.ftn.service.PaymentService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.PaymentDTO;
@@ -30,7 +34,7 @@ public class PaymentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PaymentDTO>> getAll(){
 		List<Payment> payments = paymentService.findAll();
-		List<ParmentDTO> paymentDTOs = new ArrayList<>();
+		List<PaymentDTO> paymentDTOs = new ArrayList<>();
 		
 		for(Payment p : payments) {
 			paymentDTOs.add(new PaymentDTO(p));
@@ -84,8 +88,8 @@ public class PaymentController {
 		found.setPaymentDate(payment.getPaymentDate());
 		found.setOwes(payment.getOwes());
 		
-		paymentService.save(newPayment);
-		return new ResponseEntity<>(new PaymentDTO(newPayment), HttpStatus.OK);
+		paymentService.save(found);
+		return new ResponseEntity<>(new PaymentDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)

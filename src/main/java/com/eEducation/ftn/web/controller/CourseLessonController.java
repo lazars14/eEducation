@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.service.CourseService;
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.CourseLesson;
 import com.eEducation.ftn.service.CourseLessonService;
 import com.eEducation.ftn.web.dto.CourseLessonDTO;
 
@@ -76,7 +79,7 @@ public class CourseLessonController {
 		
 		newCourseLesson.setCourse(course);
 		newCourseLesson.setName(courseLesson.getName());
-		newCourseLesson.setDescription(course.getDescription());
+		newCourseLesson.setDescription(courseLesson.getDescription());
 		
 		courseLessonService.save(newCourseLesson);
 		return new ResponseEntity<>(new CourseLessonDTO(newCourseLesson), HttpStatus.OK);
@@ -97,7 +100,7 @@ public class CourseLessonController {
 		// not allowed to change course
 		
 		found.setName(courseLesson.getName());
-		found.setDescription(course.getDescription());
+		found.setDescription(courseLesson.getDescription());
 		
 		courseLessonService.save(found);
 		return new ResponseEntity<>(new CourseLessonDTO(found), HttpStatus.OK);

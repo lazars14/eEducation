@@ -1,5 +1,7 @@
 package com.eEducation.ftn.web.dto;
 
+import com.eEducation.ftn.model.Student;
+
 public class StudentDTO {
 	
 	private Integer id;
@@ -12,7 +14,7 @@ public class StudentDTO {
     private String email;
     private String sPassword;
     private Integer espbPoints;
-    private ClassDTO class;
+    private ClassDTO classs;
 	
 	public StudentDTO() {}
 

@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.model.StudentDocument;
+import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.StudentDocumentService;
+import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentDocumentDTO;
 
 @RestController
@@ -29,7 +35,7 @@ public class StudentDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDocumentDTO>> getAll(){
 		List<StudentDocument> studentDocuments = studentDocumentService.findAll();
-		List<StudentDocumentDTO> StudentDocumentDTOs = new ArrayList<>();
+		List<StudentDocumentDTO> studentDocumentDTOs = new ArrayList<>();
 		
 		for(StudentDocument sd : studentDocuments) {
 			studentDocumentDTOs.add(new StudentDocumentDTO(sd));
@@ -67,8 +73,8 @@ public class StudentDocumentController {
 		newStudentDocument.setStudent(student);
 		newStudentDocument.setDocumentName(studentDocument.getDocumentName());
 		newStudentDocument.setDocumentType(studentDocument.getDocumentType());
-		newStudentDocument.setDocumentUrl(studentDocument.getDocumentUrl());
-		newStudentDocument.setMimeType(studentDocument.getEspbPoints());
+		newStudentDocument.setDocumentURL(studentDocument.getDocumentURL());
+		newStudentDocument.setMimeType(studentDocument.getMimeType());
 		
 		studentDocumentService.save(newStudentDocument);
 		return new ResponseEntity<>(new StudentDocumentDTO(newStudentDocument), HttpStatus.OK);
@@ -82,8 +88,8 @@ public class StudentDocumentController {
 		
 		found.setDocumentName(studentDocument.getDocumentName());
 		found.setDocumentType(studentDocument.getDocumentType());
-		found.setDocumentUrl(studentDocument.getDocumentUrl());
-		found.setMimeType(studentDocument.getEspbPoints());
+		found.setDocumentURL(studentDocument.getDocumentURL());
+		found.setMimeType(studentDocument.getMimeType());
 		
 		studentDocumentService.save(found);
 		return new ResponseEntity<>(new StudentDocumentDTO(found), HttpStatus.OK);

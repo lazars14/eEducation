@@ -1,5 +1,7 @@
 package com.eEducation.ftn.web.dto;
 
+import com.eEducation.ftn.model.StudentDocument;
+
 public class StudentDocumentDTO {
 
 	private Integer id;

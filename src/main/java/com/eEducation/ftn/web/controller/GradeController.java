@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.Grade;
+import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.GradeService;
 import com.eEducation.ftn.service.StudentService;
@@ -67,8 +71,8 @@ public class GradeController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newGrade.setCourseId(grade.getCourse());
-		newGrade.setStudentId(grade.getStudent());
+		newGrade.setCourse(course);
+		newGrade.setStudent(student);
 		
 		gradeService.save(newGrade);
 		return new ResponseEntity<>(new GradeDTO(newGrade), HttpStatus.OK);
@@ -83,7 +87,7 @@ public class GradeController {
 		// not allowed to change course or student
 		
 		gradeService.save(found);
-		return new ResponseEntity<>(new GradeDTO(newGrade), HttpStatus.OK);
+		return new ResponseEntity<>(new GradeDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)

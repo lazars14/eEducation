@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.repository.StudentRepository;
 import com.eEducation.ftn.service.ClassService;
+import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.ClassDTO;
 
 @RestController
@@ -35,7 +38,7 @@ public class ClassController {
 			classDTOs.add(new ClassDTO(c));
 		}
 		
-		return new ResponseEntity(classDTOs, HttpStatus.OK);
+		return new ResponseEntity<>(classDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
@@ -85,7 +88,7 @@ public class ClassController {
 	
 	// collection methods
 	
-	@RequestMapping(method = RequestMethod.GET value="/{id}/students")
+	@RequestMapping(method = RequestMethod.GET, value="/{id}/students")
 	public ResponseEntity<List<ClassDTO>> getStudentsForClass(@PathVariable Integer id){
 		Class found = classService.findOne(id);
 		if(found == null) {
@@ -99,6 +102,6 @@ public class ClassController {
 			studentDTOs.add(new StudentDTO(s));
 		}
 		
-		return new ResponseEntity(studentDTOs, HttpStatus.OK);
+		return new ResponseEntity<>(studentDTOs, HttpStatus.OK);
 	}
 }

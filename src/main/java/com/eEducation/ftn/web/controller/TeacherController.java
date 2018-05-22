@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eEducation.ftn.service.ClassService;
+import com.eEducation.ftn.model.Rank;
+import com.eEducation.ftn.model.Teacher;
+import com.eEducation.ftn.repository.TeacherRepository;
 import com.eEducation.ftn.service.RankService;
 import com.eEducation.ftn.service.TeacherService;
 import com.eEducation.ftn.web.dto.TeacherDTO;
@@ -56,17 +59,17 @@ public class TeacherController {
 		newTeacher.setFirstname(teacher.getFirstname());
 		newTeacher.setLastname(teacher.getLastname());
 		
-		if(teacher.getEmail() == null || teacher.getSPassword() == null) {
+		if(teacher.getEmail() == null || teacher.getsPassword() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Teacher existing = teacherRepository.findByEmail(teacher.getEmail());
 		if(existing != null) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		newTeacher.setEmail(teacher.getEmail());
-		newTeacher.setSPassword(teacher.getSPassword());
+		newTeacher.setSPassword(teacher.getsPassword());
 		
 		if(teacher.getRank() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -93,17 +96,17 @@ public class TeacherController {
 		found.setFirstname(teacher.getFirstname());
 		found.setLastname(teacher.getLastname());
 		
-		if(teacher.getEmail() == null || teacher.getSPassword() == null) {
+		if(teacher.getEmail() == null || teacher.getsPassword() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Teacher existing = teacherRepository.findByEmail(teacher.getEmail());
 		if(existing != null && teacher.getId() != existing.getId()) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		found.setEmail(teacher.getEmail());
-		found.setSPassword(teacher.getSPassword());
+		found.setSPassword(teacher.getsPassword());
 		
 		if(teacher.getRank() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

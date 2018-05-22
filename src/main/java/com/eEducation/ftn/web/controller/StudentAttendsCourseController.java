@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.model.StudentAttendsCourse;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.StudentAttendsCourseService;
 import com.eEducation.ftn.service.StudentService;

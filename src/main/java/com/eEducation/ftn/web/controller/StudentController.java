@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.repository.StudentRepository;
 import com.eEducation.ftn.service.ClassService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentDTO;
@@ -53,13 +56,13 @@ public class StudentController {
 	public ResponseEntity<StudentDTO> save(@RequestBody StudentDTO student){
 		Student newStudent = new Student();
 		
-		if(student.getEmail() == null || student.getSPassword() == null) {
+		if(student.getEmail() == null || student.getsPassword() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Student existing = studentRepository.findByEmail(student.getEmail());
 		if(existing != null) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		if(student.getClass() == null) {
@@ -79,7 +82,7 @@ public class StudentController {
 		
 		Student found = studentRepository.findByIndexNumber(student.getIndexNumber());
 		if(found != null) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		newStudent.setIndexNumber(student.getIndexNumber());
@@ -92,13 +95,13 @@ public class StudentController {
 		
 		Student foundAccNum = studentRepository.findByAccountNumber(student.getAccountNumber());
 		if(foundAccNum != null) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		newStudent.setStudYear(student.getStudYear());
 		newStudent.setStudYearOrdNum(student.getStudYearOrdNum());
 		newStudent.setEmail(student.getEmail());
-		newStudent.setSPassword(student.getSPassword());
+		newStudent.setSPassword(student.getsPassword());
 		newStudent.setEspbPoints(student.getEspbPoints());
 		
 		studentService.save(newStudent);
@@ -112,13 +115,13 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(student.getEmail() == null || student.getSPassword() == null) {
+		if(student.getEmail() == null || student.getsPassword() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Student existing = studentRepository.findByEmail(student.getEmail());
 		if(existing != null && student.getId() != existing.getId()) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		if(student.getClass() == null) {
@@ -139,7 +142,7 @@ public class StudentController {
 		Student foundIndNum = studentRepository.findByIndexNumber(student.getIndexNumber());
 		// found a student with that index number, not allowed
 		if(foundIndNum != null && student.getId() != foundIndNum.getId()) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		found.setIndexNumber(student.getIndexNumber());
@@ -152,13 +155,13 @@ public class StudentController {
 		
 		Student foundAccNum = studentRepository.findByAccountNumber(student.getAccountNumber());
 		if(foundAccNum != null && student.getId() != foundAccNum.getId()) {
-			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		found.setStudYear(student.getStudYear());
 		found.setStudYearOrdNum(student.getStudYearOrdNum());
 		found.setEmail(student.getEmail());
-		found.setSPassword(student.getSPassword());
+		found.setSPassword(student.getsPassword());
 		found.setEspbPoints(student.getEspbPoints());
 		
 		studentService.save(found);

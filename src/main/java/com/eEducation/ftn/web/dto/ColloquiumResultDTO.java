@@ -1,5 +1,7 @@
 package com.eEducation.ftn.web.dto;
 
+import com.eEducation.ftn.model.ColloquiumResult;
+
 public class ColloquiumResultDTO {
 	
 	private Integer id;
@@ -16,7 +18,7 @@ public class ColloquiumResultDTO {
 		this.points = cr.getPoints();
 		this.colloquium = new ColloquiumDTO(cr.getColloquium());
 		this.student = new StudentDTO(cr.getStudent());
-		this.document = new StudentDocument(cr.getDocument());
+		this.document = new StudentDocumentDTO(cr.getDocument());
 	}
 
 	public Integer getId() {

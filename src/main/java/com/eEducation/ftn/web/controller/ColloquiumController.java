@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Colloquium;
+import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.service.ColloquiumService;
+import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.web.dto.ColloquiumDTO;
 
 @RestController
@@ -32,7 +36,7 @@ public class ColloquiumController {
 			colloquiumDTOs.add(new ColloquiumDTO(c));
 		}
 		
-		return new ResponseEntity(colloquiumDTOs, HttpStatus.OK);
+		return new ResponseEntity<>(colloquiumDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")

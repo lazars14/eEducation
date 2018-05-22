@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.ExamPeriod;
 import com.eEducation.ftn.service.ExamPeriodService;
 import com.eEducation.ftn.web.dto.ExamPeriodDTO;
 
@@ -50,7 +52,7 @@ public class ExamPeriodController {
 		newExamPeriod.setEndDate(examPeriod.getEndDate());
 		
 		examPeriodService.save(newExamPeriod);
-		return ResponseEntity<>(new ExamPeriodDTO(newExamPeriod), HttpStatus.OK);
+		return new ResponseEntity<>(new ExamPeriodDTO(newExamPeriod), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
@@ -64,8 +66,8 @@ public class ExamPeriodController {
 		found.setStartDate(examPeriod.getStartDate());
 		found.setEndDate(examPeriod.getEndDate());
 		
-		examPeriodService.save(newExamPeriod);
-		return ResponseEntity<>(new ExamPeriodDTO(newExamPeriod), HttpStatus.OK);
+		examPeriodService.save(found);
+		return new ResponseEntity<>(new ExamPeriodDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)

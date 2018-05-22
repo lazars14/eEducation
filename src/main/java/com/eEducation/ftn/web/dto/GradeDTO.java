@@ -1,5 +1,7 @@
 package com.eEducation.ftn.web.dto;
 
+import com.eEducation.ftn.model.Grade;
+
 public class GradeDTO {
 	
 	private Integer id;

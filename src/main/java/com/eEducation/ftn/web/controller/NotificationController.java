@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eEducation.ftn.service.ClassService;
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.CourseFile;
+import com.eEducation.ftn.model.Notification;
 import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.NotificationService;
@@ -35,7 +38,7 @@ public class NotificationController {
 		List<NotificationDTO> notificationDTOs = new ArrayList<>();
 		
 		for(Notification n : notifications) {
-			notificationDTOs.add(n);
+			notificationDTOs.add(new NotificationDTO(n));
 		}
 		
 		return new ResponseEntity<>(notificationDTOs, HttpStatus.OK);
@@ -55,7 +58,7 @@ public class NotificationController {
 	public ResponseEntity<NotificationDTO> save(@RequestBody NotificationDTO notification){
 		Notification newNotification = new Notification();
 		newNotification.setMessage(notification.getMessage());
-		newNotification.setNDate(notification.getNDate());
+		newNotification.setNDate(notification.getnDate());
 		
 		if(notification.getCourse() == null || notification.getDocument() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -79,7 +82,7 @@ public class NotificationController {
 	public ResponseEntity<NotificationDTO> update(@RequestBody NotificationDTO notification){
 		Notification found = notificationService.findOne(notification.getId());
 		found.setMessage(notification.getMessage());
-		found.setNDate(notification.getNDate());
+		found.setNDate(notification.getnDate());
 		
 		// not allowed to change course
 		

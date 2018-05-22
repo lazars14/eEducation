@@ -2,6 +2,8 @@ package com.eEducation.ftn.web.dto;
 
 import java.util.Date;
 
+import com.eEducation.ftn.model.Colloquium;
+
 public class ColloquiumDTO {
 	
 	private Integer id;

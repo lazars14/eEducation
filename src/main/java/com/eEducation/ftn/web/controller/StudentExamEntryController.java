@@ -1,5 +1,6 @@
 package com.eEducation.ftn.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.ExamPeriod;
+import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.model.StudentExamEntry;
+import com.eEducation.ftn.service.CourseService;
+import com.eEducation.ftn.service.ExamPeriodService;
 import com.eEducation.ftn.service.StudentExamEntryService;
+import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentExamEntryDTO;
 
 @RestController
 @RequestMapping(value="api/examEntries")
-public class ClassController {
+public class StudentExamEntryController {
 	@Autowired
 	StudentExamEntryService examEntryService;
 	
@@ -38,7 +46,7 @@ public class ClassController {
 			examEntriesDTOs.add(new StudentExamEntryDTO(ee));
 		}
 		
-		return new ResponseEntity(examEntriesDTOs, HttpStatus.OK);
+		return new ResponseEntity<>(examEntriesDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
@@ -54,7 +62,7 @@ public class ClassController {
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<StudentExamEntryDTO> save(@RequestBody StudentExamEntry examEntry){
 		StudentExamEntry newExamEntry = new StudentExamEntry();
-		newExamEntry.setEDate(classs.getName());
+		newExamEntry.setEDate(examEntry.getEDate());
 		
 		if(examEntry.getStudent() == null || examEntry.getCourse() == null || examEntry.getExamPeriod() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -73,7 +81,7 @@ public class ClassController {
 		newExamEntry.setExamPeriod(examPeriod);
 		
 		examEntryService.save(newExamEntry);
-		return new ResponseEntity<>(new StudentExamEntry(newExamEntry), HttpStatus.OK);
+		return new ResponseEntity<>(new StudentExamEntryDTO(newExamEntry), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
@@ -83,7 +91,7 @@ public class ClassController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setEDate(classs.getName());
+		found.setEDate(found.getEDate());
 		
 		// not allowed to change examPeriod or student
 		
@@ -100,7 +108,7 @@ public class ClassController {
 		found.setCourse(course);
 		
 		examEntryService.save(found);
-		return new ResponseEntity<>(new StudentExamEntry(found), HttpStatus.OK);
+		return new ResponseEntity<>(new StudentExamEntryDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
