@@ -23,6 +23,9 @@ public class TeacherController {
 	TeacherService teacherService;
 	
 	@Autowired
+	TeacherRepository teacherRepository;
+	
+	@Autowired
 	RankService rankService;
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -57,7 +60,7 @@ public class TeacherController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Teacher existing = teacherService.findByEmail(teacher.getEmail());
+		Teacher existing = teacherRepository.findByEmail(teacher.getEmail());
 		if(existing != null) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}
@@ -94,7 +97,7 @@ public class TeacherController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Teacher existing = teacherService.findByEmail(teacher.getEmail());
+		Teacher existing = teacherRepository.findByEmail(teacher.getEmail());
 		if(existing != null && teacher.getId() != existing.getId()) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}

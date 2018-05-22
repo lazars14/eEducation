@@ -22,6 +22,9 @@ public class StudentController {
 	StudentService studentService;
 	
 	@Autowired
+	StudentRepository studentRepository;
+	
+	@Autowired
 	ClassService classService;
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -54,7 +57,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student existing = studentService.findByEmail(student.getEmail());
+		Student existing = studentRepository.findByEmail(student.getEmail());
 		if(existing != null) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}
@@ -74,8 +77,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		// find by indexNumber naci kako ide
-		Student found = studentService.findByIndexNumber(student.getIndexNumber());
+		Student found = studentRepository.findByIndexNumber(student.getIndexNumber());
 		if(found != null) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}
@@ -88,8 +90,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		// find by accountNumber naci kako ide
-		Student foundAccNum = studentService.findByAccountNumber(student.getAccountNumber());
+		Student foundAccNum = studentRepository.findByAccountNumber(student.getAccountNumber());
 		if(foundAccNum != null) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}
@@ -115,7 +116,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student existing = studentService.findByEmail(student.getEmail());
+		Student existing = studentRepository.findByEmail(student.getEmail());
 		if(existing != null && student.getId() != existing.getId()) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}
@@ -135,8 +136,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		// find by indexNumber naci kako ide
-		Student foundIndNum = studentService.findByIndexNumber(student.getIndexNumber());
+		Student foundIndNum = studentRepository.findByIndexNumber(student.getIndexNumber());
 		// found a student with that index number, not allowed
 		if(foundIndNum != null && student.getId() != foundIndNum.getId()) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
@@ -150,8 +150,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		// find by accountNumber naci kako ide
-		Student foundAccNum = studentService.findByAccountNumber(student.getAccountNumber());
+		Student foundAccNum = studentRepository.findByAccountNumber(student.getAccountNumber());
 		if(foundAccNum != null && student.getId() != foundAccNum.getId()) {
 			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}

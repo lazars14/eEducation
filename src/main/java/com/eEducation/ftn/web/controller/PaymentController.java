@@ -24,6 +24,9 @@ public class PaymentController {
 	@Autowired
 	StudentService studentService;
 	
+	@Autowired
+	StudentRepository studentRepository;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PaymentDTO>> getAll(){
 		List<Payment> payments = paymentService.findAll();
@@ -54,8 +57,7 @@ public class PaymentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		// naci kako ide za find by kriterijum
-		Student student = sudentService.findByAccountNumber(payment.getAccountNumber());
+		Student student = studentRepository.findByAccountNumber(payment.getAccountNumber());
 		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

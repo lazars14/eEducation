@@ -23,6 +23,9 @@ public class ClassController {
 	@Autowired
 	StudentService studentService;
 	
+	@Autowired
+	StudentRepository studentRepository;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ClassDTO>> getAll(){
 		List<Class> classes = classService.findAll();
@@ -84,7 +87,12 @@ public class ClassController {
 	
 	@RequestMapping(method = RequestMethod.GET value="/{id}/students")
 	public ResponseEntity<List<ClassDTO>> getStudentsForClass(@PathVariable Integer id){
-		List<Student> students = studentService.findByClass(id);
+		Class found = classService.findOne(id);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<Student> students = studentRepository.findByClasss(found);
 		List<StudentDTO> studentDTOs = new ArrayList<>();
 		
 		for(Student s : students){
