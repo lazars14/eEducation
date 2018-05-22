@@ -22,8 +22,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.eEducation.ftn.model.Class;
-
 /**
  *
  * @author lazar
@@ -73,7 +71,7 @@ public class Student implements Serializable {
     private Collection<StudentExamEntry> studentExamEntryCollection;
     @JoinColumn(name = "classId", referencedColumnName = "id")
     @ManyToOne
-    private Class classs;
+    private CollegeDirection direction;
     @OneToMany(mappedBy = "studentId")
     private Collection<StudentAttendsCourse> studentAttendsCourseCollection;
     @OneToMany(mappedBy = "studentId")
@@ -179,12 +177,12 @@ public class Student implements Serializable {
         this.studentExamEntryCollection = studentExamEntryCollection;
     }
 
-    public Class getClass() {
-        return classs;
+    public CollegeDirection getCollegeDirection() {
+        return direction;
     }
 
-    public void setClass(Class classs) {
-        this.classs = classs;
+    public void setCollegeDirection(CollegeDirection direction) {
+        this.direction = direction;
     }
 
     @XmlTransient

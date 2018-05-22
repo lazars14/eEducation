@@ -1,16 +1,16 @@
 package com.eEducation.ftn.web.dto;
 
-import com.eEducation.ftn.model.Class;
+import com.eEducation.ftn.model.CollegeDirection;
 
-public class ClassDTO {
+public class CollegeDirectionDTO {
 	
 	private Integer id;
     private String name;
     private Integer numOfYears;
 	
-	public ClassDTO() {}
+	public CollegeDirectionDTO() {}
 
-	public ClassDTO(Class c) {
+	public CollegeDirectionDTO(CollegeDirection c) {
 		this.id = c.getId();
 		this.name = c.getName();
 		this.numOfYears = c.getNumOfYears();

@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.CollegeDirection;
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.repository.StudentRepository;
-import com.eEducation.ftn.service.ClassService;
+import com.eEducation.ftn.service.CollegeDirectionService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentDTO;
 
@@ -28,7 +29,7 @@ public class StudentController {
 	StudentRepository studentRepository;
 	
 	@Autowired
-	ClassService classService;
+	CollegeDirectionService directionService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<StudentDTO>> getAll(){
@@ -69,12 +70,12 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Class classs = classService.findOne(student.getClass().getId());
-		if(classs == null) {
+		CollegeDirection direction = directionService.findOne(student.getCollegeDirection().getId());
+		if(direction == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newStudent.setClass(classs);
+		newStudent.setCollegeDirection(direction);
 		
 		if(student.getIndexNumber() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -128,12 +129,12 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Class classs = classService.findOne(student.getClass().getId());
-		if(classs == null) {
+		CollegeDirection direction = directionService.findOne(student.getCollegeDirection().getId());
+		if(direction == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setClass(classs);
+		found.setCollegeDirection(direction);
 		
 		if(student.getIndexNumber() == null ) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

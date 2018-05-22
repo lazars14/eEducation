@@ -14,7 +14,7 @@ public class StudentDTO {
     private String email;
     private String sPassword;
     private Integer espbPoints;
-    private ClassDTO classs;
+    private CollegeDirectionDTO direction;
 	
 	public StudentDTO() {}
 
@@ -29,7 +29,7 @@ public class StudentDTO {
 		this.email = student.getEmail();
 		this.sPassword = student.getSPassword();
 		this.espbPoints = student.getEspbPoints();
-		this.classs = new ClassDTO(student.getClass());
+		this.direction = new CollegeDirectionDTO(student.getCollegeDirection());
 	}
 
 	public Integer getId() {
@@ -104,12 +104,12 @@ public class StudentDTO {
 		this.espbPoints = espbPoints;
 	}
 
-	public ClassDTO getClass() {
-		return classs;
+	public CollegeDirectionDTO getCollegeDirection() {
+		return direction;
 	}
 
-	public void setClass(ClassDTO classs) {
-		this.classs = classs;
+	public void setCollegeDirection(CollegeDirectionDTO direction) {
+		this.direction = direction;
 	}
 	
 	public Integer getStudYearOrdNum() {
