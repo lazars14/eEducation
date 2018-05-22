@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.eEducation.ftn.model.StudentDocument;
 
-public interface StudentDocumentRepository extends JpaRepository<StudentDocument, Long> {
+public interface StudentDocumentRepository extends JpaRepository<StudentDocument, Integer> {
 
 }

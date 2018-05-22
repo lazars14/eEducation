@@ -16,7 +16,7 @@ import com.eEducation.ftn.service.CourseLessonService;
 import com.eEducation.ftn.web.dto.CourseFileDTO;
 
 @RestController
-@RequestMapping(value="api/courses")
+@RequestMapping(value="api/courses/{courseId}/courseFiles")
 public class CourseController {
 	@Autowired
 	CourseFileService courseFileService;
@@ -24,8 +24,16 @@ public class CourseController {
 	@Autowired
 	CourseLessonService courseLessonService;
 	
+	@Autowired
+	CourseService courseService;
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseFileDTO>> getAll(){
+	public ResponseEntity<List<CourseFileDTO>> getAll(@PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 		List<CourseFile> courseFiles = courseFileService.findAll();
 		List<CourseFileDTO> courseFileDTOs = new ArrayList<>();
 		
@@ -37,7 +45,12 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseFileDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<CourseFileDTO> getById(@PathVariable Integer id, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 		CourseFile found = courseFileService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -48,7 +61,12 @@ public class CourseController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> save(@RequestBody CourseFileDTO courseFile){
+	public ResponseEntity<CourseFileDTO> save(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 		CourseFile newCourseFile = new CourseFile();
 		
 		if(courseFile.getCourseLesson() == null) {
@@ -71,7 +89,12 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> update(@RequestBody CourseFileDTO courseFile){
+	public ResponseEntity<CourseFileDTO> update(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 		CourseFile found = courseFileService.findOne(courseFile.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -89,7 +112,12 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 		CourseFile found = courseFileService.findOne(id);
 		if(found != null) {
 			courseFileService.remove(id);

@@ -50,6 +50,15 @@ public class StudentController {
 	public ResponseEntity<StudentDTO> save(@RequestBody StudentDTO student){
 		Student newStudent = new Student();
 		
+		if(student.getEmail() == null || student.getSPassword() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Student existing = studentService.findByEmail(student.getEmail());
+		if(existing != null) {
+			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+		}
+		
 		if(student.getClass() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -100,6 +109,15 @@ public class StudentController {
 		Student found = studentService.findOne(student.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(student.getEmail() == null || student.getSPassword() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Student existing = studentService.findByEmail(student.getEmail());
+		if(existing != null && student.getId() != existing.getId()) {
+			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
 		}
 		
 		if(student.getClass() == null) {

@@ -52,6 +52,16 @@ public class TeacherController {
 		Teacher newTeacher = new Teacher();
 		newTeacher.setFirstname(teacher.getFirstname());
 		newTeacher.setLastname(teacher.getLastname());
+		
+		if(teacher.getEmail() == null || teacher.getSPassword() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Teacher existing = teacherService.findByEmail(teacher.getEmail());
+		if(existing != null) {
+			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+		}
+		
 		newTeacher.setEmail(teacher.getEmail());
 		newTeacher.setSPassword(teacher.getSPassword());
 		
@@ -79,6 +89,16 @@ public class TeacherController {
 		
 		found.setFirstname(teacher.getFirstname());
 		found.setLastname(teacher.getLastname());
+		
+		if(teacher.getEmail() == null || teacher.getSPassword() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Teacher existing = teacherService.findByEmail(teacher.getEmail());
+		if(existing != null && teacher.getId() != existing.getId()) {
+			return new ResponseEntity<>(HttpStatus.ALREADY_EXISTS);
+		}
+		
 		found.setEmail(teacher.getEmail());
 		found.setSPassword(teacher.getSPassword());
 		

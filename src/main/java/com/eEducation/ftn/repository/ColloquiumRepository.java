@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.eEducation.ftn.model.Colloquium;
 
-public interface ColloquiumRepository extends JpaRepository<Colloquium, Long> {
+public interface ColloquiumRepository extends JpaRepository<Colloquium, Integer> {
 
 }
