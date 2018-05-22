@@ -1,0 +1,291 @@
+insert into class (name, numOfYears) values ('Softverske i informacione tehnologije', 3), ('Graficko inzenjerstvo i dizajn', 5), ('Arhitektura i gradjevinarstvo', 5), ('Softversko inzenjestvo', 5);
+
+
+create table student
+(
+	id int primary key auto_increment not null,
+	indexNumber varchar(15) unique,
+	firstname varchar(20),
+	lastname varchar(20),
+	accountNumber char(18) unique,
+	studYear int,
+	studYearOrdNum int,
+	email varchar(30) unique,
+	sPassword varchar(20),
+	classId int,
+	espbPoints int,
+
+	Foreign Key (classId) References class(id)
+);
+
+insert into student (indexNumber, firstname, lastname, accountNumber, studYear, studYearOrdNum, email, sPassword, classId, espbPoints) values
+('sf01-2018', 'Matija', 'Popovic', '1', 1, 1, 'matijaPopovic@gmail.com', 'matijaPopovic', 1, 0),
+('sf02-2018', 'Dusan', 'Kutlesic', '1', 1, 1, 'dusanKutlesic@gmail.com', 'dusanKutlesic', 1, 0),
+('sf03-2018', 'Ilija', 'Djokovic', '1', 1, 1, 'ilijaDjokovic@gmail.com', 'ilijaDjokovic', 1, 0),
+('sf04-2018', 'Nikola', 'Pesakovic', '1', 1, 1, 'nikolaPesakovic@gmail.com', 'nikolaPesakovic', 1, 0),
+('sf05-2018', 'Darko', 'Balaban', '1', 1, 1, 'darkoBalaban@gmail.com', 'darkoBalaban', 1, 0),
+('sf06-2018', 'Predrag', 'Prlja', '1', 1, 1, 'predragPrlja@gmail.com', 'predragPrlja', 1, 0),
+('sf07-2018', 'Milos', 'Dimic', '1', 1, 1, 'milosDimic@gmail.com', 'milosDimic', 1, 0),
+('sf08-2018', 'Marko', 'Stojadinovic', '1', 1, 1, 'markoStojadinovic@gmail.com', 'markoStojadinovic', 1, 0),
+('sf09-2018', 'Aleksandar', 'Radulovic', '1', 1, 1, 'aleksandarRadulovic@gmail.com', 'aleksandarRadulovic', 1, 0),
+('sf10-2018', 'Nemanja', 'Todorovic', '1', 1, 1, 'nemanjaTodorovic@gmail.com', 'nemanjaTodorovic', 1, 0),
+('sf11-2018', 'Uros', 'Carapic', '1', 1, 1, 'urosCarapic@gmail.com', 'urosCarapic', 1, 0),
+('sf12-2018', 'Marko', 'Marinovic', '1', 1, 1, 'markoMarinovic@gmail.com', 'markoMarinovic', 1, 0),
+
+('gr01-2018', 'Dusan', 'Beslac', '1', 1, 1, 'dusanBeslac@gmail.com', 'dusanBeslac', 2, 0),
+('gr02-2018', 'Nemanja', 'Krstic', '1', 1, 1, 'nemanjaKrstic@gmail.com', 'nemanjaKrstic', 2, 0),
+('gr03-2018', 'Vuk', 'Vulikic', '1', 1, 1, 'vukVulikic@gmail.com', 'vukVulikic', 2, 0),
+('gr04-2018', 'Milos', 'Milisavljevic', '1', 1, 1, 'milosMilisavljevic@gmail.com', 'milosMilisavljevic', 2, 0),
+('gr05-2018', 'Marko', 'Radonjic', '1', 1, 1, 'markoRadonjic@gmail.com', 'markoRadonjic', 2, 0),
+('gr06-2018', 'Aleksandar', 'Todorovic', '1', 1, 1, 'aleksandarTodorovic@gmail.com', 'aleksandarTodorovic', 2, 0),
+('gr07-2018', 'Petar', 'Rakicevic', '1', 1, 1, 'petarRakicevic@gmail.com', 'petarRakicevic', 2, 0),
+('gr08-2018', 'Milos', 'Glisic', '1', 1, 1, 'milosGlisic@gmail.com', 'milosGlisic', 2, 0),
+('gr09-2018', 'Andreja', 'Stevanovic', '1', 1, 1, 'andrejaStevanovic@gmail.com', 'andrejaStevanovic', 2, 0),
+('gr10-2018', 'Aleksandar', 'Tomjanski', '1', 1, 1, 'aleksandarTomjanski@gmail.com', 'aleksandarTomjanski', 2, 0),
+('gr11-2018', 'Jonas', 'Bergstedt', '1', 1, 1, 'jonasBergstedt@gmail.com', 'jonasBergstedt', 2, 0),
+('gr12-2018', 'Nemanja', 'Kapetanovic', '1', 1, 1, 'nemanjaKapetanovic@gmail.com', 'nemanjaKapetanovic', 2, 0),
+
+('zz01-2018', 'Filip', 'Covic', '1', 1, 1, 'filipCovic@gmail.com', 'filipCovic', 3, 0),
+('zz02-2018', 'Dejan', 'Davidovac', '1', 1, 1, 'dejanDavidovac@gmail.com', 'dejanDavidovac', 3, 0),
+('zz03-2018', 'Branko', 'Lazic', '1', 1, 1, 'brankoLazic@gmail.com', 'brankoLazic', 3, 0),
+('zz04-2018', 'Aleksa', 'Radanov', '1', 1, 1, 'aleksaRadanov@gmail.com', 'aleksaRadanov', 3, 0),
+('zz05-2018', 'Pero', 'Antic', '1', 1, 1, 'peroAntic@gmail.com', 'peroAntic', 3, 0),
+('zz06-2018', 'Ognjen', 'Dobric', '1', 1, 1, 'ognjenDobric@gmail.com', 'ognjenDobric', 3, 0),
+('zz07-2018', 'James', 'Feldeine', '1', 1, 1, 'jamesFeldeine@gmail.com', 'jamesFeldeine', 3, 0),
+('zz08-2018', 'Stefan', 'Jankovic', '1', 1, 1, 'stefanJankovic@gmail.com', 'stefanJankovic', 3, 0),
+('zz09-2018', 'Taylor', 'Rochestie', '1', 1, 1, 'taylorRochestie@gmail.com', 'taylorRochestie', 3, 0),
+('zz10-2018', 'Alen', 'Omic', '1', 1, 1, 'alenOmic@gmail.com', 'alenOmic', 3, 0),
+('zz11-2018', 'Mathias', 'Lessort', '1', 1, 1, 'mathiasLessort@gmail.com', 'mathiasLessort', 3, 0),
+('zz12-2018', 'Nikola', 'Jovanovic', '1', 1, 1, 'nikolaJovanovic@gmail.com', 'nikolaJovanovic', 3, 0),
+
+('ag01-2018', 'Mirko', 'Djeric', '1', 1, 1, 'mirkoDjeric@gmail.com', 'mirkoDjeric', 4, 0),
+('ag02-2018', 'Miroslav', 'Pasajlic', '1', 1, 1, 'miroslavPasajlic@gmail.com', 'miroslavPasajlic', 4, 0),
+('ag03-2018', 'Stefan', 'Mitrovic', '1', 1, 1, 'stefanMitrovic@gmail.com', 'stefanMitrovic', 4, 0),
+('ag04-2018', 'Milan', 'Radivojevic', '1', 1, 1, 'milanRadivojevic@gmail.com', 'milanRadivojevic', 4, 0),
+('ag05-2018', 'Milan', 'Munizaba', '1', 1, 1, 'milanMunizaba@gmail.com', 'milanMunizaba', 4, 0),
+('ag06-2018', 'Milenko', 'Veljkovic', '1', 1, 1, 'milenkoVeljkovic@gmail.com', 'milenkoVeljkovic', 4, 0),
+('ag07-2018', 'Koca', 'Jovovic', '1', 1, 1, 'kocaJovovic@gmail.com', 'kocaJovovic', 4, 0),
+('ag08-2018', 'Marko', 'Uzelac', '1', 1, 1, 'markoUzelac@gmail.com', 'markoUzelac', 4, 0),
+('ag09-2018', 'Danilo', 'Ostojic', '1', 1, 1, 'daniloOstojic@gmail.com', 'daniloOstojic', 4, 0),
+('ag10-2018', 'Stefan', 'Momirov', '1', 1, 1, 'stefanMomirov@gmail.com', 'stefanMomirov', 4, 0),
+('ag11-2018', 'Nikola', 'Pavlovic', '1', 1, 1, 'nikolaPavlovic@gmail.com', 'nikolaPavlovic', 4, 0),
+('ag12-2018', 'Stefan', 'Djordjevic', '1', 1, 1, 'stefanDjordjevic@gmail.com', 'stefanDjordjevic', 4, 0);
+
+create table rank
+(
+	id int primary key auto_increment not null,
+	name varchar(30)
+);
+
+insert into rank (name) values ('Teacher', 'Assistant');
+
+create table teacher
+(
+	id int primary key auto_increment not null,
+	firstname varchar(20),
+	lastname varchar(20),
+	email varchar(30) unique,
+	sPassword varchar(20),
+	rank integer,
+
+	Foreign Key (rank) References rank(id)
+);
+
+insert into teacher (firstname, lastname, email, sPassword, rank) values
+('Filip', 'Zekavcic', 'filipZekavcic@gmail.com', 'filipZekavcic', 1),
+('Adis', 'Turbic', 'adisTurbic@gmail.com', 'adisTurbic', 1),
+('Bojan', 'Krstovic', 'bojanKrstovic@gmail.com', 'bojanKrstovic', 1),
+('Aleksandar', 'Vasic', 'aleksandarVasic@gmail.com', 'aleksandarVasic', 1),
+('Dragomir', 'Marojevic', 'dragomirMarojevic@gmail.com', 'dragomirMarojevic', 1),
+('Stefan', 'Colovic', 'stefanColovic@gmail.com', 'stefanColovic', 1),
+('Josip', 'Mikulic', 'josipMikulic@gmail.com', 'josipMikulic', 1),
+('Uros', 'Matic', 'urosMatic@gmail.com', 'urosMatic', 1),
+
+('Mladen', 'Pavlovic', 'mladenPavlovic@gmail.com', 'mladenPavlovic', 2),
+('Djordje', 'Kaplanovic', 'djordjeKaplanovic@gmail.com', 'djordjeKaplanovic', 2),
+('Nenad', 'Nerandzic', 'nenadNerandzic@gmail.com', 'nenadNerandzic', 2),
+('Dragan', 'Vasic', 'draganVasic@gmail.com', 'draganVasic', 2),
+('Aleksa', 'Zaric', 'aleksaZaric@gmail.com', 'aleksaZaric', 2),
+('Aleksa', 'Stojanovic', 'aleksaStojanovic@gmail.com', 'aleksaStojanovic', 2),
+('Branimir', 'Berbakov', 'branimirBerbakov@gmail.com', 'branimirBerbakov', 2),
+('Dejan', 'Janjic', 'dejanJanjic@gmail.com', 'dejanJanjic', 2),
+('Jovan', 'Virijevic', 'jovanVirijevic@gmail.com', 'jovanVirijevic', 2),
+('Dusan', 'Prica', 'dusanPrica@gmail.com', 'dusanPrica', 2),
+('Nikola', 'Siladji', 'nikolaSiladji@gmail.com', 'nikolaSiladji', 2),
+('Vladimir', 'Kovacevic', 'vladimirKovacevic@gmail.com', 'vladimirKovacevic', 2),
+('Aleksa', 'Cabrilo', 'aleksaCabrilo@gmail.com', 'aleksaCabrilo', 2),
+('Teodor', 'Atanasov', 'teodorAtanasov@gmail.com', 'teodorAtanasov', 2),
+('Aleksa', 'Birovljev', 'aleksaBirovljev@gmail.com', 'aleksaBirovljev', 2),
+('Danilo', 'Matovic', 'daniloMatovic@gmail.com', 'daniloMatovic', 2);
+
+create table course
+(
+	id int primary key auto_increment not null,
+	courseName varchar(50),
+	espbPoints int,
+	teacherId int,
+
+	Foreign Key (teacherId) References teacher(id)
+);
+
+insert into course (courseName, espbPoints, teacherId) values
+('Osnove programiranja', 8, 1), ('Web programiranje', 8, 2),
+('Web dizajn', 8, 3), ('Osnove grafickog dizajna', 8, 4),
+('Mehanika', 8, 5), ('Arhitektonska fizika', 8, 6),
+('Objektno orijentisano programiranje', 8, 7), ('Algoritmi', 8, 8);
+
+
+create table studentAttendsCourse
+(
+	id int primary key auto_increment not null,
+	studentId int,
+	courseId int,
+
+	Foreign Key (studentId) References student(id),
+	Foreign Key (courseId) References course(id)
+);
+
+insert into studentAttendsCourse (courseId, studentId) values 
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12),
+(2, 13), (2, 14), (2, 15), (2, 16), (2, 17), (2, 18), (2, 19), (2, 20), (2, 21), (2, 22), (2, 23), (2, 24),
+(3, 25), (3, 26), (3, 27), (3, 28), (3, 29), (3, 30), (3, 31), (3, 32), (3, 33), (3, 34), (3, 35), (3, 36),
+(4, 37), (4, 38), (4, 39), (4, 40), (4, 41), (4, 42), (4, 43), (4, 44), (4, 45), (4, 46), (4, 47), (4, 48);
+
+create table teacherTeachesCourse
+(
+	id int primary key auto_increment not null,
+	teacherId int,
+	courseId int,
+
+	Foreign Key (teacherId) References teacher(id),
+	Foreign Key (courseId) References course(id)
+);
+
+insert into teacherTeachesCourse (courseId, teacherId) values
+(1, 9), (1, 10), (2, 11), (2, 12), (3, 13), (3, 14), (4, 15), (4, 16),
+(5, 17), (5, 18), (6, 19), (6, 20), (7, 21), (7, 22), (8, 23), (8, 24);
+
+create table courseLesson
+(
+	id int primary key auto_increment not null,
+	name varchar(50),
+	description varchar(100),
+	courseId int,
+
+	Foreign Key (courseId) References course(id)	
+);
+
+insert into courseLesson (name, description, courseId) values
+('Lesson number 1', 'Description', 1), ('Lesson number 2', 'Description', 1), ('Lesson number 3', 'Description', 1), ('Lesson number 4', 'Description', 1),
+('Lesson number 1', 'Description', 2), ('Lesson number 2', 'Description', 2), ('Lesson number 3', 'Description', 2), ('Lesson number 4', 'Description', 2),
+('Lesson number 1', 'Description', 3), ('Lesson number 2', 'Description', 3), ('Lesson number 3', 'Description', 3), ('Lesson number 4', 'Description', 3),
+('Lesson number 1', 'Description', 4), ('Lesson number 2', 'Description', 4), ('Lesson number 3', 'Description', 4), ('Lesson number 4', 'Description', 4),
+('Lesson number 1', 'Description', 5), ('Lesson number 2', 'Description', 5), ('Lesson number 3', 'Description', 5), ('Lesson number 4', 'Description', 5),
+('Lesson number 1', 'Description', 6), ('Lesson number 2', 'Description', 6), ('Lesson number 3', 'Description', 6), ('Lesson number 4', 'Description', 6),
+('Lesson number 1', 'Description', 7), ('Lesson number 2', 'Description', 7), ('Lesson number 3', 'Description', 7), ('Lesson number 4', 'Description', 7),
+('Lesson number 1', 'Description', 8), ('Lesson number 2', 'Description', 8), ('Lesson number 3', 'Description', 8), ('Lesson number 4', 'Description', 8);
+
+create table studentDocument
+(
+	id int primary key auto_increment not null,
+	documentName varchar(30),
+	documentType varchar(30),
+	documentURL varchar(200),
+	mimeType varchar(30),
+	studentId int,
+	courseId int,
+	
+	Foreign Key (studentId) References student(id),
+	Foreign Key (courseId) References course(id)
+);
+
+create table courseFile
+(
+	id int primary key auto_increment not null,
+	documentName varchar(30),
+	documentType varchar(30),
+	documentURL varchar(200),
+	mimeType varchar(30),
+	courseLessonId int,
+	
+	Foreign Key (courseLessonId) References courseLesson(id)
+);
+
+create table payment
+(
+	id int primary key auto_increment not null,
+	accountNumber varchar(18),
+	amount float,
+	cause varchar(30),
+	paymentDate datetime,
+	owes bit
+);
+
+create table colloquium
+(
+	id int primary key auto_increment not null,
+	courseId int,
+	maxPoints float,
+	examType varchar(30),
+	examDateTime datetime,
+
+	Foreign Key (courseId) References course(id)
+);
+
+create table colloquiumResult
+(
+	id int primary key auto_increment not null,
+	points float,
+	colloquiumId int,
+	studentId int,
+	documentId int,		
+
+	Foreign Key (colloquiumId) References colloquium(id),
+	Foreign Key (studentId) References student(id),
+	Foreign Key (documentId) References studentDocument(id)
+);
+
+create table grade
+(
+	id int primary key auto_increment not null,
+	points float,
+	grade int,
+	courseId int,
+	studentId int,
+
+	Foreign Key (courseId) References course(id),
+	Foreign Key (studentId) References student(id)
+);
+
+create table examPeriod
+(
+	id int primary key auto_increment not null,
+	name varchar(50),
+	startDate datetime,
+	endDate datetime
+);
+
+create table studentExamEntry
+(
+	id int primary key auto_increment not null,	
+	eDate datetime,
+	studentId int,
+	courseId int,
+	examPeriodId int,
+
+	Foreign Key (studentId) References student(id),
+	Foreign Key (courseId) References course(id),
+	Foreign Key (examPeriodId) References examPeriod(id)	
+);
+
+create table notification
+(
+	id int primary key auto_increment not null,
+	message varchar(300),
+    nDate datetime,
+	courseId int,
+	documentId int,
+
+	Foreign Key (courseId) References course(id),
+	Foreign Key (documentId) References courseFile(id)
+);
