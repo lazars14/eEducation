@@ -19,6 +19,9 @@ import com.eEducation.ftn.service.ExamTermService;
 import com.eEducation.ftn.service.StudentExamEntryService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentExamEntryDTO;
+import com.eEducation.ftn.service.Grade;
+import com.eEducation.ftn.service.GradeService;
+import com.eEducation.ftn.web.dto.GradeDTO;
 
 @RestController
 @RequestMapping(value="api/examEntries")
@@ -31,6 +34,9 @@ public class StudentExamEntryController {
 	
 	@Autowired
 	ExamTermService examTermService;
+	
+	@Autowired
+	GradeService gradeService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<StudentExamEntryDTO>> getAll(){
@@ -69,6 +75,8 @@ public class StudentExamEntryController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		// grade is null when student fills in entry
+		
 		newExamEntry.setStudent(student);
 		newExamEntry.setExamTerm(examTerm);
 		
@@ -83,20 +91,23 @@ public class StudentExamEntryController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(examEntry.getStudent() == null || examEntry.getExamTerm() == null){
+		if(examEntry.getStudent() == null || examEntry.getExamTerm() == null || examEntry.getGrade()){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Student student = studentService.findOne(examEntry.getStudent().getId());
 		ExamTerm examTerm = examTermService.findOne(examEntry.getExamTerm().getId());
+		// grade must be filled when teacher grades exam
+		Grade grade = gradeService.findOne(examEntry.getGrade().getId());
 		
-		if(student == null || examTerm == null) {
+		if(student == null || examTerm == null || grade == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		found.setStudent(student);
 		found.setExamTerm(examTerm);
-				
+		found.setGrade(grade);
+		
 		examEntryService.save(found);
 		return new ResponseEntity<>(new StudentExamEntryDTO(found), HttpStatus.OK);
 	}

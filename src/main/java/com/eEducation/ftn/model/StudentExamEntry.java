@@ -46,6 +46,9 @@ public class StudentExamEntry implements Serializable {
     @JoinColumn(name = "examTermId", referencedColumnName = "id")
     @ManyToOne
     private ExamTerm examTerm;
+    @JoinColumn(name = "gradeId", referencedColumnName = "id")
+    @ManyToOne
+    private Grade grade;
 
     public StudentExamEntry() {
     }
@@ -76,6 +79,14 @@ public class StudentExamEntry implements Serializable {
 
     public void setExamTerm(ExamTerm examTerm) {
         this.examTerm = examTerm;
+    }
+    
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 
     @Override

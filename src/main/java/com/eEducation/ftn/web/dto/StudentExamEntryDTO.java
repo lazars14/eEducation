@@ -10,6 +10,7 @@ public class StudentExamEntryDTO {
 	private Integer id;
     private StudentDTO student;
     private ExamTermDTO examTerm;
+    private GradeDTO grade;
     
     public StudentExamEntryDTO() {}
 
@@ -18,6 +19,7 @@ public class StudentExamEntryDTO {
 		this.id = see.getId();
 		this.student = new StudentDTO(see.getStudent());
 		this.examTerm = new ExamTermDTO(see.getExamTerm());
+		this.grade = new GradeDTO(see.getGrade());
 	}
 
 	public Integer getId() {
@@ -43,5 +45,12 @@ public class StudentExamEntryDTO {
 	public void setExamTerm(ExamTermDTO examTerm) {
 		this.examTerm = examTerm;
 	}
+	
+	public GradeDTO getGrade() {
+		return grade;
+	}
 
+	public void setGrade(GradeDTO grade) {
+		this.grade = grade;
+	}
 }

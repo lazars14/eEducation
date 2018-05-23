@@ -182,9 +182,11 @@ create table studentExamEntry
 	id int primary key auto_increment not null,	
 	studentId int,
 	examPeriodId int,
+	gradeId int,
 
 	Foreign Key (studentId) References student(id),
-	Foreign Key (examTermId) References examTerm(id)	
+	Foreign Key (examTermId) References examTerm(id),
+	Foreign Key (gradeId) References grade(id)	
 );
 
 create table notification
