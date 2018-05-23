@@ -8,20 +8,16 @@ import com.eEducation.ftn.model.StudentExamEntry;
 public class StudentExamEntryDTO {
 	
 	private Integer id;
-    private Date eDate;
     private StudentDTO student;
-    private CourseDTO course;
-    private ExamPeriodDTO examPeriod;
+    private ExamTermDTO examTerm;
     
     public StudentExamEntryDTO() {}
 
 	public StudentExamEntryDTO(StudentExamEntry see) {
 		super();
 		this.id = see.getId();
-		this.eDate = see.getEDate();
 		this.student = new StudentDTO(see.getStudent());
-		this.course = new CourseDTO(see.getCourse());
-		this.examPeriod = new ExamPeriodDTO(see.getExamPeriod());
+		this.examTerm = new ExamTermDTO(see.getExamTerm());
 	}
 
 	public Integer getId() {
@@ -32,14 +28,6 @@ public class StudentExamEntryDTO {
 		this.id = id;
 	}
 
-	public Date geteDate() {
-		return eDate;
-	}
-
-	public void seteDate(Date eDate) {
-		this.eDate = eDate;
-	}
-
 	public StudentDTO getStudent() {
 		return student;
 	}
@@ -48,20 +36,12 @@ public class StudentExamEntryDTO {
 		this.student = student;
 	}
 
-	public CourseDTO getCourse() {
-		return course;
+	public ExamTermDTO getExamTerm() {
+		return examTerm;
 	}
 
-	public void setCourse(CourseDTO course) {
-		this.course = course;
-	}
-
-	public ExamPeriodDTO getExamPeriod() {
-		return examPeriod;
-	}
-
-	public void setExamPeriod(ExamPeriodDTO examPeriod) {
-		this.examPeriod = examPeriod;
+	public void setExamTerm(ExamTermDTO examTerm) {
+		this.examTerm = examTerm;
 	}
 
 }

@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,12 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lazar
  */
 @Entity
-@Table(name = "studentExamEntry")
+@Table(name = "examTerm")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "StudentExamEntry.findAll", query = "SELECT s FROM StudentExamEntry s"),
-    @NamedQuery(name = "StudentExamEntry.findById", query = "SELECT s FROM StudentExamEntry s WHERE s.id = :id")
-public class StudentExamEntry implements Serializable {
+    @NamedQuery(name = "ExamTerm.findAll", query = "SELECT s FROM ExamTerm s"),
+    @NamedQuery(name = "ExamTerm.findById", query = "SELECT s FROM ExamTerm s WHERE s.id = :id")})
+public class ExamTerm implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,14 +40,14 @@ public class StudentExamEntry implements Serializable {
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne
     private Student student;
-    @JoinColumn(name = "examTermId", referencedColumnName = "id")
+    @JoinColumn(name = "examPeriodId", referencedColumnName = "id")
     @ManyToOne
-    private ExamTerm examTerm;
+    private ExamPeriod examPeriod;
 
-    public StudentExamEntry() {
+    public ExamTerm() {
     }
 
-    public StudentExamEntry(Integer id) {
+    public ExamTerm(Integer id) {
         this.id = id;
     }
 
@@ -70,12 +67,12 @@ public class StudentExamEntry implements Serializable {
         this.student = student;
     }
 
-    public ExamTerm getExamTerm() {
-        return examTerm;
+    public ExamPeriod getExamPeriod() {
+        return examPeriod;
     }
 
-    public void setExamTerm(ExamTerm examTerm) {
-        this.examTerm = examTerm;
+    public void setExamPeriod(ExamPeriod examPeriod) {
+        this.examPeriod = examPeriod;
     }
 
     @Override
@@ -88,10 +85,10 @@ public class StudentExamEntry implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StudentExamEntry)) {
+        if (!(object instanceof StudentAttendsCourse)) {
             return false;
         }
-        StudentExamEntry other = (StudentExamEntry) object;
+        StudentAttendsCourse other = (StudentAttendsCourse) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -100,7 +97,7 @@ public class StudentExamEntry implements Serializable {
 
     @Override
     public String toString() {
-        return "newpackage.StudentExamEntry[ id=" + id + " ]";
+        return "newpackage.StudentAttendsCourse[ id=" + id + " ]";
     }
     
 }

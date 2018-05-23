@@ -166,17 +166,25 @@ create table examPeriod
 	endDate datetime
 );
 
+create table examTerm
+(
+	id int primary key auto_increment not null,
+	examDate datetime,
+	courseId int,
+	examPeriodId int,
+	
+	Foreign Key (courseId) References course(id),
+	Foreign Key (examPeriodId) References examPeriod(id)
+);
+
 create table studentExamEntry
 (
 	id int primary key auto_increment not null,	
-	eDate datetime,
 	studentId int,
-	courseId int,
 	examPeriodId int,
 
 	Foreign Key (studentId) References student(id),
-	Foreign Key (courseId) References course(id),
-	Foreign Key (examPeriodId) References examPeriod(id)	
+	Foreign Key (examTermId) References examTerm(id)	
 );
 
 create table notification
