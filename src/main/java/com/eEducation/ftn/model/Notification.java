@@ -53,6 +53,8 @@ public class Notification implements Serializable {
     @JoinColumn(name = "documentId", referencedColumnName = "id")
     @ManyToOne
     private CourseFile document;
+    @Column(name = "seen")
+    private Boolean seen;
 
     public Notification() {
     }
@@ -99,6 +101,14 @@ public class Notification implements Serializable {
 
     public void setDocument(CourseFile document) {
         this.document = document;
+    }
+    
+    public Boolean getSeen() {
+        return owes;
+    }
+
+    public void setSeen(Boolean seen) {
+        this.seen = seen;
     }
 
     @Override

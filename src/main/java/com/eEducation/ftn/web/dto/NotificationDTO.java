@@ -11,6 +11,7 @@ public class NotificationDTO {
     private Date nDate;
     private CourseDTO course;
     private CourseFileDTO document;
+    private Boolean seen;
 	
 	public NotificationDTO() {}
 
@@ -20,6 +21,7 @@ public class NotificationDTO {
 		this.nDate = notification.getNDate();
 		this.course = new CourseDTO(notification.getCourse());
 		this.document = new CourseFileDTO(notification.getDocument());
+		this.seen = notification.getSeen();
 	}
 
 	public Integer getId() {
@@ -61,5 +63,13 @@ public class NotificationDTO {
 	public void setDocument(CourseFileDTO document) {
 		this.document = document;
 	}
+	
+	public Boolean getSeen() {
+        return owes;
+    }
+
+    public void setSeen(Boolean seen) {
+        this.seen = seen;
+    }
 	
 }

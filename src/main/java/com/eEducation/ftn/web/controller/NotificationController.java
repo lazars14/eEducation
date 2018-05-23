@@ -71,6 +71,9 @@ public class NotificationController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		// seen is false on creation - student hasn't seen it yet
+		newNotification.setSeen(false);
+		
 		newNotification.setCourse(course);
 		newNotification.setDocument(courseFile);
 		
@@ -96,6 +99,7 @@ public class NotificationController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		found.setSeen(notification.getSeen());
 		found.setDocument(courseFile);
 		
 		notificationService.save(found);
