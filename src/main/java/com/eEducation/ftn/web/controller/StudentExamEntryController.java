@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.ExamTerm;
+import com.eEducation.ftn.model.Grade;
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.StudentExamEntry;
 import com.eEducation.ftn.service.ExamTermService;
 import com.eEducation.ftn.service.StudentExamEntryService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentExamEntryDTO;
-import com.eEducation.ftn.service.Grade;
 import com.eEducation.ftn.service.GradeService;
-import com.eEducation.ftn.web.dto.GradeDTO;
 
 @RestController
 @RequestMapping(value="api/examEntries")
@@ -91,7 +90,7 @@ public class StudentExamEntryController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(examEntry.getStudent() == null || examEntry.getExamTerm() == null || examEntry.getGrade()){
+		if(examEntry.getStudent() == null || examEntry.getExamTerm() == null || examEntry.getGrade() == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		

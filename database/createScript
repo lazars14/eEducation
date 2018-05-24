@@ -196,8 +196,10 @@ create table notification
     nDate datetime,
 	courseId int,
 	documentId int,
-	seen bit
+	seen bit,
+	studentId int,
 
 	Foreign Key (courseId) References course(id),
-	Foreign Key (documentId) References courseFile(id)
+	Foreign Key (documentId) References courseFile(id),
+	Foreign Key (studentId) References student(id)
 );

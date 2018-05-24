@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StudentExamEntry.findAll", query = "SELECT s FROM StudentExamEntry s"),
-    @NamedQuery(name = "StudentExamEntry.findById", query = "SELECT s FROM StudentExamEntry s WHERE s.id = :id")
+    @NamedQuery(name = "StudentExamEntry.findById", query = "SELECT s FROM StudentExamEntry s WHERE s.id = :id")})
 public class StudentExamEntry implements Serializable {
 
     private static final long serialVersionUID = 1L;

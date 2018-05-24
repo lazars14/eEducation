@@ -85,10 +85,10 @@ public class ExamTerm implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StudentAttendsCourse)) {
+        if (!(object instanceof ExamTerm)) {
             return false;
         }
-        StudentAttendsCourse other = (StudentAttendsCourse) object;
+        ExamTerm other = (ExamTerm) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

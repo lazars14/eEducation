@@ -34,7 +34,7 @@ public class ExamTermController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ExamTermDTO>> getAll(){
-		List<ExamTermCourse> examTerms = examTermService.findAll();
+		List<ExamTerm> examTerms = examTermService.findAll();
 		List<ExamTermDTO> examTermDTOs = new ArrayList<>();
 		
 		for(ExamTerm e : examTerms) {

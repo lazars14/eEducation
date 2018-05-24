@@ -27,7 +27,7 @@ public class ExamTermService {
 		return examTermRepository.findAll(page);
 	}
 
-	public ExamPeriod save(ExamTerm examTerm) {
+	public ExamTerm save(ExamTerm examTerm) {
 		return examTermRepository.save(examTerm);
 	}
 

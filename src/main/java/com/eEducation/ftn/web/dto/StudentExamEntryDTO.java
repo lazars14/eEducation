@@ -1,8 +1,5 @@
 package com.eEducation.ftn.web.dto;
 
-
-import java.util.Date;
-
 import com.eEducation.ftn.model.StudentExamEntry;
 
 public class StudentExamEntryDTO {

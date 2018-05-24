@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.CourseFile;
 import com.eEducation.ftn.model.Notification;
+import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.NotificationService;
+import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.NotificationDTO;
 
 @RestController
@@ -31,6 +33,9 @@ public class NotificationController {
 	
 	@Autowired
 	CourseService courseService;
+	
+	@Autowired
+	StudentService studentService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<NotificationDTO>> getAll(){
@@ -54,20 +59,35 @@ public class NotificationController {
 		return new ResponseEntity<>(new NotificationDTO(found), HttpStatus.OK);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value="/{id}/read")
+	public ResponseEntity<NotificationDTO> readNotification(@PathVariable Integer id){
+		Notification found = notificationService.findOne(id);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		// set notification to seen
+		found.setSeen(true);
+		notificationService.save(found);
+		
+		return new ResponseEntity<>(new NotificationDTO(found), HttpStatus.OK);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<NotificationDTO> save(@RequestBody NotificationDTO notification){
 		Notification newNotification = new Notification();
 		newNotification.setMessage(notification.getMessage());
 		newNotification.setNDate(notification.getnDate());
 		
-		if(notification.getCourse() == null || notification.getDocument() == null) {
+		if(notification.getCourse() == null || notification.getDocument() == null || notification.getStudent() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Course course = courseService.findOne(notification.getCourse().getId());
 		CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
+		Student student = studentService.findOne(notification.getStudent().getId());
 		
-		if(course == null || courseFile == null) {
+		if(course == null || courseFile == null || student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -76,6 +96,7 @@ public class NotificationController {
 		
 		newNotification.setCourse(course);
 		newNotification.setDocument(courseFile);
+		newNotification.setStudent(student);
 		
 		notificationService.save(newNotification);
 		return new ResponseEntity<>(new NotificationDTO(newNotification), HttpStatus.OK);
@@ -87,7 +108,7 @@ public class NotificationController {
 		found.setMessage(notification.getMessage());
 		found.setNDate(notification.getnDate());
 		
-		// not allowed to change course
+		// not allowed to change course or student
 		
 		if(notification.getDocument() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
