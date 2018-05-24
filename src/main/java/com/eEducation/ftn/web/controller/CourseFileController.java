@@ -33,11 +33,11 @@ public class CourseFileController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseFileDTO>> getAll(){
-//		Course c = courseService.findOne(courseId);
-//		if(c == null) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
+	public ResponseEntity<List<CourseFileDTO>> getAll(@PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		
 		List<CourseFile> courseFiles = courseFileService.findAll();
 		List<CourseFileDTO> courseFileDTOs = new ArrayList<>();
@@ -50,11 +50,11 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseFileDTO> getById(@PathVariable Integer id){
-//		Course c = courseService.findOne(courseId);
-//		if(c == null) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
+	public ResponseEntity<CourseFileDTO> getById(@PathVariable Integer id, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		
 		CourseFile found = courseFileService.findOne(id);
 		if(found == null) {
@@ -66,11 +66,11 @@ public class CourseFileController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> save(@RequestBody CourseFileDTO courseFile){
-//		Course c = courseService.findOne(courseId);
-//		if(c == null) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
+	public ResponseEntity<CourseFileDTO> save(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		
 		CourseFile newCourseFile = new CourseFile();
 		
@@ -104,11 +104,11 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> update(@RequestBody CourseFileDTO courseFile){
-//		Course c = courseService.findOne(courseId);
-//		if(c == null) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
+	public ResponseEntity<CourseFileDTO> update(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		
 		CourseFile found = courseFileService.findOne(courseFile.getId());
 		if(found == null) {
@@ -127,11 +127,11 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
-//		Course c = courseService.findOne(courseId);
-//		if(c == null) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer courseId){
+		Course c = courseService.findOne(courseId);
+		if(c == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		
 		CourseFile found = courseFileService.findOne(id);
 		if(found != null) {

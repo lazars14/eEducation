@@ -21,7 +21,7 @@ import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.ExamTermDTO;
 
 @RestController
-@RequestMapping(value="api/examTerms")
+@RequestMapping(value="api/examPeriod/{examPeriodId}/examTerms")
 public class ExamTermController {
 	@Autowired
 	ExamTermService examTermService;
@@ -33,7 +33,13 @@ public class ExamTermController {
 	ExamPeriodService examPeriodService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ExamTermDTO>> getAll(){
+	public ResponseEntity<List<ExamTermDTO>> getAll(@PathVariable Integer examPeriodId){
+		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
+		
+		if(examPeriod == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		List<ExamTerm> examTerms = examTermService.findAll();
 		List<ExamTermDTO> examTermDTOs = new ArrayList<>();
 		
@@ -45,7 +51,13 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ExamTermDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<ExamTermDTO> getById(@PathVariable Integer id, @PathVariable Integer examPeriodId){
+		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
+		
+		if(examPeriod == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		ExamTerm found = examTermService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -55,7 +67,13 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ExamTermDTO> save(@RequestBody ExamTermDTO examTerm){
+	public ResponseEntity<ExamTermDTO> save(@RequestBody ExamTermDTO examTerm, @PathVariable Integer examPeriodId){
+		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
+		
+		if(examPeriod == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		ExamTerm newExamTerm = new ExamTerm();
 		
 		if(examTerm.getStudent() == null || examTerm.getExamPeriod() == null) {
@@ -63,9 +81,8 @@ public class ExamTermController {
 		}
 		
 		Student student = studentService.findOne(examTerm.getStudent().getId());
-		ExamPeriod examPeriod = examPeriodService.findOne(examTerm.getExamPeriod().getId());
 		
-		if(student == null || examPeriod == null) {
+		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -77,7 +94,13 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ExamTermDTO> update(@RequestBody ExamTermDTO examTerm){
+	public ResponseEntity<ExamTermDTO> update(@RequestBody ExamTermDTO examTerm, @PathVariable Integer examPeriodId){
+		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
+		
+		if(examPeriod == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		ExamTerm found = examTermService.findOne(examTerm.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -88,9 +111,8 @@ public class ExamTermController {
 		}
 		
 		Student student = studentService.findOne(examTerm.getStudent().getId());
-		ExamPeriod examPeriod = examPeriodService.findOne(examTerm.getExamPeriod().getId());
 		
-		if(student == null || examPeriod == null) {
+		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -102,7 +124,13 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer examPeriodId){
+		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
+		
+		if(examPeriod == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		ExamTerm found = examTermService.findOne(id);
 		if(found != null) {
 			examTermService.remove(id);

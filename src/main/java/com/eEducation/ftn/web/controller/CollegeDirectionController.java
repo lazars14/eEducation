@@ -13,15 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.CollegeDirection;
-import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.repository.StudentRepository;
 import com.eEducation.ftn.service.CollegeDirectionService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.CollegeDirectionDTO;
-import com.eEducation.ftn.web.dto.StudentDTO;
 
 @RestController
-@RequestMapping(value="api/CollegeDirectiones")
+@RequestMapping(value="api/classes")
 public class CollegeDirectionController {
 	@Autowired
 	CollegeDirectionService CollegeDirectionService;
@@ -90,21 +88,4 @@ public class CollegeDirectionController {
 	}
 	
 	// collection methods
-	
-	@RequestMapping(method = RequestMethod.GET, value="/{id}/students")
-	public ResponseEntity<List<StudentDTO>> getStudentsForCollegeDirection(@PathVariable Integer id){
-		CollegeDirection found = CollegeDirectionService.findOne(id);
-		if(found == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		List<Student> students = studentRepository.findByDirection(found);
-		List<StudentDTO> studentDTOs = new ArrayList<>();
-		
-		for(Student s : students){
-			studentDTOs.add(new StudentDTO(s));
-		}
-		
-		return new ResponseEntity<>(studentDTOs, HttpStatus.OK);
-	}
 }

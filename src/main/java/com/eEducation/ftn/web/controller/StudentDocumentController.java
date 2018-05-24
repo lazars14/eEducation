@@ -21,7 +21,7 @@ import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentDocumentDTO;
 
 @RestController
-@RequestMapping(value="api/studentDocuments")
+@RequestMapping(value="api/course/{courseId}/studentDocuments")
 public class StudentDocumentController {
 	@Autowired
 	StudentDocumentService studentDocumentService;
@@ -33,7 +33,12 @@ public class StudentDocumentController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<StudentDocumentDTO>> getAll(){
+	public ResponseEntity<List<StudentDocumentDTO>> getAll(@PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		List<StudentDocument> studentDocuments = studentDocumentService.findAll();
 		List<StudentDocumentDTO> studentDocumentDTOs = new ArrayList<>();
 		
@@ -45,7 +50,12 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<StudentDocumentDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<StudentDocumentDTO> getById(@PathVariable Integer id, @PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		StudentDocument found = studentDocumentService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,16 +66,20 @@ public class StudentDocumentController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentDocumentDTO> save(@RequestBody StudentDocumentDTO studentDocument){
-		StudentDocument newStudentDocument = new StudentDocument();
-		
-		if(studentDocument.getCourse() == null || studentDocument.getStudent() == null) {
+	public ResponseEntity<StudentDocumentDTO> save(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Course course = courseService.findOne(studentDocument.getCourse().getId());
+		StudentDocument newStudentDocument = new StudentDocument();
+		
+		if(studentDocument.getStudent() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		Student student = studentService.findOne(studentDocument.getStudent().getId());
-		if(course == null || student == null) {
+		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -81,7 +95,12 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<StudentDocumentDTO> update(@RequestBody StudentDocumentDTO studentDocument){
+	public ResponseEntity<StudentDocumentDTO> update(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		StudentDocument found = studentDocumentService.findOne(studentDocument.getId());
 		
 		// not allowed to change course and student
@@ -96,7 +115,12 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		StudentDocument found = studentDocumentService.findOne(id);
 		if(found != null) {
 			studentDocumentService.remove(id);
