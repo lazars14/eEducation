@@ -181,7 +181,7 @@ create table studentExamEntry
 (
 	id int primary key auto_increment not null,	
 	studentId int,
-	examPeriodId int,
+	examTermId int,
 	gradeId int,
 
 	Foreign Key (studentId) References student(id),
