@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.Payment;
 import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.repository.PaymentRepository;
 import com.eEducation.ftn.repository.StudentRepository;
 import com.eEducation.ftn.service.PaymentService;
 import com.eEducation.ftn.service.StudentService;
@@ -30,6 +31,9 @@ public class PaymentController {
 	
 	@Autowired
 	StudentRepository studentRepository;
+	
+	@Autowired
+	PaymentRepository paymentRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PaymentDTO>> getAll(){
@@ -57,16 +61,16 @@ public class PaymentController {
 	public ResponseEntity<PaymentDTO> save(@RequestBody PaymentDTO payment){
 		Payment newPayment = new Payment();
 		
-		if(payment.getAccountNumber() == null) {
+		if(payment.getStudent() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student student = studentRepository.findByAccountNumber(payment.getAccountNumber());
+		Student student = studentService.findOne(payment.getStudent().getId());
 		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		newPayment.setAccountNumber(payment.getAccountNumber());
+		newPayment.setStudent(student);
 		newPayment.setCause(payment.getCause());
 		newPayment.setPaymentDate(payment.getPaymentDate());
 		newPayment.setOwes(payment.getOwes());
@@ -82,8 +86,16 @@ public class PaymentController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		// not allowed to change account number
+		if(payment.getStudent() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		
+		Student student = studentService.findOne(payment.getStudent().getId());
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		found.setStudent(student);
 		found.setCause(payment.getCause());
 		found.setPaymentDate(payment.getPaymentDate());
 		found.setOwes(payment.getOwes());
@@ -103,5 +115,20 @@ public class PaymentController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/students/{studentId}")
+	public ResponseEntity<List<PaymentDTO>> getByStudent(@PathVariable Integer studentId){
+		Student student = studentService.findOne(studentId);
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<Payment> payments = paymentRepository.findByStudent(student);
+		List<PaymentDTO> paymentDTOs = new ArrayList<>();
+		
+		for(Payment p : payments) {
+			paymentDTOs.add(new PaymentDTO(p));
+		}
+		
+		return new ResponseEntity<>(paymentDTOs, HttpStatus.OK);
+	}
 }

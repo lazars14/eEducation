@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.Grade;
 import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.repository.GradeRepository;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.GradeService;
 import com.eEducation.ftn.service.StudentService;
@@ -31,6 +32,9 @@ public class GradeController {
 	
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	GradeRepository gradeRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<GradeDTO>> getAll(){
@@ -101,5 +105,21 @@ public class GradeController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/students/{studentId}")
+	public ResponseEntity<List<GradeDTO>> getByStudentId(@PathVariable Integer studentId){
+		Student student = studentService.findOne(studentId);
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<Grade> grades = gradeRepository.findByStudent(student);
+		List<GradeDTO> gradeDTOs = new ArrayList<>();
+		
+		for(Grade g : grades) {
+			gradeDTOs.add(new GradeDTO(g));
+		}
+		
+		return new ResponseEntity<>(gradeDTOs, HttpStatus.OK);
+	}
+
 }

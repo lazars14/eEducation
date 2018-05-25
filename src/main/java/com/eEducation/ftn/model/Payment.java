@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -43,8 +45,9 @@ public class Payment implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "accountNumber")
-    private String accountNumber;
+    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @ManyToOne
+    private Student student;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Float amount;
@@ -71,12 +74,12 @@ public class Payment implements Serializable {
         this.id = id;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Float getAmount() {

@@ -7,7 +7,7 @@ import com.eEducation.ftn.model.Payment;
 public class PaymentDTO {
 	
 	private Integer id;
-    private String accountNumber;
+    private StudentDTO student;
     private Float amount;
     private String cause;
     private Date paymentDate;
@@ -18,7 +18,7 @@ public class PaymentDTO {
 	public PaymentDTO(Payment payment) {
 		super();
 		this.id = payment.getId();
-		this.accountNumber = payment.getAccountNumber();
+		this.student = new StudentDTO(payment.getStudent());
 		this.amount = payment.getAmount();
 		this.cause = payment.getCause();
 		this.paymentDate = payment.getPaymentDate();
@@ -33,12 +33,12 @@ public class PaymentDTO {
 		this.id = id;
 	}
 
-	public String getAccountNumber() {
-		return accountNumber;
+	public StudentDTO getStudent() {
+		return student;
 	}
 
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 
 	public Float getAmount() {
