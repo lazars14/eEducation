@@ -171,6 +171,7 @@ create table examTerm
 (
 	id int primary key auto_increment not null,
 	examDate datetime,
+	classRoom varchar(100),
 	courseId int,
 	examPeriodId int,
 	

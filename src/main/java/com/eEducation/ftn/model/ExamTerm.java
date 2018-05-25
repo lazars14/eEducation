@@ -6,6 +6,8 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -43,6 +47,11 @@ public class ExamTerm implements Serializable {
     @JoinColumn(name = "examPeriodId", referencedColumnName = "id")
     @ManyToOne
     private ExamPeriod examPeriod;
+    @Column(name = "examDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date examDate;
+    @Column(name = "classRoom")
+    private String classRoom;
 
     public ExamTerm() {
     }
@@ -58,6 +67,23 @@ public class ExamTerm implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    public Date getExamDate() {
+        return examDate;
+    }
+
+    public void setExamDate(Date examDate) {
+        this.examDate = examDate;
+    }
+
+    public String getClassRoom() {
+        return classRoom;
+    }
+
+    public void setClassRoom(String classRoom) {
+        this.classRoom = classRoom;
+    }
+
 
     public Student getStudent() {
         return student;

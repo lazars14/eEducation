@@ -86,6 +86,8 @@ public class ExamTermController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		newExamTerm.setExamDate(examTerm.getExamDate());
+		newExamTerm.setClassRoom(examTerm.getClassRoom());
 		newExamTerm.setStudent(student);
 		newExamTerm.setExamPeriod(examPeriod);
 		
@@ -116,6 +118,8 @@ public class ExamTermController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		found.setExamDate(examTerm.getExamDate());
+		found.setClassRoom(examTerm.getClassRoom());
 		found.setStudent(student);
 		found.setExamPeriod(examPeriod);
 		
