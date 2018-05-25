@@ -9,6 +9,7 @@ public class StudentDTO {
     private String firstname;
     private String lastname;
     private String accountNumber;
+    private String referenceNumber;
     private Integer studYear;
     private Integer studYearOrdNum;
     private String email;
@@ -24,6 +25,7 @@ public class StudentDTO {
 		this.firstname = student.getFirstname();
 		this.lastname = student.getLastname();
 		this.accountNumber = student.getAccountNumber();
+		this.referenceNumber = student.getReferenceNumber();
 		this.studYear = student.getStudYear();
 		this.studYearOrdNum = student.getStudYearOrdNum();
 		this.email = student.getEmail();
@@ -70,6 +72,14 @@ public class StudentDTO {
 
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
+	}
+	
+	public String getReferenceNumber() {
+		return referenceNumber;
+	}
+
+	public void setReferenceNumber(String referenceNumber) {
+		this.referenceNumber = referenceNumber;
 	}
 
 	public Integer getStudYear() {

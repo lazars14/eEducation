@@ -99,6 +99,13 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
+		Student foundRefNum = studentRepository.findByReferenceNumber(student.getReferenceNumber());
+		if(foundRefNum != null) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+		newStudent.setAccountNumber(student.getAccountNumber());
+		newStudent.setReferenceNumber(student.getReferenceNumber());
 		newStudent.setStudYear(student.getStudYear());
 		newStudent.setStudYearOrdNum(student.getStudYearOrdNum());
 		newStudent.setEmail(student.getEmail());
@@ -159,6 +166,13 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
+		Student foundRefNum = studentRepository.findByReferenceNumber(student.getReferenceNumber());
+		if(foundRefNum != null && student.getId() != foundRefNum.getId()) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+		found.setAccountNumber(student.getAccountNumber());
+		found.setReferenceNumber(student.getReferenceNumber());
 		found.setStudYear(student.getStudYear());
 		found.setStudYearOrdNum(student.getStudYearOrdNum());
 		found.setEmail(student.getEmail());

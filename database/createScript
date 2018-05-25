@@ -16,6 +16,7 @@ create table student
 	firstname varchar(20),
 	lastname varchar(20),
 	accountNumber char(18) unique,
+	referenceNumber varchar(30) unique,
 	studYear int,
 	studYearOrdNum int,
 	email varchar(30) unique,

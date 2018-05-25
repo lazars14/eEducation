@@ -57,6 +57,8 @@ public class Student implements Serializable {
     private String lastname;
     @Column(name = "accountNumber")
     private String accountNumber;
+    @Column(name = "referenceNumber")
+    private String referenceNumber;
     @Column(name = "studYear")
     private Integer studYear;
     @Column(name = "studYearOrdNum")
@@ -126,6 +128,14 @@ public class Student implements Serializable {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
+    }
+    
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
     }
 
     public Integer getStudYear() {
