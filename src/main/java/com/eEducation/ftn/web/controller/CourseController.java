@@ -64,7 +64,8 @@ public class CourseController {
 		}		
 				
 		newCourse.setTeacher(teacher);
-		newCourse.setCourseName(course.getCourseName());
+		newCourse.setName(course.getName());
+		newCourse.setDescription(course.getDescription());
 		newCourse.setEspbPoints(course.getEspbPoints());
 		
 		courseService.save(newCourse);
@@ -89,7 +90,8 @@ public class CourseController {
 		}		
 				
 		found.setTeacher(teacher);
-		found.setCourseName(course.getCourseName());
+		found.setName(course.getName());
+		found.setDescription(course.getDescription());
 		found.setEspbPoints(course.getEspbPoints());
 		
 		courseService.save(found);

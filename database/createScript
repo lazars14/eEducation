@@ -48,7 +48,8 @@ create table teacher
 create table course
 (
 	id int primary key auto_increment not null,
-	courseName varchar(50),
+	name varchar(50),
+	description varchar(1000),
 	espbPoints int,
 	teacherId int,
 

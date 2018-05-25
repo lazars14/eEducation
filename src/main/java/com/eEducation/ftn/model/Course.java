@@ -42,8 +42,10 @@ public class Course implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "courseName")
-    private String courseName;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "description")
+    private String description;
     @Column(name = "espbPoints")
     private Integer espbPoints;
     @OneToMany(mappedBy = "courseId")
@@ -79,12 +81,20 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getEspbPoints() {

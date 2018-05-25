@@ -5,7 +5,8 @@ import com.eEducation.ftn.model.Course;
 public class CourseDTO {
 	
 	private Integer id;
-    private String courseName;
+    private String name;
+    private String description;
     private Integer espbPoints;
     private TeacherDTO teacher;
 	
@@ -13,7 +14,8 @@ public class CourseDTO {
 	
 	public CourseDTO(Course course) {
 		this.id = course.getId();
-		this.courseName = course.getCourseName();
+		this.name = course.getName();
+		this.description = course.getDescription();
 		this.espbPoints = course.getEspbPoints();
 		this.teacher = new TeacherDTO(course.getTeacher());
 	}
@@ -26,14 +28,22 @@ public class CourseDTO {
 		this.id = id;
 	}
 
-	public String getCourseName() {
-		return courseName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+	
 	public Integer getEspbPoints() {
 		return espbPoints;
 	}
