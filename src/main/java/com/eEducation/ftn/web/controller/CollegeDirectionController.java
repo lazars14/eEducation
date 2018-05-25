@@ -53,7 +53,7 @@ public class CollegeDirectionController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CollegeDirectionDTO> save(@RequestBody CollegeDirectionDTO CollegeDirections){
+	public ResponseEntity<CollegeDirectionDTO> add(@RequestBody CollegeDirectionDTO CollegeDirections){
 		CollegeDirection newCollegeDirection = new CollegeDirection();
 		newCollegeDirection.setName(CollegeDirections.getName());
 		newCollegeDirection.setNumOfYears(CollegeDirections.getNumOfYears());

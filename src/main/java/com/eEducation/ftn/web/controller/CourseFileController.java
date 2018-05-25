@@ -66,7 +66,7 @@ public class CourseFileController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> save(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
+	public ResponseEntity<CourseFileDTO> add(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

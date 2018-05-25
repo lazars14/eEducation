@@ -45,7 +45,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ExamPeriodDTO> save(@RequestBody ExamPeriodDTO examPeriod){
+	public ResponseEntity<ExamPeriodDTO> add(@RequestBody ExamPeriodDTO examPeriod){
 		ExamPeriod newExamPeriod = new ExamPeriod();
 		newExamPeriod.setName(examPeriod.getName());
 		newExamPeriod.setStartDate(examPeriod.getStartDate());

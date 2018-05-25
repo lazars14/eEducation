@@ -72,7 +72,7 @@ public class ColloquiumResultController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ColloquiumResultDTO> save(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Integer colloquiumId){
+	public ResponseEntity<ColloquiumResultDTO> add(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Integer colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
 		if(colloquium == null) {

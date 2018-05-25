@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.Rank;
 import com.eEducation.ftn.model.Teacher;
+import com.eEducation.ftn.model.TeacherTeachesCourse;
 import com.eEducation.ftn.repository.TeacherRepository;
+import com.eEducation.ftn.repository.TeacherTeachesCourseRepository;
+import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.RankService;
 import com.eEducation.ftn.service.TeacherService;
 import com.eEducation.ftn.web.dto.TeacherDTO;
@@ -31,12 +35,19 @@ public class TeacherController {
 	@Autowired
 	RankService rankService;
 	
+	@Autowired
+	CourseService courseService;
+	
+	@Autowired
+	TeacherTeachesCourseRepository ttcRepository;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<TeacherDTO>> getAll(){
 		List<Teacher> teachers = teacherService.findAll();
 		List<TeacherDTO> teacherDTOs = new ArrayList<>();
 		
 		for(Teacher t : teachers) {
+			t.setSPassword("");
 			teacherDTOs.add(new TeacherDTO(t));
 		}
 		
@@ -50,11 +61,13 @@ public class TeacherController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
+		found.setSPassword("");
+		
 		return new ResponseEntity<>(new TeacherDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<TeacherDTO> save(@RequestBody TeacherDTO teacher){
+	public ResponseEntity<TeacherDTO> add(@RequestBody TeacherDTO teacher){
 		Teacher newTeacher = new Teacher();
 		newTeacher.setFirstname(teacher.getFirstname());
 		newTeacher.setLastname(teacher.getLastname());
@@ -69,6 +82,7 @@ public class TeacherController {
 		}
 		
 		newTeacher.setEmail(teacher.getEmail());
+		// encode password
 		newTeacher.setSPassword(teacher.getsPassword());
 		
 		if(teacher.getRank() == null) {
@@ -106,7 +120,12 @@ public class TeacherController {
 		}
 		
 		found.setEmail(teacher.getEmail());
-		found.setSPassword(teacher.getsPassword());
+		
+		if(teacher.getsPassword() != null && !teacher.getsPassword().equals("")) {
+			// encode
+			found.setSPassword(teacher.getsPassword());
+		}
+
 		
 		if(teacher.getRank() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -134,5 +153,20 @@ public class TeacherController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}")
+	public ResponseEntity<List<TeacherDTO>> getByCourse(@PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<TeacherTeachesCourse> ttcS = ttcRepository.findByCourse(course);
+		List<TeacherDTO> teacherDTOs = new ArrayList<>();
+		
+		for(TeacherTeachesCourse t : ttcS) {
+			teacherDTOs.add(new TeacherDTO(t.getTeacher()));
+		}
+		
+		return new ResponseEntity<>(teacherDTOs, HttpStatus.OK);
+	}
 }

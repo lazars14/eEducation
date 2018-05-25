@@ -59,7 +59,7 @@ public class GradeController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<GradeDTO> save(@RequestBody GradeDTO grade){
+	public ResponseEntity<GradeDTO> add(@RequestBody GradeDTO grade){
 		Grade newGrade = new Grade();
 		newGrade.setPoints(grade.getPoints());
 		newGrade.setGrade(grade.getGrade());

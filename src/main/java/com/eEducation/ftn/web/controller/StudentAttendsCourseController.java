@@ -55,7 +55,7 @@ public class StudentAttendsCourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentAttendsCourseDTO> save(@RequestBody StudentAttendsCourseDTO sac){
+	public ResponseEntity<StudentAttendsCourseDTO> add(@RequestBody StudentAttendsCourseDTO sac){
 		StudentAttendsCourse newSac = new StudentAttendsCourse();
 		
 		if(sac.getStudent() == null || sac.getCourse() == null) {

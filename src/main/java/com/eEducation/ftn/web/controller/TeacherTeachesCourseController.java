@@ -55,7 +55,7 @@ public class TeacherTeachesCourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<TeacherTeachesCourseDTO> save(@RequestBody TeacherTeachesCourseDTO ttc){
+	public ResponseEntity<TeacherTeachesCourseDTO> add(@RequestBody TeacherTeachesCourseDTO ttc){
 		TeacherTeachesCourse newTtc = new TeacherTeachesCourse();
 		
 		if(ttc.getTeacher() == null || ttc.getCourse() == null) {
@@ -111,7 +111,5 @@ public class TeacherTeachesCourseController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	// collection methods
 	
 }

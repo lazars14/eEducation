@@ -66,7 +66,7 @@ public class StudentDocumentController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentDocumentDTO> save(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Integer courseId){
+	public ResponseEntity<StudentDocumentDTO> add(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Integer courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.model.StudentAttendsCourse;
 import com.eEducation.ftn.model.Teacher;
+import com.eEducation.ftn.model.TeacherTeachesCourse;
+import com.eEducation.ftn.repository.StudentAttendsCourseRepository;
+import com.eEducation.ftn.repository.TeacherTeachesCourseRepository;
 import com.eEducation.ftn.service.CourseService;
+import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.service.TeacherService;
 import com.eEducation.ftn.web.dto.CourseDTO;
 
@@ -26,6 +32,15 @@ public class CourseController {
 	
 	@Autowired
 	TeacherService teacherService;
+	
+	@Autowired
+	TeacherTeachesCourseRepository ttcRepository;
+	
+	@Autowired
+	StudentService studentService;
+	
+	@Autowired
+	StudentAttendsCourseRepository sacRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CourseDTO>> getAll(){
@@ -50,7 +65,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseDTO> save(@RequestBody CourseDTO course){
+	public ResponseEntity<CourseDTO> add(@RequestBody CourseDTO course){
 		Course newCourse = new Course();
 		
 		if(course.getTeacher() == null){
@@ -109,5 +124,37 @@ public class CourseController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/teacher/{teacherId}")
+	public ResponseEntity<List<CourseDTO>> getByTeacher(@PathVariable Integer teacherId){
+		Teacher teacher = teacherService.findOne(teacherId);
+		if(teacher == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<TeacherTeachesCourse> ttcS = ttcRepository.findByTeacher(teacher);
+		List<CourseDTO> courseDTOs = new ArrayList<>();
+		
+		for(TeacherTeachesCourse t : ttcS) {
+			courseDTOs.add(new CourseDTO(t.getCourse()));
+		}
+		
+		return new ResponseEntity<>(courseDTOs, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/student/{studentId}")
+	public ResponseEntity<List<CourseDTO>> getByStudent(@PathVariable Integer studentId){
+		Student student = studentService.findOne(studentId);
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<StudentAttendsCourse> sacS = sacRepository.findByStudent(student);
+		List<CourseDTO> courseDTOs = new ArrayList<>();
+		
+		for(StudentAttendsCourse s : sacS) {
+			courseDTOs.add(new CourseDTO(s.getCourse()));
+		}
+		
+		return new ResponseEntity<>(courseDTOs, HttpStatus.OK);
+	}
 }

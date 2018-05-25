@@ -16,6 +16,7 @@ import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.CourseFile;
 import com.eEducation.ftn.model.Notification;
 import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.repository.NotificationRepository;
 import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.NotificationService;
@@ -27,6 +28,9 @@ import com.eEducation.ftn.web.dto.NotificationDTO;
 public class NotificationController {
 	@Autowired
 	NotificationService notificationService;
+	
+	@Autowired
+	NotificationRepository notificationRepository;
 	
 	@Autowired
 	CourseFileService courseFileService;
@@ -74,7 +78,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<NotificationDTO> save(@RequestBody NotificationDTO notification){
+	public ResponseEntity<NotificationDTO> add(@RequestBody NotificationDTO notification){
 		Notification newNotification = new Notification();
 		newNotification.setMessage(notification.getMessage());
 		newNotification.setNDate(notification.getnDate());
@@ -138,5 +142,20 @@ public class NotificationController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/student/{studentId}")
+	public ResponseEntity<List<NotificationDTO>> getByStudent(@PathVariable Integer studentId){
+		Student student = studentService.findOne(studentId);
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<Notification> notifications = notificationRepository.findByStudent(student);
+		List<NotificationDTO> notificationDTOs = new ArrayList<>();
+		
+		for(Notification n : notifications) {
+			notificationDTOs.add(new NotificationDTO(n));
+		}
+		
+		return new ResponseEntity<>(notificationDTOs, HttpStatus.OK);
+	}
 }

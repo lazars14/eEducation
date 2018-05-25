@@ -58,7 +58,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<PaymentDTO> save(@RequestBody PaymentDTO payment){
+	public ResponseEntity<PaymentDTO> add(@RequestBody PaymentDTO payment){
 		Payment newPayment = new Payment();
 		
 		if(payment.getStudent() == null) {

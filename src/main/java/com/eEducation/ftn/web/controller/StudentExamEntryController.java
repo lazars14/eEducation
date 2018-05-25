@@ -60,7 +60,7 @@ public class StudentExamEntryController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentExamEntryDTO> save(@RequestBody StudentExamEntry examEntry){
+	public ResponseEntity<StudentExamEntryDTO> add(@RequestBody StudentExamEntry examEntry){
 		StudentExamEntry newExamEntry = new StudentExamEntry();
 		
 		if(examEntry.getStudent() == null || examEntry.getExamTerm() == null) {

@@ -50,11 +50,13 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	
+		found.setSPassword("");
+		
 		return new ResponseEntity<>(new StudentDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentDTO> save(@RequestBody StudentDTO student){
+	public ResponseEntity<StudentDTO> add(@RequestBody StudentDTO student){
 		Student newStudent = new Student();
 		
 		if(student.getEmail() == null || student.getsPassword() == null) {
@@ -109,10 +111,12 @@ public class StudentController {
 		newStudent.setStudYear(student.getStudYear());
 		newStudent.setStudYearOrdNum(student.getStudYearOrdNum());
 		newStudent.setEmail(student.getEmail());
+		// encode password
 		newStudent.setSPassword(student.getsPassword());
 		newStudent.setEspbPoints(student.getEspbPoints());
 		
 		studentService.save(newStudent);
+		newStudent.setSPassword("");
 		return new ResponseEntity<>(new StudentDTO(newStudent), HttpStatus.OK);
 	}
 	
@@ -176,7 +180,14 @@ public class StudentController {
 		found.setStudYear(student.getStudYear());
 		found.setStudYearOrdNum(student.getStudYearOrdNum());
 		found.setEmail(student.getEmail());
-		found.setSPassword(student.getsPassword());
+		
+		
+		if(student.getsPassword() != null && !student.getsPassword().equals("")) {
+			// encode
+			found.setSPassword(student.getsPassword());
+		}
+		
+		
 		found.setEspbPoints(student.getEspbPoints());
 		
 		studentService.save(found);
@@ -194,5 +205,21 @@ public class StudentController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/class/{classId}")
+	public ResponseEntity<List<StudentDTO>> getByClass(@PathVariable Integer classId){
+		CollegeDirection direction = directionService.findOne(classId);
+		if(direction == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<Student> students = studentRepository.findByDirection(direction);
+		List<StudentDTO> studentDTOs = new ArrayList<>();
+		
+		for(Student s : students) {
+			s.setSPassword("");
+			studentDTOs.add(new StudentDTO(s));
+		}
+		
+		return new ResponseEntity<>(studentDTOs, HttpStatus.OK);
+	}
 }

@@ -67,7 +67,7 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ExamTermDTO> save(@RequestBody ExamTermDTO examTerm, @PathVariable Integer examPeriodId){
+	public ResponseEntity<ExamTermDTO> add(@RequestBody ExamTermDTO examTerm, @PathVariable Integer examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		
 		if(examPeriod == null) {

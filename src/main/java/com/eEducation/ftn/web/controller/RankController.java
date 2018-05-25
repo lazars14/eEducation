@@ -45,7 +45,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<RankDTO> save(@RequestBody RankDTO rank){
+	public ResponseEntity<RankDTO> add(@RequestBody RankDTO rank){
 		Rank newRank = new Rank();
 		rank.setName(rank.getName());
 		
