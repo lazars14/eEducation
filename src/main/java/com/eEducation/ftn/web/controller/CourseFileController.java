@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.CourseFile;
 import com.eEducation.ftn.model.CourseLesson;
+import com.eEducation.ftn.repository.CourseFileRepository;
 import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseLessonService;
 import com.eEducation.ftn.service.CourseService;
@@ -25,6 +26,9 @@ import com.eEducation.ftn.web.dto.CourseFileDTO;
 public class CourseFileController {
 	@Autowired
 	CourseFileService courseFileService;
+	
+	@Autowired
+	CourseFileRepository courseFileRepository;
 	
 	@Autowired
 	CourseLessonService courseLessonService;
@@ -142,5 +146,42 @@ public class CourseFileController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/courseLessons/{lessonId}")
+	public ResponseEntity<List<CourseFileDTO>> getByCourseLesson(@PathVariable Integer lessonId){
+		CourseLesson courseLesson = courseLessonService.findOne(lessonId);
+		if(courseLesson == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<CourseFile> courseFiles = courseFileRepository.findByCourseLesson(courseLesson);
+		List<CourseFileDTO> courseFileDTOs = new ArrayList<>();
+		
+		for(CourseFile cf : courseFiles) {
+			courseFileDTOs.add(new CourseFileDTO(cf));
+		}
+		
+		return new ResponseEntity<>(courseFileDTOs, HttpStatus.OK);
+	}
+	
+	/*
+	 * This is for getting files related to notifications
+	 */
+	@RequestMapping(method = RequestMethod.GET, value="/courses/{courseId}/notifications")
+	public ResponseEntity<List<CourseFileDTO>> getByCourseNotifications(@PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<CourseFile> courseFiles = courseFileRepository.findByCourse(course);
+		List<CourseFileDTO> courseFileDTOs = new ArrayList<>();
+		
+		for(CourseFile cf : courseFiles) {
+			if(cf.getCourseLesson() == null) {
+				courseFileDTOs.add(new CourseFileDTO(cf));
+			}
+		}
+		
+		return new ResponseEntity<>(courseFileDTOs, HttpStatus.OK);
+	}
 }

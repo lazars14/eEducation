@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.CourseLesson;
+import com.eEducation.ftn.repository.CourseLessonRepository;
 import com.eEducation.ftn.service.CourseLessonService;
 import com.eEducation.ftn.web.dto.CourseLessonDTO;
 
@@ -23,6 +24,9 @@ import com.eEducation.ftn.web.dto.CourseLessonDTO;
 public class CourseLessonController {
 	@Autowired
 	CourseLessonService courseLessonService;
+	
+	@Autowired
+	CourseLessonRepository courseLessonRepository;
 	
 	@Autowired
 	CourseService courseService;
@@ -122,5 +126,20 @@ public class CourseLessonController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/courses/{courseId}")
+	public ResponseEntity<List<CourseLessonDTO>> getByCourse(@PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<CourseLesson> courseLessons = courseLessonRepository.findByCourse(course);
+		List<CourseLessonDTO> courseLessonDTOs = new ArrayList<>();
+		
+		for(CourseLesson cl : courseLessons) {
+			courseLessonDTOs.add(new CourseLessonDTO(cl));
+		}
+		
+		return new ResponseEntity<>(courseLessonDTOs, HttpStatus.OK);
+	}
 }

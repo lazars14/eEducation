@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.Colloquium;
 import com.eEducation.ftn.model.Course;
+import com.eEducation.ftn.repository.ColloquiumRepository;
 import com.eEducation.ftn.service.ColloquiumService;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.web.dto.ColloquiumDTO;
@@ -23,6 +24,9 @@ import com.eEducation.ftn.web.dto.ColloquiumDTO;
 public class ColloquiumController {
 	@Autowired
 	ColloquiumService colloquiumService;
+	
+	@Autowired
+	ColloquiumRepository colloquiumRepository;
 	
 	@Autowired
 	CourseService courseService;
@@ -119,5 +123,21 @@ public class ColloquiumController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}")
+	public ResponseEntity<List<ColloquiumDTO>> getByCourse(@PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<Colloquium> colloquiums = colloquiumRepository.findByCourse(course);
+		List<ColloquiumDTO> colloquiumDTOs = new ArrayList<>();
+		
+		for(Colloquium c : colloquiums){
+			colloquiumDTOs.add(new ColloquiumDTO(c));
+		}
+		
+		return new ResponseEntity<>(colloquiumDTOs, HttpStatus.OK);
+	}
+	
 }
