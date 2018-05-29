@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.ExamTerm;
 import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.repository.ExamTermRepository;
 import com.eEducation.ftn.model.ExamPeriod;
 import com.eEducation.ftn.service.ExamTermService;
 import com.eEducation.ftn.service.ExamPeriodService;
@@ -31,6 +32,9 @@ public class ExamTermController {
 	
 	@Autowired
 	ExamPeriodService examPeriodService;
+	
+	@Autowired
+	ExamTermRepository examTermRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ExamTermDTO>> getAll(@PathVariable Integer examPeriodId){
@@ -144,7 +148,23 @@ public class ExamTermController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/byExamPeriod")
+	public ResponseEntity<List<ExamTermDTO>> getByExamPeriod(@PathVariable Integer examPeriodId){
+		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
+		
+		if(examPeriod == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<ExamTerm> examTerms = examTermRepository.findByExamPeriod(examPeriod);
+		List<ExamTermDTO> examTermDTOs = new ArrayList<>();
+		
+		for(ExamTerm e : examTerms) {
+			examTermDTOs.add(new ExamTermDTO(e));
+		}
+		
+		return new ResponseEntity<>(examTermDTOs, HttpStatus.OK);
+	}
 	
 	
 	

@@ -124,7 +124,7 @@ public class NotificationController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		found.setSeen(notification.getSeen());
+		found.setSeen(false);
 		found.setDocument(courseFile);
 		
 		notificationService.save(found);
