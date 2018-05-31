@@ -11,4 +11,6 @@ import com.eEducation.ftn.model.Student;
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 	public List<Notification> findByStudent(Student student);
 	public List<Notification> findByCourse(Course course);
+	public List<Notification> findByCourseAndStudent(Course course, Student student);
+	public List<Notification> findDistinctMessageByCourse(Course course);
 }

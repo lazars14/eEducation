@@ -159,14 +159,36 @@ public class NotificationController {
 		return new ResponseEntity<>(notificationDTOs, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}")
-	public ResponseEntity<List<NotificationDTO>> getByCourse(@PathVariable Integer courseId){
+	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}/student/{studentId}")
+	public ResponseEntity<List<NotificationDTO>> getByCourseAndStudent(@PathVariable Integer studentId, @PathVariable Integer courseId){
+		Student student = studentService.findOne(studentId);
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		List<Notification> notifications = notificationRepository.findByCourse(course);
+		List<Notification> notifications = notificationRepository.findByCourseAndStudent(course, student);
+		List<NotificationDTO> notificationDTOs = new ArrayList<>();
+		
+		for(Notification n : notifications) {
+			notificationDTOs.add(new NotificationDTO(n));
+		}
+		
+		return new ResponseEntity<>(notificationDTOs, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}/distinctMessages")
+	public ResponseEntity<List<NotificationDTO>> getByCourseDistinct(@PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<Notification> notifications = notificationRepository.findDistinctMessageByCourse(course);
 		List<NotificationDTO> notificationDTOs = new ArrayList<>();
 		
 		for(Notification n : notifications) {

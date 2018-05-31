@@ -20,7 +20,7 @@ import com.eEducation.ftn.service.CourseLessonService;
 import com.eEducation.ftn.web.dto.CourseLessonDTO;
 
 @RestController
-@RequestMapping(value="api/{courseId}/courseLessons")
+@RequestMapping(value="api/course/{courseId}/courseLessons")
 public class CourseLessonController {
 	@Autowired
 	CourseLessonService courseLessonService;
@@ -126,7 +126,7 @@ public class CourseLessonController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/courses/{courseId}")
+	@RequestMapping(method = RequestMethod.GET, value="/byCourse")
 	public ResponseEntity<List<CourseLessonDTO>> getByCourse(@PathVariable Integer courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
