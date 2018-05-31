@@ -143,26 +143,105 @@ create table courseFile
     Foreign Key (courseId) References course(id)
 );
 
+
+*/
+
 create table payment
 (
 	id int primary key auto_increment not null,
-	accountNumber varchar(18),
+	studentId int,
 	amount float,
 	cause varchar(30),
 	paymentDate datetime,
-	owes bit
+	owes bit,
+	
+	Foreign Key (studentId) References student(id)
 );
 
-create table colloquium
-(
-	id int primary key auto_increment not null,
-	courseId int,
-	maxPoints float,
-	examType varchar(30),
-	examDateTime datetime,
+insert into payment (studentId, amount, cause, paymentDate, owes) values
+(1, 1000, 'Exam entries', '2018-06-01', true),
+(2, 1000, 'Exam entries', '2018-06-01', true),
+(3, 1000, 'Exam entries', '2018-06-01', true),
+(4, 1000, 'Exam entries', '2018-06-01', true),
+(5, 1000, 'Exam entries', '2018-06-01', true),
+(6, 1000, 'Exam entries', '2018-06-01', true),
+(7, 1000, 'Exam entries', '2018-06-01', true),
+(8, 1000, 'Exam entries', '2018-06-01', true),
+(9, 1000, 'Exam entries', '2018-06-01', true),
+(10, 1000, 'Exam entries', '2018-06-01', true),
+(11, 1000, 'Exam entries', '2018-06-01', true),
+(12, 1000, 'Exam entries', '2018-06-01', true),
+(13, 1000, 'Exam entries', '2018-06-01', true),
+(14, 1000, 'Exam entries', '2018-06-01', true),
+(15, 1000, 'Exam entries', '2018-06-01', true),
+(16, 1000, 'Exam entries', '2018-06-01', true),
+(17, 1000, 'Exam entries', '2018-06-01', true),
+(18, 1000, 'Exam entries', '2018-06-01', true),
+(19, 1000, 'Exam entries', '2018-06-01', true),
+(20, 1000, 'Exam entries', '2018-06-01', true),
+(21, 1000, 'Exam entries', '2018-06-01', true),
+(22, 1000, 'Exam entries', '2018-06-01', true),
+(23, 1000, 'Exam entries', '2018-06-01', true),
+(24, 1000, 'Exam entries', '2018-06-01', true),
+(25, 1000, 'Exam entries', '2018-06-01', true),
+(26, 1000, 'Exam entries', '2018-06-01', true),
+(27, 1000, 'Exam entries', '2018-06-01', true),
+(28, 1000, 'Exam entries', '2018-06-01', true),
+(29, 1000, 'Exam entries', '2018-06-01', true),
+(30, 1000, 'Exam entries', '2018-06-01', true),
+(31, 1000, 'Exam entries', '2018-06-01', true),
+(32, 1000, 'Exam entries', '2018-06-01', true),
+(33, 1000, 'Exam entries', '2018-06-01', true),
+(34, 1000, 'Exam entries', '2018-06-01', true),
+(35, 1000, 'Exam entries', '2018-06-01', true),
+(36, 1000, 'Exam entries', '2018-06-01', true),
+(37, 1000, 'Exam entries', '2018-06-01', true),
+(38, 1000, 'Exam entries', '2018-06-01', true),
+(39, 1000, 'Exam entries', '2018-06-01', true),
+(40, 1000, 'Exam entries', '2018-06-01', true),
+(41, 1000, 'Exam entries', '2018-06-01', true),
+(42, 1000, 'Exam entries', '2018-06-01', true),
+(43, 1000, 'Exam entries', '2018-06-01', true),
+(44, 1000, 'Exam entries', '2018-06-01', true),
+(45, 1000, 'Exam entries', '2018-06-01', true),
+(46, 1000, 'Exam entries', '2018-06-01', true),
+(47, 1000, 'Exam entries', '2018-06-01', true),
+(48, 1000, 'Exam entries', '2018-06-01', true);
 
-	Foreign Key (courseId) References course(id)
-);
+insert into colloquium (courseId, maxPoints, examType, examDateTime) values
+(1, 40, 'theory', '2018-07-01'),
+(1, 40, 'exercise', '2018-07-01'),
+(1, 40, 'homework', '2018-07-01'),
+
+(2, 40, 'theory', '2018-07-01'),
+(2, 40, 'exercise', '2018-07-01'),
+(2, 40, 'homework', '2018-07-01'),
+
+(3, 40, 'theory', '2018-07-01'),
+(3, 40, 'exercise', '2018-07-01'),
+(3, 40, 'homework', '2018-07-01'),
+
+(4, 40, 'theory', '2018-07-01'),
+(4, 40, 'exercise', '2018-07-01'),
+(4, 40, 'homework', '2018-07-01'),
+
+(5, 40, 'theory', '2018-07-01'),
+(5, 40, 'exercise', '2018-07-01'),
+(5, 40, 'homework', '2018-07-01'),
+
+(6, 40, 'theory', '2018-07-01'),
+(6, 40, 'exercise', '2018-07-01'),
+(6, 40, 'homework', '2018-07-01'),
+
+(7, 40, 'theory', '2018-07-01'),
+(7, 40, 'exercise', '2018-07-01'),
+(7, 40, 'homework', '2018-07-01'),
+
+(8, 40, 'theory', '2018-07-01'),
+(8, 40, 'exercise', '2018-07-01'),
+(8, 40, 'homework', '2018-07-01');
+
+/*
 
 create table colloquiumResult
 (
@@ -189,13 +268,18 @@ create table grade
 	Foreign Key (studentId) References student(id)
 );
 
-create table examPeriod
-(
-	id int primary key auto_increment not null,
-	name varchar(50),
-	startDate datetime,
-	endDate datetime
-);
+*/
+
+insert into examPeriod (name, startDate, endDate) values
+('July', '2018-07-01', '2018-07-30'),
+('August', '2018-08-01', '2018-08-30'),
+('September', '2018-09-01', '2018-09-30'),
+('October', '2018-10-01', '2018-10-30'),
+('November', '2018-11-01', '2018-11-30'),
+('December', '2018-12-01', '2018-12-30');
+
+
+## to do 
 
 create table studentExamEntry
 (
@@ -221,4 +305,3 @@ create table notification
 	Foreign Key (courseId) References course(id),
 	Foreign Key (documentId) References courseFile(id)
 );
-*/

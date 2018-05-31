@@ -119,7 +119,7 @@ create table payment
 	id int primary key auto_increment not null,
 	studentId int,
 	amount float,
-	cause varchar(30),
+	cause varchar(100),
 	paymentDate datetime,
 	owes bit,
 	
