@@ -56,7 +56,7 @@ create table course
 	Foreign Key (teacherId) References teacher(id)
 );
 
-create table studentAttendsCourse
+create table student_attends_course
 (
 	id int primary key auto_increment not null,
 	studentId int,
@@ -66,7 +66,7 @@ create table studentAttendsCourse
 	Foreign Key (courseId) References course(id)
 );
 
-create table teacherTeachesCourse
+create table teacher_teaches_course
 (
 	id int primary key auto_increment not null,
 	teacherId int,
@@ -76,7 +76,7 @@ create table teacherTeachesCourse
 	Foreign Key (courseId) References course(id)
 );
 
-create table courseLesson
+create table course_lesson
 (
 	id int primary key auto_increment not null,
 	name varchar(50),
@@ -86,7 +86,7 @@ create table courseLesson
 	Foreign Key (courseId) References course(id)	
 );
 
-create table studentDocument
+create table student_document
 (
 	id int primary key auto_increment not null,
 	documentName varchar(30),
@@ -100,7 +100,7 @@ create table studentDocument
 	Foreign Key (courseId) References course(id)
 );
 
-create table courseFile
+create table course_file
 (
 	id int primary key auto_increment not null,
 	documentName varchar(30),
@@ -110,7 +110,7 @@ create table courseFile
 	courseLessonId int,
     courseId int,
 	
-	Foreign Key (courseLessonId) References courseLesson(id),
+	Foreign Key (courseLessonId) References course_lesson(id),
     Foreign Key (courseId) References course(id)
 );
 
@@ -137,7 +137,7 @@ create table colloquium
 	Foreign Key (courseId) References course(id)
 );
 
-create table colloquiumResult
+create table colloquium_result
 (
 	id int primary key auto_increment not null,
 	points float,
@@ -147,7 +147,7 @@ create table colloquiumResult
 
 	Foreign Key (colloquiumId) References colloquium(id),
 	Foreign Key (studentId) References student(id),
-	Foreign Key (documentId) References studentDocument(id)
+	Foreign Key (documentId) References student_document(id)
 );
 
 create table grade
@@ -162,7 +162,7 @@ create table grade
 	Foreign Key (studentId) References student(id)
 );
 
-create table examPeriod
+create table exam_period
 (
 	id int primary key auto_increment not null,
 	name varchar(50),
@@ -170,7 +170,7 @@ create table examPeriod
 	endDate datetime
 );
 
-create table examTerm
+create table exam_term
 (
 	id int primary key auto_increment not null,
 	examDate datetime,
@@ -179,10 +179,10 @@ create table examTerm
 	examPeriodId int,
 	
 	Foreign Key (courseId) References course(id),
-	Foreign Key (examPeriodId) References examPeriod(id)
+	Foreign Key (examPeriodId) References exam_period(id)
 );
 
-create table studentExamEntry
+create table student_exam_entry
 (
 	id int primary key auto_increment not null,	
 	studentId int,
@@ -190,7 +190,7 @@ create table studentExamEntry
 	gradeId int,
 
 	Foreign Key (studentId) References student(id),
-	Foreign Key (examTermId) References examTerm(id),
+	Foreign Key (examTermId) References exam_term(id),
 	Foreign Key (gradeId) References grade(id)	
 );
 
@@ -205,6 +205,6 @@ create table notification
 	studentId int,
 
 	Foreign Key (courseId) References course(id),
-	Foreign Key (documentId) References courseFile(id),
+	Foreign Key (documentId) References course_file(id),
 	Foreign Key (studentId) References student(id)
 );
