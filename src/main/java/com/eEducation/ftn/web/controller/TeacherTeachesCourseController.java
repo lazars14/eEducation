@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.Teacher;
 import com.eEducation.ftn.model.TeacherTeachesCourse;
+import com.eEducation.ftn.repository.TeacherTeachesCourseRepository;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.TeacherService;
 import com.eEducation.ftn.service.TeacherTeachesCourseService;
+import com.eEducation.ftn.web.dto.TeacherDTO;
 import com.eEducation.ftn.web.dto.TeacherTeachesCourseDTO;
 
 @RestController
@@ -25,6 +27,9 @@ import com.eEducation.ftn.web.dto.TeacherTeachesCourseDTO;
 public class TeacherTeachesCourseController {
 	@Autowired
 	TeacherTeachesCourseService ttcService;
+	
+	@Autowired
+	TeacherTeachesCourseRepository ttcRepository;
 	
 	@Autowired
 	TeacherService teacherService;
@@ -38,6 +43,7 @@ public class TeacherTeachesCourseController {
 		List<TeacherTeachesCourseDTO> ttcDTOs = new ArrayList<>();
 		
 		for(TeacherTeachesCourse ttc : ttcS) {
+			ttc.getTeacher().setSPassword("");
 			ttcDTOs.add(new TeacherTeachesCourseDTO(ttc));
 		}
 		
@@ -50,6 +56,8 @@ public class TeacherTeachesCourseController {
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
+		found.getTeacher().setSPassword("");
 		
 		return new ResponseEntity<>(new TeacherTeachesCourseDTO(found), HttpStatus.OK);
 	}
@@ -73,7 +81,55 @@ public class TeacherTeachesCourseController {
 		newTtc.setCourse(course);
 		
 		ttcService.save(newTtc);
+		
+		newTtc.getTeacher().setSPassword("");
+		
 		return new ResponseEntity<>(new TeacherTeachesCourseDTO(newTtc), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/course/{courseId}/batchAdd")
+	public ResponseEntity<Void> batchAdd(@RequestBody List<TeacherDTO> teachers, @PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		for(TeacherDTO teacher : teachers) {
+			Teacher t = teacherService.findOne(teacher.getId());
+			
+			if(t == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			TeacherTeachesCourse newTtc = new TeacherTeachesCourse();
+			newTtc.setTeacher(t);
+			newTtc.setCourse(course);
+			ttcService.save(newTtc);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/course/{courseId}/batchRemove")
+	public ResponseEntity<TeacherTeachesCourseDTO> batchRemove(@RequestBody List<TeacherDTO> teachers, @PathVariable Integer courseId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		for(TeacherDTO teacher : teachers) {
+			Teacher t = teacherService.findOne(teacher.getId());
+			
+			TeacherTeachesCourse found = ttcRepository.findByTeacherAndCourse(t, course);
+			
+			if(found == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			teacherService.remove(found.getId());
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
@@ -98,6 +154,9 @@ public class TeacherTeachesCourseController {
 		found.setCourse(course);
 		
 		ttcService.save(found);
+		
+		found.getTeacher().setSPassword("");
+		
 		return new ResponseEntity<>(new TeacherTeachesCourseDTO(found), HttpStatus.OK);
 	}
 	

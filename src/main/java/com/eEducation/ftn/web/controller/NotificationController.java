@@ -16,10 +16,13 @@ import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.CourseFile;
 import com.eEducation.ftn.model.Notification;
 import com.eEducation.ftn.model.Student;
+import com.eEducation.ftn.model.StudentAttendsCourse;
 import com.eEducation.ftn.repository.NotificationRepository;
+import com.eEducation.ftn.repository.StudentAttendsCourseRepository;
 import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.NotificationService;
+import com.eEducation.ftn.service.StudentAttendsCourseService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.NotificationDTO;
 
@@ -40,6 +43,12 @@ public class NotificationController {
 	
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	StudentAttendsCourseService sacService;
+	
+	@Autowired
+	StudentAttendsCourseRepository sacRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<NotificationDTO>> getAll(){
@@ -104,6 +113,77 @@ public class NotificationController {
 		
 		notificationService.save(newNotification);
 		return new ResponseEntity<>(new NotificationDTO(newNotification), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/batchAdd")
+	public ResponseEntity<Void> batchAdd(@RequestBody NotificationDTO notification){
+		if(notification.getCourse() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Course course = courseService.findOne(notification.getCourse().getId());
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<StudentAttendsCourse> sacS = sacRepository.findByCourse(course);
+		
+		for(StudentAttendsCourse sac : sacS) {
+			Notification newNotification = new Notification();
+			
+			newNotification.setMessage(notification.getMessage());
+			newNotification.setNDate(notification.getnDate());
+			
+			CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
+			
+			// seen is false on update - student hasn't seen it yet
+			newNotification.setSeen(false);
+			
+			newNotification.setCourse(course);
+			newNotification.setDocument(courseFile);
+			newNotification.setStudent(sac.getStudent());
+			
+			notificationService.save(newNotification);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/batchUpdate")
+	public ResponseEntity<NotificationDTO> batchUpdate(@RequestBody NotificationDTO notification){
+		if(notification.getCourse() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		String[] newAndOldMessageParts = notification.getMessage().split("|");
+		String newMessage = newAndOldMessageParts[0];
+		String oldMessage = newAndOldMessageParts[1];
+		
+		notification.setMessage(newMessage);
+		
+		Course course = courseService.findOne(notification.getCourse().getId());
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<Notification> notifications = notificationRepository.findByCourseAndMessage(course, oldMessage);
+		
+		for(Notification nForUpdate : notifications) {
+			nForUpdate.setMessage(notification.getMessage());
+			nForUpdate.setNDate(notification.getnDate());
+			
+			CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
+			
+			// seen is false on update - student hasn't seen it yet
+			nForUpdate.setSeen(false);
+			nForUpdate.setDocument(courseFile);
+			
+			// not allowed to change course and student
+			
+			notificationService.save(nForUpdate);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")

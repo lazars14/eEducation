@@ -38,6 +38,7 @@ public class StudentAttendsCourseController {
 		List<StudentAttendsCourseDTO> sacDTOs = new ArrayList<>();
 		
 		for(StudentAttendsCourse sac : sacS) {
+			sac.getStudent().setSPassword("");
 			sacDTOs.add(new StudentAttendsCourseDTO(sac));
 		}
 		
@@ -50,6 +51,8 @@ public class StudentAttendsCourseController {
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
+		found.getStudent().setSPassword("");
 		
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(found), HttpStatus.OK);
 	}
@@ -73,6 +76,9 @@ public class StudentAttendsCourseController {
 		newSac.setCourse(course);
 		
 		sacService.save(newSac);
+		
+		newSac.getStudent().setSPassword("");
+		
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(newSac), HttpStatus.OK);
 	}
 	
@@ -98,6 +104,9 @@ public class StudentAttendsCourseController {
 		found.setCourse(course);
 		
 		sacService.save(found);
+		
+		found.getStudent().setSPassword("");
+		
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(found), HttpStatus.OK);
 	}
 	

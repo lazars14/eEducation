@@ -11,4 +11,5 @@ import com.eEducation.ftn.model.TeacherTeachesCourse;
 public interface TeacherTeachesCourseRepository extends JpaRepository<TeacherTeachesCourse, Integer> {
 	public List<TeacherTeachesCourse> findByTeacher(Teacher teacher);
 	public List<TeacherTeachesCourse> findByCourse(Course course);
+	public TeacherTeachesCourse findByTeacherAndCourse(Teacher teacher, Course course);
 }

@@ -164,6 +164,7 @@ public class TeacherController {
 		List<TeacherDTO> teacherDTOs = new ArrayList<>();
 		
 		for(TeacherTeachesCourse t : ttcS) {
+			t.getTeacher().setSPassword("");
 			teacherDTOs.add(new TeacherDTO(t.getTeacher()));
 		}
 		
