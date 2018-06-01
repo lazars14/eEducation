@@ -7,7 +7,7 @@ import com.eEducation.ftn.model.ExamTerm;
 public class ExamTermDTO {
 	
 	private Integer id;
-    private StudentDTO student;
+    private CourseDTO course;
     private ExamPeriodDTO examPeriod;
     private Date examDate;
     private String classRoom;
@@ -17,7 +17,7 @@ public class ExamTermDTO {
 
 	public ExamTermDTO(ExamTerm examTerm) {
 		this.id = examTerm.getId();
-		this.student = new StudentDTO(examTerm.getStudent());
+		this.course = new CourseDTO(examTerm.getCourse());
 		this.examPeriod = new ExamPeriodDTO(examTerm.getExamPeriod());
 		this.examDate = examTerm.getExamDate();
 		this.classRoom = examTerm.getClassRoom();
@@ -31,12 +31,12 @@ public class ExamTermDTO {
 		this.id = id;
 	}
 
-	public StudentDTO getStudent() {
-		return student;
+	public CourseDTO getCourse() {
+		return course;
 	}
 
-	public void setStudent(StudentDTO student) {
-		this.student = student;
+	public void setCourse(CourseDTO course) {
+		this.course = course;
 	}
 
 	public ExamPeriodDTO getExamPeriod() {

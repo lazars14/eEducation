@@ -16,9 +16,12 @@ import com.eEducation.ftn.model.ExamTerm;
 import com.eEducation.ftn.model.Grade;
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.StudentExamEntry;
+import com.eEducation.ftn.model.Teacher;
+import com.eEducation.ftn.repository.StudentExamEntryRepository;
 import com.eEducation.ftn.service.ExamTermService;
 import com.eEducation.ftn.service.StudentExamEntryService;
 import com.eEducation.ftn.service.StudentService;
+import com.eEducation.ftn.service.TeacherService;
 import com.eEducation.ftn.web.dto.StudentExamEntryDTO;
 import com.eEducation.ftn.service.GradeService;
 
@@ -29,7 +32,13 @@ public class StudentExamEntryController {
 	StudentExamEntryService examEntryService;
 	
 	@Autowired
+	StudentExamEntryRepository examEntryRepository;
+	
+	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	TeacherService teacherService;
 	
 	@Autowired
 	ExamTermService examTermService;
@@ -122,5 +131,43 @@ public class StudentExamEntryController {
 		}
 	}
 	
-	// collection methods
+	@RequestMapping(method = RequestMethod.GET, value="/examTerms/{examTermId}/student/{studentId}")
+	public ResponseEntity<List<StudentExamEntryDTO>> getByExamTermAndStudent(@PathVariable Integer examTermId, @PathVariable Integer studentId){
+		Student student = studentService.findOne(studentId);
+		ExamTerm examTerm = examTermService.findOne(examTermId);
+		
+		if(student == null || examTerm == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<StudentExamEntry> examEntries = examEntryRepository.findByExamTermAndStudent(examTerm, student);
+		List<StudentExamEntryDTO> examEntriesDTOs = new ArrayList<>();
+		
+		for(StudentExamEntry ee : examEntries){
+			examEntriesDTOs.add(new StudentExamEntryDTO(ee));
+		}
+		
+		return new ResponseEntity<>(examEntriesDTOs, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/examTerms/{examTermId}/teacher/{teacherId}")
+	public ResponseEntity<List<StudentExamEntryDTO>> getByExamTermAndTeacher(@PathVariable Integer examTermId, @PathVariable Integer teacherId){
+		Teacher teacher = teacherService.findOne(teacherId);
+		ExamTerm examTerm = examTermService.findOne(examTermId);
+		
+		if(teacher == null || examTerm == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<StudentExamEntry> examEntries = examEntryRepository.findByExamTerm(examTerm);
+		List<StudentExamEntryDTO> examEntriesDTOs = new ArrayList<>();
+		
+		for(StudentExamEntry ee : examEntries){
+			if(ee.getExamTerm().getCourse().getTeacher().getId() == teacher.getId()) {
+				examEntriesDTOs.add(new StudentExamEntryDTO(ee));
+			}
+		}
+		
+		return new ResponseEntity<>(examEntriesDTOs, HttpStatus.OK);
+	}
 }

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.ExamTerm;
-import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.repository.ExamTermRepository;
+import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.ExamPeriod;
 import com.eEducation.ftn.service.ExamTermService;
+import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.ExamPeriodService;
-import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.ExamTermDTO;
 
 @RestController
@@ -28,7 +28,7 @@ public class ExamTermController {
 	ExamTermService examTermService;
 	
 	@Autowired
-	StudentService studentService;
+	CourseService courseService;
 	
 	@Autowired
 	ExamPeriodService examPeriodService;
@@ -80,19 +80,19 @@ public class ExamTermController {
 		
 		ExamTerm newExamTerm = new ExamTerm();
 		
-		if(examTerm.getStudent() == null || examTerm.getExamPeriod() == null) {
+		if(examTerm.getCourse() == null || examTerm.getExamPeriod() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student student = studentService.findOne(examTerm.getStudent().getId());
+		Course course = courseService.findOne(examTerm.getCourse().getId());
 		
-		if(student == null) {
+		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		newExamTerm.setExamDate(examTerm.getExamDate());
 		newExamTerm.setClassRoom(examTerm.getClassRoom());
-		newExamTerm.setStudent(student);
+		newExamTerm.setCourse(course);
 		newExamTerm.setExamPeriod(examPeriod);
 		
 		examTermService.save(newExamTerm);
@@ -112,19 +112,19 @@ public class ExamTermController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(examTerm.getStudent() == null || examTerm.getExamPeriod() == null) {
+		if(examTerm.getCourse() == null || examTerm.getExamPeriod() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student student = studentService.findOne(examTerm.getStudent().getId());
+		Course course = courseService.findOne(examTerm.getCourse().getId());
 		
-		if(student == null) {
+		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		found.setExamDate(examTerm.getExamDate());
 		found.setClassRoom(examTerm.getClassRoom());
-		found.setStudent(student);
+		found.setCourse(course);
 		found.setExamPeriod(examPeriod);
 		
 		examTermService.save(found);

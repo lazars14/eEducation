@@ -41,9 +41,9 @@ public class ExamTerm implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
     @ManyToOne
-    private Student student;
+    private Course course;
     @JoinColumn(name = "examPeriodId", referencedColumnName = "id")
     @ManyToOne
     private ExamPeriod examPeriod;
@@ -85,12 +85,12 @@ public class ExamTerm implements Serializable {
     }
 
 
-    public Student getStudent() {
-        return student;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public ExamPeriod getExamPeriod() {
