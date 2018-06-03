@@ -37,7 +37,7 @@ public class ExamTermController {
 	ExamTermRepository examTermRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ExamTermDTO>> getAll(@PathVariable Integer examPeriodId){
+	public ResponseEntity<List<ExamTermDTO>> getAll(@PathVariable Long examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		
 		if(examPeriod == null) {
@@ -55,7 +55,7 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ExamTermDTO> getById(@PathVariable Integer id, @PathVariable Integer examPeriodId){
+	public ResponseEntity<ExamTermDTO> getById(@PathVariable Long id, @PathVariable Long examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		
 		if(examPeriod == null) {
@@ -71,7 +71,7 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ExamTermDTO> add(@RequestBody ExamTermDTO examTerm, @PathVariable Integer examPeriodId){
+	public ResponseEntity<ExamTermDTO> add(@RequestBody ExamTermDTO examTerm, @PathVariable Long examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		
 		if(examPeriod == null) {
@@ -100,7 +100,7 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ExamTermDTO> update(@RequestBody ExamTermDTO examTerm, @PathVariable Integer examPeriodId){
+	public ResponseEntity<ExamTermDTO> update(@RequestBody ExamTermDTO examTerm, @PathVariable Long examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		
 		if(examPeriod == null) {
@@ -132,7 +132,7 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer examPeriodId){
+	public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		
 		if(examPeriod == null) {
@@ -149,7 +149,7 @@ public class ExamTermController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/byExamPeriod")
-	public ResponseEntity<List<ExamTermDTO>> getByExamPeriod(@PathVariable Integer examPeriodId){
+	public ResponseEntity<List<ExamTermDTO>> getByExamPeriod(@PathVariable Long examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		
 		if(examPeriod == null) {

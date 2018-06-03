@@ -63,7 +63,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<NotificationDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<NotificationDTO> getById(@PathVariable Long id){
 		Notification found = notificationService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -73,7 +73,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}/read")
-	public ResponseEntity<NotificationDTO> readNotification(@PathVariable Integer id){
+	public ResponseEntity<NotificationDTO> readNotification(@PathVariable Long id){
 		Notification found = notificationService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -212,7 +212,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Notification found = notificationService.findOne(id);
 		if(found != null) {
 			notificationService.remove(id);
@@ -223,7 +223,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/student/{studentId}")
-	public ResponseEntity<List<NotificationDTO>> getByStudent(@PathVariable Integer studentId){
+	public ResponseEntity<List<NotificationDTO>> getByStudent(@PathVariable Long studentId){
 		Student student = studentService.findOne(studentId);
 		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -240,7 +240,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}/student/{studentId}")
-	public ResponseEntity<List<NotificationDTO>> getByCourseAndStudent(@PathVariable Integer studentId, @PathVariable Integer courseId){
+	public ResponseEntity<List<NotificationDTO>> getByCourseAndStudent(@PathVariable Long studentId, @PathVariable Long courseId){
 		Student student = studentService.findOne(studentId);
 		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -262,7 +262,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}/distinctMessages")
-	public ResponseEntity<List<NotificationDTO>> getByCourseDistinct(@PathVariable Integer courseId){
+	public ResponseEntity<List<NotificationDTO>> getByCourseDistinct(@PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

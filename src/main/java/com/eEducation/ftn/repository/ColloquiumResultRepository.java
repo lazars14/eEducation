@@ -1,9 +1,11 @@
 package com.eEducation.ftn.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.eEducation.ftn.model.ColloquiumResult;
 
-public interface ColloquiumResultRepository extends JpaRepository<ColloquiumResult, Integer> {
+@Repository
+public interface ColloquiumResultRepository extends JpaRepository<ColloquiumResult, Long> {
 
 }

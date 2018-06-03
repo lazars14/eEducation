@@ -43,7 +43,7 @@ public class ExamPeriod implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "startDate")
@@ -58,15 +58,15 @@ public class ExamPeriod implements Serializable {
     public ExamPeriod() {
     }
 
-    public ExamPeriod(Integer id) {
+    public ExamPeriod(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

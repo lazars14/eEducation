@@ -43,7 +43,7 @@ public class CollegeDirectionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CollegeDirectionDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<CollegeDirectionDTO> getById(@PathVariable Long id){
 		CollegeDirection found = CollegeDirectionService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ public class CollegeDirectionController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		CollegeDirection found = CollegeDirectionService.findOne(id);
 		if(found != null){
 			CollegeDirectionService.remove(id);

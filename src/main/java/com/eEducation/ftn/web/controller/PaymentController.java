@@ -48,7 +48,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<PaymentDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<PaymentDTO> getById(@PathVariable Long id){
 		Payment found = paymentService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -105,7 +105,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Payment found = paymentService.findOne(id);
 		if(found != null) {
 			paymentService.remove(id);
@@ -116,7 +116,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/students/{studentId}")
-	public ResponseEntity<List<PaymentDTO>> getByStudent(@PathVariable Integer studentId){
+	public ResponseEntity<List<PaymentDTO>> getByStudent(@PathVariable Long studentId){
 		Student student = studentService.findOne(studentId);
 		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

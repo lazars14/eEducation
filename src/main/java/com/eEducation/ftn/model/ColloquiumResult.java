@@ -37,7 +37,7 @@ public class ColloquiumResult implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "points")
     private Float points;
@@ -54,15 +54,15 @@ public class ColloquiumResult implements Serializable {
     public ColloquiumResult() {
     }
 
-    public ColloquiumResult(Integer id) {
+    public ColloquiumResult(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

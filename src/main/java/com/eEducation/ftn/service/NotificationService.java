@@ -15,7 +15,7 @@ public class NotificationService {
 	@Autowired
 	NotificationRepository notificationRepository;
 	
-	public Notification findOne(Integer id) {
+	public Notification findOne(Long id) {
 		return notificationRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class NotificationService {
 		return notificationRepository.save(notification);
 	}
 
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		notificationRepository.delete(id);
 	}
 }

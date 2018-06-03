@@ -36,7 +36,7 @@ public class TeacherTeachesCourse implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @JoinColumn(name = "teacherId", referencedColumnName = "id")
     @ManyToOne
     private Teacher teacher;
@@ -47,15 +47,15 @@ public class TeacherTeachesCourse implements Serializable {
     public TeacherTeachesCourse() {
     }
 
-    public TeacherTeachesCourse(Integer id) {
+    public TeacherTeachesCourse(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

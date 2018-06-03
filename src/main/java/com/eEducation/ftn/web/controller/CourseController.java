@@ -55,7 +55,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<CourseDTO> getById(@PathVariable Long id){
 		Course found = courseService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -114,7 +114,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Course found = courseService.findOne(id);
 		if(found != null) {
 			courseService.remove(id);
@@ -125,7 +125,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/teacher/{teacherId}")
-	public ResponseEntity<List<CourseDTO>> getByTeacher(@PathVariable Integer teacherId){
+	public ResponseEntity<List<CourseDTO>> getByTeacher(@PathVariable Long teacherId){
 		Teacher teacher = teacherService.findOne(teacherId);
 		if(teacher == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -142,7 +142,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/student/{studentId}")
-	public ResponseEntity<List<CourseDTO>> getByStudent(@PathVariable Integer studentId){
+	public ResponseEntity<List<CourseDTO>> getByStudent(@PathVariable Long studentId){
 		Student student = studentService.findOne(studentId);
 		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

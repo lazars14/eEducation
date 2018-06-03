@@ -38,7 +38,7 @@ public class ColloquiumResultController {
 	StudentDocumentService studentDocumentService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ColloquiumResultDTO>> getAll(@PathVariable Integer colloquiumId){
+	public ResponseEntity<List<ColloquiumResultDTO>> getAll(@PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
 		if(colloquium == null) {
@@ -56,7 +56,7 @@ public class ColloquiumResultController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ColloquiumResultDTO> getById(@PathVariable Integer id, @PathVariable Integer colloquiumId){
+	public ResponseEntity<ColloquiumResultDTO> getById(@PathVariable Long id, @PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
 		if(colloquium == null) {
@@ -72,7 +72,7 @@ public class ColloquiumResultController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ColloquiumResultDTO> add(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Integer colloquiumId){
+	public ResponseEntity<ColloquiumResultDTO> add(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
 		if(colloquium == null) {
@@ -103,7 +103,7 @@ public class ColloquiumResultController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ColloquiumResultDTO> update(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Integer colloquiumId){
+	public ResponseEntity<ColloquiumResultDTO> update(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
 		if(colloquium == null) {
@@ -136,7 +136,7 @@ public class ColloquiumResultController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer colloquiumId){
+	public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
 		if(colloquium == null) {

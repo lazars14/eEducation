@@ -46,7 +46,7 @@ public class StudentAttendsCourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<StudentAttendsCourseDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<StudentAttendsCourseDTO> getById(@PathVariable Long id){
 		StudentAttendsCourse found = sacService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -111,7 +111,7 @@ public class StudentAttendsCourseController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		StudentAttendsCourse found = sacService.findOne(id);
 		if(found != null) {
 			sacService.remove(id);

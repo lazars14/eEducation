@@ -4,7 +4,7 @@ import com.eEducation.ftn.model.ColloquiumResult;
 
 public class ColloquiumResultDTO {
 	
-	private Integer id;
+	private Long id;
     private Float points;
     private ColloquiumDTO colloquium;
     private StudentDTO student;
@@ -21,11 +21,11 @@ public class ColloquiumResultDTO {
 		this.document = new StudentDocumentDTO(cr.getDocument());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

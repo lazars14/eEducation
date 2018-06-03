@@ -6,7 +6,7 @@ import com.eEducation.ftn.model.Payment;
 
 public class PaymentDTO {
 	
-	private Integer id;
+	private Long id;
     private StudentDTO student;
     private Float amount;
     private String cause;
@@ -25,11 +25,11 @@ public class PaymentDTO {
 		this.owes = payment.getOwes();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

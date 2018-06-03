@@ -35,7 +35,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<RankDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<RankDTO> getById(@PathVariable Long id){
 		Rank found = rankService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,7 +66,7 @@ public class RankController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Rank found = rankService.findOne(id);
 		if(found != null){
 			return new ResponseEntity<>(HttpStatus.OK);

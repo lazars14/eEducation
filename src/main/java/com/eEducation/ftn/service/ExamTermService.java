@@ -15,7 +15,7 @@ public class ExamTermService {
 	@Autowired
 	ExamTermRepository examTermRepository;
 	
-	public ExamTerm findOne(Integer id) {
+	public ExamTerm findOne(Long id) {
 		return examTermRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class ExamTermService {
 		return examTermRepository.save(examTerm);
 	}
 
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		examTermRepository.delete(id);
 	}
 }

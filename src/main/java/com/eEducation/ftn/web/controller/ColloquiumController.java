@@ -32,7 +32,7 @@ public class ColloquiumController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ColloquiumDTO>> getAll(@PathVariable Integer courseId){
+	public ResponseEntity<List<ColloquiumDTO>> getAll(@PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -49,7 +49,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ColloquiumDTO> getById(@PathVariable Integer courseId, @PathVariable Integer id){
+	public ResponseEntity<ColloquiumDTO> getById(@PathVariable Long courseId, @PathVariable Long id){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -64,7 +64,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ColloquiumDTO> add(@RequestBody ColloquiumDTO colloquium, @PathVariable Integer courseId){
+	public ResponseEntity<ColloquiumDTO> add(@RequestBody ColloquiumDTO colloquium, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -86,7 +86,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<ColloquiumDTO> update(@RequestBody ColloquiumDTO colloquium, @PathVariable Integer courseId){
+	public ResponseEntity<ColloquiumDTO> update(@RequestBody ColloquiumDTO colloquium, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -108,7 +108,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer courseId){
+	public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -124,7 +124,7 @@ public class ColloquiumController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}")
-	public ResponseEntity<List<ColloquiumDTO>> getByCourse(@PathVariable Integer courseId){
+	public ResponseEntity<List<ColloquiumDTO>> getByCourse(@PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

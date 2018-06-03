@@ -51,7 +51,7 @@ public class TeacherTeachesCourseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<TeacherTeachesCourseDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<TeacherTeachesCourseDTO> getById(@PathVariable Long id){
 		TeacherTeachesCourse found = ttcService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -88,7 +88,7 @@ public class TeacherTeachesCourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/course/{courseId}/batchAdd")
-	public ResponseEntity<Void> batchAdd(@RequestBody List<TeacherDTO> teachers, @PathVariable Integer courseId){
+	public ResponseEntity<Void> batchAdd(@RequestBody List<TeacherDTO> teachers, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -111,7 +111,7 @@ public class TeacherTeachesCourseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/course/{courseId}/batchRemove")
-	public ResponseEntity<TeacherTeachesCourseDTO> batchRemove(@RequestBody List<TeacherDTO> teachers, @PathVariable Integer courseId){
+	public ResponseEntity<TeacherTeachesCourseDTO> batchRemove(@RequestBody List<TeacherDTO> teachers, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -161,7 +161,7 @@ public class TeacherTeachesCourseController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		TeacherTeachesCourse found = ttcService.findOne(id);
 		if(found != null) {
 			ttcService.remove(id);

@@ -37,7 +37,7 @@ public class CourseFileController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseFileDTO>> getAll(@PathVariable Integer courseId){
+	public ResponseEntity<List<CourseFileDTO>> getAll(@PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseFileDTO> getById(@PathVariable Integer id, @PathVariable Integer courseId){
+	public ResponseEntity<CourseFileDTO> getById(@PathVariable Long id, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,7 +70,7 @@ public class CourseFileController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> add(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
+	public ResponseEntity<CourseFileDTO> add(@RequestBody CourseFileDTO courseFile, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -108,7 +108,7 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> update(@RequestBody CourseFileDTO courseFile, @PathVariable Integer courseId){
+	public ResponseEntity<CourseFileDTO> update(@RequestBody CourseFileDTO courseFile, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -131,7 +131,7 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer courseId){
+	public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -147,7 +147,7 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/courseLessons/{lessonId}")
-	public ResponseEntity<List<CourseFileDTO>> getByCourseLesson(@PathVariable Integer lessonId){
+	public ResponseEntity<List<CourseFileDTO>> getByCourseLesson(@PathVariable Long lessonId){
 		CourseLesson courseLesson = courseLessonService.findOne(lessonId);
 		if(courseLesson == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -167,7 +167,7 @@ public class CourseFileController {
 	 * This is for getting files related to notifications
 	 */
 	@RequestMapping(method = RequestMethod.GET, value="/courses/{courseId}/notifications")
-	public ResponseEntity<List<CourseFileDTO>> getByCourseNotifications(@PathVariable Integer courseId){
+	public ResponseEntity<List<CourseFileDTO>> getByCourseNotifications(@PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

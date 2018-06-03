@@ -4,7 +4,7 @@ import com.eEducation.ftn.model.CourseLesson;
 
 public class CourseLessonDTO {
 
-	private Integer id;
+	private Long id;
 	private String name;
 	private String description;
 	private CourseDTO course;
@@ -20,11 +20,11 @@ public class CourseLessonDTO {
 		this.course = new CourseDTO(cl.getCourse());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

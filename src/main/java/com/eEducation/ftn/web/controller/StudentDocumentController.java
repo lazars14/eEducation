@@ -33,7 +33,7 @@ public class StudentDocumentController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<StudentDocumentDTO>> getAll(@PathVariable Integer courseId){
+	public ResponseEntity<List<StudentDocumentDTO>> getAll(@PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -50,7 +50,7 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<StudentDocumentDTO> getById(@PathVariable Integer id, @PathVariable Integer courseId){
+	public ResponseEntity<StudentDocumentDTO> getById(@PathVariable Long id, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -66,7 +66,7 @@ public class StudentDocumentController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<StudentDocumentDTO> add(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Integer courseId){
+	public ResponseEntity<StudentDocumentDTO> add(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -95,7 +95,7 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<StudentDocumentDTO> update(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Integer courseId){
+	public ResponseEntity<StudentDocumentDTO> update(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -115,7 +115,7 @@ public class StudentDocumentController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer courseId){
+	public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

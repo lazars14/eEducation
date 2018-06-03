@@ -4,7 +4,7 @@ import com.eEducation.ftn.model.Grade;
 
 public class GradeDTO {
 	
-	private Integer id;
+	private Long id;
 	private Float points;
     private Integer grade;
     private CourseDTO course;
@@ -20,11 +20,11 @@ public class GradeDTO {
 		this.student = new StudentDTO(grade.getStudent());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

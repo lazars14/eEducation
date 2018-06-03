@@ -6,7 +6,7 @@ import com.eEducation.ftn.model.Notification;
 
 public class NotificationDTO {
 	
-	private Integer id;
+	private Long id;
     private String message;
     private Date nDate;
     private CourseDTO course;
@@ -26,11 +26,11 @@ public class NotificationDTO {
 		this.student = new StudentDTO(notification.getStudent());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

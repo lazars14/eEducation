@@ -4,7 +4,7 @@ import com.eEducation.ftn.model.CourseFile;
 
 public class CourseFileDTO {
 	
-	private Integer id;
+	private Long id;
     private String documentName;
     private String documentType;
     private String documentURL;
@@ -25,11 +25,11 @@ public class CourseFileDTO {
 		this.course = new CourseDTO(courseFile.getCourse());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

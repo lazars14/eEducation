@@ -15,7 +15,7 @@ public class RankService {
 	@Autowired
 	RankRepository rankRepository;
 	
-	public Rank findOne(Integer id) {
+	public Rank findOne(Long id) {
 		return rankRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class RankService {
 		return rankRepository.save(rank);
 	}
 
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		rankRepository.delete(id);
 	}
 }

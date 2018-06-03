@@ -32,7 +32,7 @@ public class CourseLessonController {
 	CourseService courseService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CourseLessonDTO>> getAll(@PathVariable Integer courseId){
+	public ResponseEntity<List<CourseLessonDTO>> getAll(@PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,7 +49,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<CourseLessonDTO> getById(@PathVariable Integer id, @PathVariable Integer courseId){
+	public ResponseEntity<CourseLessonDTO> getById(@PathVariable Long id, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -64,7 +64,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseLessonDTO> add(@RequestBody CourseLessonDTO courseLesson, @PathVariable Integer courseId){
+	public ResponseEntity<CourseLessonDTO> add(@RequestBody CourseLessonDTO courseLesson, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -90,7 +90,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
-	public ResponseEntity<CourseLessonDTO> update(@RequestBody CourseLessonDTO courseLesson, @PathVariable Integer courseId){
+	public ResponseEntity<CourseLessonDTO> update(@RequestBody CourseLessonDTO courseLesson, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -111,7 +111,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @PathVariable Integer courseId){
+	public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long courseId){
 		Course c = courseService.findOne(courseId);
 		if(c == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -127,7 +127,7 @@ public class CourseLessonController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/byCourse")
-	public ResponseEntity<List<CourseLessonDTO>> getByCourse(@PathVariable Integer courseId){
+	public ResponseEntity<List<CourseLessonDTO>> getByCourse(@PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

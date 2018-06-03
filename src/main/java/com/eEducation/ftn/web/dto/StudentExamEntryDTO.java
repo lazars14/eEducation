@@ -4,7 +4,7 @@ import com.eEducation.ftn.model.StudentExamEntry;
 
 public class StudentExamEntryDTO {
 	
-	private Integer id;
+	private Long id;
     private StudentDTO student;
     private ExamTermDTO examTerm;
     private GradeDTO grade;
@@ -19,11 +19,11 @@ public class StudentExamEntryDTO {
 		this.grade = new GradeDTO(see.getGrade());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

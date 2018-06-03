@@ -6,7 +6,7 @@ import com.eEducation.ftn.model.Colloquium;
 
 public class ColloquiumDTO {
 	
-	private Integer id;
+	private Long id;
 	private Float maxPoints;
     private String examType;
     private Date examDateTime;
@@ -23,11 +23,11 @@ public class ColloquiumDTO {
 		this.course = new CourseDTO(colloquium.getCourse());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

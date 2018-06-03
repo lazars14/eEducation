@@ -15,7 +15,7 @@ public class ColloquiumService {
 	@Autowired
 	ColloquiumRepository cRepository;
 	
-	public Colloquium findOne(Integer id) {
+	public Colloquium findOne(Long id) {
 		return cRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class ColloquiumService {
 		return cRepository.save(c);
 	}
 
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		cRepository.delete(id);
 	}
 }

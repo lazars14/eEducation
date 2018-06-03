@@ -35,7 +35,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<ExamPeriodDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<ExamPeriodDTO> getById(@PathVariable Long id){
 		ExamPeriod found = examPeriodService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -71,7 +71,7 @@ public class ExamPeriodController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		ExamPeriod found = examPeriodService.findOne(id);
 		if(found != null){
 			examPeriodService.remove(id);

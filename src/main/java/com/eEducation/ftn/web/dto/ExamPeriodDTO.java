@@ -6,7 +6,7 @@ import com.eEducation.ftn.model.ExamPeriod;
 
 public class ExamPeriodDTO {
 	
-	private Integer id;
+	private Long id;
 	private String name;
     private Date startDate;
     private Date endDate;
@@ -20,11 +20,11 @@ public class ExamPeriodDTO {
 		this.endDate = examPeriod.getEndDate();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

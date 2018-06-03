@@ -49,7 +49,7 @@ public class GradeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<GradeDTO> getById(@PathVariable Integer id){
+	public ResponseEntity<GradeDTO> getById(@PathVariable Long id){
 		Grade found = gradeService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -95,7 +95,7 @@ public class GradeController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Grade found = gradeService.findOne(id);
 		if(found != null) {
 			gradeService.remove(id);
@@ -106,7 +106,7 @@ public class GradeController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/students/{studentId}")
-	public ResponseEntity<List<GradeDTO>> getByStudentId(@PathVariable Integer studentId){
+	public ResponseEntity<List<GradeDTO>> getByStudentId(@PathVariable Long studentId){
 		Student student = studentService.findOne(studentId);
 		if(student == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

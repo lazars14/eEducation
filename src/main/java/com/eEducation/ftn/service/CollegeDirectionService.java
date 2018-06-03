@@ -15,7 +15,7 @@ public class CollegeDirectionService {
 	@Autowired
 	CollegeDirectionRepository directionRepository;
 	
-	public CollegeDirection findOne(Integer id) {
+	public CollegeDirection findOne(Long id) {
 		return directionRepository.findOne(id);
 	}
 
@@ -31,7 +31,7 @@ public class CollegeDirectionService {
 		return directionRepository.save(direction);
 	}
 
-	public void remove(Integer id) {
+	public void remove(Long id) {
 		directionRepository.delete(id);
 	}
 }
