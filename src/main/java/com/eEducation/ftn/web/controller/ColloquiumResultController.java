@@ -16,6 +16,7 @@ import com.eEducation.ftn.model.Colloquium;
 import com.eEducation.ftn.model.ColloquiumResult;
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.StudentDocument;
+import com.eEducation.ftn.repository.ColloquiumResultRepository;
 import com.eEducation.ftn.service.ColloquiumResultService;
 import com.eEducation.ftn.service.ColloquiumService;
 import com.eEducation.ftn.service.StudentDocumentService;
@@ -27,6 +28,9 @@ import com.eEducation.ftn.web.dto.ColloquiumResultDTO;
 public class ColloquiumResultController {
 	@Autowired
 	ColloquiumResultService colloquiumResultService;
+	
+	@Autowired
+	ColloquiumResultRepository colloquiumResultRepository;
 	
 	@Autowired
 	ColloquiumService colloquiumService;
@@ -66,6 +70,28 @@ public class ColloquiumResultController {
 		ColloquiumResult found = colloquiumResultService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(new ColloquiumResultDTO(found), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/student/{studentId}")
+	public ResponseEntity<ColloquiumResultDTO> getByStudentAndColloquium(@PathVariable Long studentId, @PathVariable Long colloquiumId){
+		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
+		
+		if(colloquium == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Student student = studentService.findOne(studentId);
+		
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		ColloquiumResult found = colloquiumResultRepository.findByStudentAndColloquium(student, colloquium);
+		if(found == null){
+			return new ResponseEntity<>(null, HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<>(new ColloquiumResultDTO(found), HttpStatus.OK);
