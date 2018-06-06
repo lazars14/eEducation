@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,14 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,12 +25,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "exam_period")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ExamPeriod.findAll", query = "SELECT e FROM ExamPeriod e"),
-    @NamedQuery(name = "ExamPeriod.findById", query = "SELECT e FROM ExamPeriod e WHERE e.id = :id"),
-    @NamedQuery(name = "ExamPeriod.findByName", query = "SELECT e FROM ExamPeriod e WHERE e.name = :name"),
-    @NamedQuery(name = "ExamPeriod.findByStartDate", query = "SELECT e FROM ExamPeriod e WHERE e.startDate = :startDate"),
-    @NamedQuery(name = "ExamPeriod.findByEndDate", query = "SELECT e FROM ExamPeriod e WHERE e.endDate = :endDate")})
 public class ExamPeriod implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,14 +35,12 @@ public class ExamPeriod implements Serializable {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
-    @Column(name = "endDate")
+    @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @OneToMany(mappedBy = "examPeriodId")
-    private Collection<StudentExamEntry> studentExamEntryCollection;
 
     public ExamPeriod() {
     }
@@ -92,15 +79,6 @@ public class ExamPeriod implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    @XmlTransient
-    public Collection<StudentExamEntry> getStudentExamEntryCollection() {
-        return studentExamEntryCollection;
-    }
-
-    public void setStudentExamEntryCollection(Collection<StudentExamEntry> studentExamEntryCollection) {
-        this.studentExamEntryCollection = studentExamEntryCollection;
     }
 
     @Override

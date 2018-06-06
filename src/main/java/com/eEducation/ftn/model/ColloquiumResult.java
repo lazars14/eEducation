@@ -14,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,10 +24,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "colloquium_result")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ColloquiumResult.findAll", query = "SELECT c FROM ColloquiumResult c"),
-    @NamedQuery(name = "ColloquiumResult.findById", query = "SELECT c FROM ColloquiumResult c WHERE c.id = :id"),
-    @NamedQuery(name = "ColloquiumResult.findByPoints", query = "SELECT c FROM ColloquiumResult c WHERE c.points = :points")})
 public class ColloquiumResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,16 +32,15 @@ public class ColloquiumResult implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "points")
     private Float points;
-    @JoinColumn(name = "colloquiumId", referencedColumnName = "id")
+    @JoinColumn(name = "colloquium_id", referencedColumnName = "id")
     @ManyToOne
     private Colloquium colloquium;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne
     private Student student;
-    @JoinColumn(name = "documentId", referencedColumnName = "id")
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
     @ManyToOne
     private StudentDocument document;
 

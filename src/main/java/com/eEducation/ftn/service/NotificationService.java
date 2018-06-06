@@ -16,7 +16,7 @@ public class NotificationService {
 	NotificationRepository notificationRepository;
 	
 	public Notification findOne(Long id) {
-		return notificationRepository.findOne(id);
+		return notificationRepository.getOne(id);
 	}
 
 	public List<Notification> findAll() {
@@ -32,6 +32,6 @@ public class NotificationService {
 	}
 
 	public void remove(Long id) {
-		notificationRepository.delete(id);
+		notificationRepository.delete(notificationRepository.getOne(id));
 	}
 }

@@ -21,7 +21,15 @@ public class NotificationDTO {
 		this.message = notification.getMessage();
 		this.nDate = notification.getNDate();
 		this.course = new CourseDTO(notification.getCourse());
-		this.document = new CourseFileDTO(notification.getDocument());
+		
+		if(notification.getDocument() == null) {
+			// document doesn't exist
+			this.document = null;
+		} else {
+			// document exists
+			this.document = new CourseFileDTO(notification.getDocument());
+		}
+		
 		this.seen = notification.getSeen();
 		this.student = new StudentDTO(notification.getStudent());
 	}

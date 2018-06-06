@@ -16,7 +16,7 @@ public class CourseLessonService {
 	CourseLessonRepository courseLessonRepository;
 	
 	public CourseLesson findOne(Long id) {
-		return courseLessonRepository.findOne(id);
+		return courseLessonRepository.getOne(id);
 	}
 
 	public List<CourseLesson> findAll() {
@@ -32,6 +32,6 @@ public class CourseLessonService {
 	}
 
 	public void remove(Long id) {
-		courseLessonRepository.delete(id);
+		courseLessonRepository.delete(courseLessonRepository.getOne(id));
 	}
 }

@@ -6,19 +6,14 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,10 +22,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "rank")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Rank.findAll", query = "SELECT r FROM Rank r"),
-    @NamedQuery(name = "Rank.findById", query = "SELECT r FROM Rank r WHERE r.id = :id"),
-    @NamedQuery(name = "Rank.findByName", query = "SELECT r FROM Rank r WHERE r.name = :name")})
 public class Rank implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,8 +32,6 @@ public class Rank implements Serializable {
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "rank")
-    private Collection<Teacher> teacherCollection;
 
     public Rank() {
     }
@@ -65,15 +54,6 @@ public class Rank implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @XmlTransient
-    public Collection<Teacher> getTeacherCollection() {
-        return teacherCollection;
-    }
-
-    public void setTeacherCollection(Collection<Teacher> teacherCollection) {
-        this.teacherCollection = teacherCollection;
     }
 
     @Override

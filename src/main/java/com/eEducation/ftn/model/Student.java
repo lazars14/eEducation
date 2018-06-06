@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,18 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "student")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
-    @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
-    @NamedQuery(name = "Student.findByIndexNumber", query = "SELECT s FROM Student s WHERE s.indexNumber = :indexNumber"),
-    @NamedQuery(name = "Student.findByFirstname", query = "SELECT s FROM Student s WHERE s.firstname = :firstname"),
-    @NamedQuery(name = "Student.findByLastname", query = "SELECT s FROM Student s WHERE s.lastname = :lastname"),
-    @NamedQuery(name = "Student.findByAccountNumber", query = "SELECT s FROM Student s WHERE s.accountNumber = :accountNumber"),
-    @NamedQuery(name = "Student.findByStudYear", query = "SELECT s FROM Student s WHERE s.studYear = :studYear"),
-    @NamedQuery(name = "Student.findByStudYearOrdNum", query = "SELECT s FROM Student s WHERE s.studYearOrdNum = :studYearOrdNum"),
-    @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),
-    @NamedQuery(name = "Student.findBySPassword", query = "SELECT s FROM Student s WHERE s.sPassword = :sPassword"),
-    @NamedQuery(name = "Student.findByEspbPoints", query = "SELECT s FROM Student s WHERE s.espbPoints = :espbPoints")})
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,39 +32,29 @@ public class Student implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "indexNumber")
+    @Column(name = "index_number")
     private String indexNumber;
     @Column(name = "firstname")
     private String firstname;
     @Column(name = "lastname")
     private String lastname;
-    @Column(name = "accountNumber")
+    @Column(name = "account_number")
     private String accountNumber;
-    @Column(name = "referenceNumber")
+    @Column(name = "reference_number")
     private String referenceNumber;
-    @Column(name = "studYear")
+    @Column(name = "stud_year")
     private Integer studYear;
-    @Column(name = "studYearOrdNum")
+    @Column(name = "stud_year_ord_num")
     private Integer studYearOrdNum;
     @Column(name = "email")
     private String email;
-    @Column(name = "sPassword")
+    @Column(name = "s_password")
     private String sPassword;
-    @Column(name = "espbPoints")
+    @Column(name = "espb_points")
     private Integer espbPoints;
-    @OneToMany(mappedBy = "studentId")
-    private Collection<StudentExamEntry> studentExamEntryCollection;
-    @JoinColumn(name = "classId", referencedColumnName = "id")
+    @JoinColumn(name = "class_id", referencedColumnName = "id")
     @ManyToOne
     private CollegeDirection direction;
-    @OneToMany(mappedBy = "studentId")
-    private Collection<StudentAttendsCourse> studentAttendsCourseCollection;
-    @OneToMany(mappedBy = "studentId")
-    private Collection<StudentDocument> studentDocumentCollection;
-    @OneToMany(mappedBy = "studentId")
-    private Collection<ColloquiumResult> colloquiumResultCollection;
-    @OneToMany(mappedBy = "studentId")
-    private Collection<Grade> gradeCollection;
 
     public Student() {
     }
@@ -178,57 +151,12 @@ public class Student implements Serializable {
         this.espbPoints = espbPoints;
     }
 
-    @XmlTransient
-    public Collection<StudentExamEntry> getStudentExamEntryCollection() {
-        return studentExamEntryCollection;
-    }
-
-    public void setStudentExamEntryCollection(Collection<StudentExamEntry> studentExamEntryCollection) {
-        this.studentExamEntryCollection = studentExamEntryCollection;
-    }
-
     public CollegeDirection getCollegeDirection() {
         return direction;
     }
 
     public void setCollegeDirection(CollegeDirection direction) {
         this.direction = direction;
-    }
-
-    @XmlTransient
-    public Collection<StudentAttendsCourse> getStudentAttendsCourseCollection() {
-        return studentAttendsCourseCollection;
-    }
-
-    public void setStudentAttendsCourseCollection(Collection<StudentAttendsCourse> studentAttendsCourseCollection) {
-        this.studentAttendsCourseCollection = studentAttendsCourseCollection;
-    }
-
-    @XmlTransient
-    public Collection<StudentDocument> getStudentDocumentCollection() {
-        return studentDocumentCollection;
-    }
-
-    public void setStudentDocumentCollection(Collection<StudentDocument> studentDocumentCollection) {
-        this.studentDocumentCollection = studentDocumentCollection;
-    }
-
-    @XmlTransient
-    public Collection<ColloquiumResult> getColloquiumResultCollection() {
-        return colloquiumResultCollection;
-    }
-
-    public void setColloquiumResultCollection(Collection<ColloquiumResult> colloquiumResultCollection) {
-        this.colloquiumResultCollection = colloquiumResultCollection;
-    }
-
-    @XmlTransient
-    public Collection<Grade> getGradeCollection() {
-        return gradeCollection;
-    }
-
-    public void setGradeCollection(Collection<Grade> gradeCollection) {
-        this.gradeCollection = gradeCollection;
     }
 
     @Override

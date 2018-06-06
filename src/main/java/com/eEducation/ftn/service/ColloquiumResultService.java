@@ -16,7 +16,7 @@ public class ColloquiumResultService {
 	ColloquiumResultRepository crRepository;
 	
 	public ColloquiumResult findOne(Long id) {
-		return crRepository.findOne(id);
+		return crRepository.getOne(id);
 	}
 
 	public List<ColloquiumResult> findAll() {
@@ -32,6 +32,6 @@ public class ColloquiumResultService {
 	}
 
 	public void remove(Long id) {
-		crRepository.delete(id);
+		crRepository.delete(crRepository.getOne(id));
 	}
 }

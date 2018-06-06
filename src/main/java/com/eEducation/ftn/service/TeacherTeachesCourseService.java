@@ -16,7 +16,7 @@ public class TeacherTeachesCourseService {
 	TeacherTeachesCourseRepository ttcRepository;
 	
 	public TeacherTeachesCourse findOne(Long id) {
-		return ttcRepository.findOne(id);
+		return ttcRepository.getOne(id);
 	}
 
 	public List<TeacherTeachesCourse> findAll() {
@@ -32,6 +32,6 @@ public class TeacherTeachesCourseService {
 	}
 
 	public void remove(Long id) {
-		ttcRepository.delete(id);
+		ttcRepository.delete(ttcRepository.getOne(id));
 	}
 }

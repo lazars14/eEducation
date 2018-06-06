@@ -16,7 +16,7 @@ public class TeacherService {
 	TeacherRepository teacherRepository;
 	
 	public Teacher findOne(Long id) {
-		return teacherRepository.findOne(id);
+		return teacherRepository.getOne(id);
 	}
 
 	public List<Teacher> findAll() {
@@ -32,6 +32,6 @@ public class TeacherService {
 	}
 
 	public void remove(Long id) {
-		teacherRepository.delete(id);
+		teacherRepository.delete(teacherRepository.getOne(id));
 	}
 }

@@ -14,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,9 +24,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "student_attends_course")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "StudentAttendsCourse.findAll", query = "SELECT s FROM StudentAttendsCourse s"),
-    @NamedQuery(name = "StudentAttendsCourse.findById", query = "SELECT s FROM StudentAttendsCourse s WHERE s.id = :id")})
 public class StudentAttendsCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,10 +32,10 @@ public class StudentAttendsCourse implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne
     private Student student;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
 

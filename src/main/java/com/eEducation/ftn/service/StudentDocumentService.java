@@ -16,7 +16,7 @@ public class StudentDocumentService {
 	StudentDocumentRepository sdRepository;
 	
 	public StudentDocument findOne(Long id) {
-		return sdRepository.findOne(id);
+		return sdRepository.getOne(id);
 	}
 
 	public List<StudentDocument> findAll() {
@@ -32,6 +32,6 @@ public class StudentDocumentService {
 	}
 
 	public void remove(Long id) {
-		sdRepository.delete(id);
+		sdRepository.delete(sdRepository.getOne(id));
 	}
 }

@@ -6,25 +6,25 @@ create table class
 (
 	id int primary key auto_increment not null,
 	name varchar(50),
-	numOfYears int
+	num_of_years int
 );
 
 create table student
 (
 	id int primary key auto_increment not null,
-	indexNumber varchar(15) unique,
+	index_number varchar(15) unique,
 	firstname varchar(20),
 	lastname varchar(20),
-	accountNumber char(18) unique,
-	referenceNumber varchar(30) unique,
-	studYear int,
-	studYearOrdNum int,
+	account_number char(18) unique,
+	reference_number varchar(30) unique,
+	stud_year int,
+	stud_year_ord_num int,
 	email varchar(30) unique,
-	sPassword varchar(20),
-	classId int,
-	espbPoints int,
+	s_password varchar(20),
+	class_id int,
+	espb_points int,
 
-	Foreign Key (classId) References class(id)
+	Foreign Key (class_id) References class(id)
 );
 
 create table rank
@@ -39,7 +39,7 @@ create table teacher
 	firstname varchar(20),
 	lastname varchar(20),
 	email varchar(30) unique,
-	sPassword varchar(20),
+	s_password varchar(20),
 	rank integer,
 
 	Foreign Key (rank) References rank(id)
@@ -50,30 +50,30 @@ create table course
 	id int primary key auto_increment not null,
 	name varchar(50),
 	description varchar(1000),
-	espbPoints int,
-	teacherId int,
+	espb_points int,
+	teacher_id int,
 
-	Foreign Key (teacherId) References teacher(id)
+	Foreign Key (teacher_id) References teacher(id)
 );
 
 create table student_attends_course
 (
 	id int primary key auto_increment not null,
-	studentId int,
-	courseId int,
+	student_id int,
+	course_id int,
 
-	Foreign Key (studentId) References student(id),
-	Foreign Key (courseId) References course(id)
+	Foreign Key (student_id) References student(id),
+	Foreign Key (course_id) References course(id)
 );
 
 create table teacher_teaches_course
 (
 	id int primary key auto_increment not null,
-	teacherId int,
-	courseId int,
+	teacher_id int,
+	course_id int,
 
-	Foreign Key (teacherId) References teacher(id),
-	Foreign Key (courseId) References course(id)
+	Foreign Key (teacher_id) References teacher(id),
+	Foreign Key (course_id) References course(id)
 );
 
 create table course_lesson
@@ -81,73 +81,73 @@ create table course_lesson
 	id int primary key auto_increment not null,
 	name varchar(50),
 	description varchar(100),
-	courseId int,
+	course_id int,
 
-	Foreign Key (courseId) References course(id)	
+	Foreign Key (course_id) References course(id)	
 );
 
 create table student_document
 (
 	id int primary key auto_increment not null,
-	documentName varchar(30),
-	documentType varchar(30),
-	documentURL varchar(200),
-	mimeType varchar(30),
-	studentId int,
-	courseId int,
+	document_name varchar(30),
+	document_type varchar(30),
+	document_url varchar(200),
+	mime_type varchar(30),
+	student_id int,
+	course_id int,
 	
-	Foreign Key (studentId) References student(id),
-	Foreign Key (courseId) References course(id)
+	Foreign Key (student_id) References student(id),
+	Foreign Key (course_id) References course(id)
 );
 
 create table course_file
 (
 	id int primary key auto_increment not null,
-	documentName varchar(30),
-	documentType varchar(30),
-	documentURL varchar(200),
-	mimeType varchar(30),
-	courseLessonId int,
-    courseId int,
+	document_name varchar(30),
+	document_type varchar(30),
+	document_url varchar(200),
+	mime_type varchar(30),
+	course_lesson_id int,
+    course_id int,
 	
-	Foreign Key (courseLessonId) References course_lesson(id),
-    Foreign Key (courseId) References course(id)
+	Foreign Key (course_lesson_id) References course_lesson(id),
+    Foreign Key (course_id) References course(id)
 );
 
 create table payment
 (
 	id int primary key auto_increment not null,
-	studentId int,
+	student_id int,
 	amount float,
 	cause varchar(100),
-	paymentDate datetime,
+	payment_date datetime,
 	owes bit,
 	
-	Foreign Key (studentId) References student(id)
+	Foreign Key (student_id) References student(id)
 );
 
 create table colloquium
 (
 	id int primary key auto_increment not null,
-	courseId int,
-	maxPoints float,
-	examType varchar(30),
-	examDateTime datetime,
+	course_id int,
+	max_points float,
+	exam_type varchar(30),
+	exam_date_time datetime,
 
-	Foreign Key (courseId) References course(id)
+	Foreign Key (course_id) References course(id)
 );
 
 create table colloquium_result
 (
 	id int primary key auto_increment not null,
 	points float,
-	colloquiumId int,
-	studentId int,
-	documentId int,		
+	colloquium_id int,
+	student_id int,
+	document_id int,		
 
-	Foreign Key (colloquiumId) References colloquium(id),
-	Foreign Key (studentId) References student(id),
-	Foreign Key (documentId) References student_document(id)
+	Foreign Key (colloquium_id) References colloquium(id),
+	Foreign Key (student_id) References student(id),
+	Foreign Key (document_id) References student_document(id)
 );
 
 create table grade
@@ -155,56 +155,56 @@ create table grade
 	id int primary key auto_increment not null,
 	points float,
 	grade int,
-	courseId int,
-	studentId int,
+	course_id int,
+	student_id int,
 
-	Foreign Key (courseId) References course(id),
-	Foreign Key (studentId) References student(id)
+	Foreign Key (course_id) References course(id),
+	Foreign Key (student_id) References student(id)
 );
 
 create table exam_period
 (
 	id int primary key auto_increment not null,
 	name varchar(50),
-	startDate datetime,
-	endDate datetime
+	start_date datetime,
+	end_date datetime
 );
 
 create table exam_term
 (
 	id int primary key auto_increment not null,
-	examDate datetime,
-	classRoom varchar(100),
-	courseId int,
-	examPeriodId int,
+	exam_date datetime,
+	class_room varchar(100),
+	course_id int,
+	exam_period_id int,
 	
-	Foreign Key (courseId) References course(id),
-	Foreign Key (examPeriodId) References exam_period(id)
+	Foreign Key (course_id) References course(id),
+	Foreign Key (exam_period_id) References exam_period(id)
 );
 
 create table student_exam_entry
 (
 	id int primary key auto_increment not null,	
-	studentId int,
-	examTermId int,
-	gradeId int,
+	student_id int,
+	exam_term_id int,
+	grade_id int,
 
-	Foreign Key (studentId) References student(id),
-	Foreign Key (examTermId) References exam_term(id),
-	Foreign Key (gradeId) References grade(id)	
+	Foreign Key (student_id) References student(id),
+	Foreign Key (exam_term_id) References exam_term(id),
+	Foreign Key (grade_id) References grade(id)	
 );
 
 create table notification
 (
 	id int primary key auto_increment not null,
 	message varchar(300),
-    nDate datetime,
-	courseId int,
-	documentId int,
+    n_date datetime,
+	course_id int,
+	document_id int,
 	seen bit,
-	studentId int,
+	student_id int,
 
-	Foreign Key (courseId) References course(id),
-	Foreign Key (documentId) References course_file(id),
-	Foreign Key (studentId) References student(id)
+	Foreign Key (course_id) References course(id),
+	Foreign Key (document_id) References course_file(id),
+	Foreign Key (student_id) References student(id)
 );

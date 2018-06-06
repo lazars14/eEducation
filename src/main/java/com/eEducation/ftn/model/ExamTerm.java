@@ -16,8 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,9 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "exam_term")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ExamTerm.findAll", query = "SELECT s FROM ExamTerm s"),
-    @NamedQuery(name = "ExamTerm.findById", query = "SELECT s FROM ExamTerm s WHERE s.id = :id")})
 public class ExamTerm implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,16 +36,16 @@ public class ExamTerm implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
-    @JoinColumn(name = "examPeriodId", referencedColumnName = "id")
+    @JoinColumn(name = "exam_period_id", referencedColumnName = "id")
     @ManyToOne
     private ExamPeriod examPeriod;
-    @Column(name = "examDate")
+    @Column(name = "exam_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date examDate;
-    @Column(name = "classRoom")
+    @Column(name = "class_room")
     private String classRoom;
 
     public ExamTerm() {

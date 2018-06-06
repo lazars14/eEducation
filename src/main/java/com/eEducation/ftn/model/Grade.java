@@ -14,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,11 +24,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "grade")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Grade.findAll", query = "SELECT g FROM Grade g"),
-    @NamedQuery(name = "Grade.findById", query = "SELECT g FROM Grade g WHERE g.id = :id"),
-    @NamedQuery(name = "Grade.findByPoints", query = "SELECT g FROM Grade g WHERE g.points = :points"),
-    @NamedQuery(name = "Grade.findByGrade", query = "SELECT g FROM Grade g WHERE g.grade = :grade")})
 public class Grade implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,15 +32,14 @@ public class Grade implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "points")
     private Float points;
     @Column(name = "grade")
     private Integer grade;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne
     private Student student;
 

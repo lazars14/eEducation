@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,11 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "course_lesson")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CourseLesson.findAll", query = "SELECT c FROM CourseLesson c"),
-    @NamedQuery(name = "CourseLesson.findById", query = "SELECT c FROM CourseLesson c WHERE c.id = :id"),
-    @NamedQuery(name = "CourseLesson.findByName", query = "SELECT c FROM CourseLesson c WHERE c.name = :name"),
-    @NamedQuery(name = "CourseLesson.findByDescription", query = "SELECT c FROM CourseLesson c WHERE c.description = :description")})
 public class CourseLesson implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,9 +36,7 @@ public class CourseLesson implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
-    @OneToMany(mappedBy = "courseLessonId")
-    private Collection<CourseFile> courseFileCollection;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
 
@@ -81,15 +69,6 @@ public class CourseLesson implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @XmlTransient
-    public Collection<CourseFile> getCourseFileCollection() {
-        return courseFileCollection;
-    }
-
-    public void setCourseFileCollection(Collection<CourseFile> courseFileCollection) {
-        this.courseFileCollection = courseFileCollection;
     }
 
     public Course getCourse() {

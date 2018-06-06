@@ -16,7 +16,14 @@ public class StudentExamEntryDTO {
 		this.id = see.getId();
 		this.student = new StudentDTO(see.getStudent());
 		this.examTerm = new ExamTermDTO(see.getExamTerm());
-		this.grade = new GradeDTO(see.getGrade());
+		if(see.getGrade() == null) {
+			// grade is not set
+			this.grade = null;
+		} else {
+			// grade is set
+			this.grade = new GradeDTO(see.getGrade());
+		}
+		
 	}
 
 	public Long getId() {

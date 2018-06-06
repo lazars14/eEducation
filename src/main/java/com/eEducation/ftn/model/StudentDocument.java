@@ -14,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,13 +24,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "student_document")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "StudentDocument.findAll", query = "SELECT s FROM StudentDocument s"),
-    @NamedQuery(name = "StudentDocument.findById", query = "SELECT s FROM StudentDocument s WHERE s.id = :id"),
-    @NamedQuery(name = "StudentDocument.findByDocumentName", query = "SELECT s FROM StudentDocument s WHERE s.documentName = :documentName"),
-    @NamedQuery(name = "StudentDocument.findByDocumentType", query = "SELECT s FROM StudentDocument s WHERE s.documentType = :documentType"),
-    @NamedQuery(name = "StudentDocument.findByDocumentURL", query = "SELECT s FROM StudentDocument s WHERE s.documentURL = :documentURL"),
-    @NamedQuery(name = "StudentDocument.findByMimeType", query = "SELECT s FROM StudentDocument s WHERE s.mimeType = :mimeType")})
 public class StudentDocument implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,18 +32,18 @@ public class StudentDocument implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "documentName")
+    @Column(name = "document_name")
     private String documentName;
-    @Column(name = "documentType")
+    @Column(name = "document_type")
     private String documentType;
-    @Column(name = "documentURL")
+    @Column(name = "document_url")
     private String documentURL;
-    @Column(name = "mimeType")
+    @Column(name = "mime_type")
     private String mimeType;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne
     private Student student;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
 

@@ -21,7 +21,15 @@ public class CourseFileDTO {
 		this.documentType = courseFile.getDocumentType();
 		this.documentURL = courseFile.getDocumentURL();
 		this.mimeType = courseFile.getMimeType();
-		this.courseLesson = new CourseLessonDTO(courseFile.getCourseLesson());
+		
+		if(courseFile.getCourseLesson() == null) {
+			// course lesson doesn't exist
+			this.courseLesson = null;
+		} else {
+			// course lesson exists
+			this.courseLesson = new CourseLessonDTO(courseFile.getCourseLesson());
+		}
+		
 		this.course = new CourseDTO(courseFile.getCourse());
 	}
 

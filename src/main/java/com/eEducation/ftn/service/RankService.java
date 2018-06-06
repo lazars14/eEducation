@@ -16,7 +16,7 @@ public class RankService {
 	RankRepository rankRepository;
 	
 	public Rank findOne(Long id) {
-		return rankRepository.findOne(id);
+		return rankRepository.getOne(id);
 	}
 
 	public List<Rank> findAll() {
@@ -32,6 +32,6 @@ public class RankService {
 	}
 
 	public void remove(Long id) {
-		rankRepository.delete(id);
+		rankRepository.delete(rankRepository.getOne(id));
 	}
 }

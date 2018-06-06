@@ -16,7 +16,7 @@ public class CollegeDirectionService {
 	CollegeDirectionRepository directionRepository;
 	
 	public CollegeDirection findOne(Long id) {
-		return directionRepository.findOne(id);
+		return directionRepository.getOne(id);
 	}
 
 	public List<CollegeDirection> findAll() {
@@ -32,6 +32,6 @@ public class CollegeDirectionService {
 	}
 
 	public void remove(Long id) {
-		directionRepository.delete(id);
+		directionRepository.delete(directionRepository.getOne(id));
 	}
 }

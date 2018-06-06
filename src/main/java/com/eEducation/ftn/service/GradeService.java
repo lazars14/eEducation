@@ -16,7 +16,7 @@ public class GradeService {
 	GradeRepository gradeRepository;
 	
 	public Grade findOne(Long id) {
-		return gradeRepository.findOne(id);
+		return gradeRepository.getOne(id);
 	}
 
 	public List<Grade> findAll() {
@@ -32,6 +32,6 @@ public class GradeService {
 	}
 
 	public void remove(Long id) {
-		gradeRepository.delete(id);
+		gradeRepository.delete(gradeRepository.getOne(id));
 	}
 }

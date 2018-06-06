@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,13 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "course_file")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CourseFile.findAll", query = "SELECT c FROM CourseFile c"),
-    @NamedQuery(name = "CourseFile.findById", query = "SELECT c FROM CourseFile c WHERE c.id = :id"),
-    @NamedQuery(name = "CourseFile.findByDocumentName", query = "SELECT c FROM CourseFile c WHERE c.documentName = :documentName"),
-    @NamedQuery(name = "CourseFile.findByDocumentType", query = "SELECT c FROM CourseFile c WHERE c.documentType = :documentType"),
-    @NamedQuery(name = "CourseFile.findByDocumentURL", query = "SELECT c FROM CourseFile c WHERE c.documentURL = :documentURL"),
-    @NamedQuery(name = "CourseFile.findByMimeType", query = "SELECT c FROM CourseFile c WHERE c.mimeType = :mimeType")})
 public class CourseFile implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,22 +32,20 @@ public class CourseFile implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "documentName")
+    @Column(name = "document_name")
     private String documentName;
-    @Column(name = "documentType")
+    @Column(name = "document_type")
     private String documentType;
-    @Column(name = "documentURL")
+    @Column(name = "document_url")
     private String documentURL;
-    @Column(name = "mimeType")
+    @Column(name = "mime_type")
     private String mimeType;
-    @JoinColumn(name = "courseLessonId", referencedColumnName = "id")
+    @JoinColumn(name = "course_lesson_id", referencedColumnName = "id")
     @ManyToOne
     private CourseLesson courseLesson;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
-    @OneToMany(mappedBy = "documentId")
-    private Collection<Notification> notificationCollection;
 
     public CourseFile() {
     }
@@ -122,15 +108,6 @@ public class CourseFile implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
-    }
-
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
     }
 
     @Override

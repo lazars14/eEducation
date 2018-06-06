@@ -6,19 +6,14 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,11 +22,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "class")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CollegeDirection.findAll", query = "SELECT c FROM CollegeDirection c"),
-    @NamedQuery(name = "CollegeDirection.findById", query = "SELECT c FROM CollegeDirection c WHERE c.id = :id"),
-    @NamedQuery(name = "CollegeDirection.findByName", query = "SELECT c FROM CollegeDirection c WHERE c.name = :name"),
-    @NamedQuery(name = "CollegeDirection.findByNumOfYears", query = "SELECT c FROM CollegeDirection c WHERE c.numOfYears = :numOfYears")})
 public class CollegeDirection implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,10 +32,8 @@ public class CollegeDirection implements Serializable {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "numOfYears")
+    @Column(name = "num_of_years")
     private Integer numOfYears;
-    @OneToMany(mappedBy = "classId")
-    private Collection<Student> studentCollection;
 
     public CollegeDirection() {
     }
@@ -76,15 +64,6 @@ public class CollegeDirection implements Serializable {
 
     public void setNumOfYears(Integer numOfYears) {
         this.numOfYears = numOfYears;
-    }
-
-    @XmlTransient
-    public Collection<Student> getStudentCollection() {
-        return studentCollection;
-    }
-
-    public void setStudentCollection(Collection<Student> studentCollection) {
-        this.studentCollection = studentCollection;
     }
 
     @Override

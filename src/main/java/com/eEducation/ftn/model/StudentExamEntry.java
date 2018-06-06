@@ -14,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,9 +24,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "student_exam_entry")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "StudentExamEntry.findAll", query = "SELECT s FROM StudentExamEntry s"),
-    @NamedQuery(name = "StudentExamEntry.findById", query = "SELECT s FROM StudentExamEntry s WHERE s.id = :id")})
 public class StudentExamEntry implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,13 +32,13 @@ public class StudentExamEntry implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne
     private Student student;
-    @JoinColumn(name = "examTermId", referencedColumnName = "id")
+    @JoinColumn(name = "exam_term_id", referencedColumnName = "id")
     @ManyToOne
     private ExamTerm examTerm;
-    @JoinColumn(name = "gradeId", referencedColumnName = "id")
+    @JoinColumn(name = "grade_id", referencedColumnName = "id")
     @ManyToOne
     private Grade grade;
 

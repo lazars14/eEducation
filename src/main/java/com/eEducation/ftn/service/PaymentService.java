@@ -16,7 +16,7 @@ public class PaymentService {
 	PaymentRepository paymentRepository;
 	
 	public Payment findOne(Long id) {
-		return paymentRepository.findOne(id);
+		return paymentRepository.getOne(id);
 	}
 
 	public List<Payment> findAll() {
@@ -32,6 +32,6 @@ public class PaymentService {
 	}
 
 	public void remove(Long id) {
-		paymentRepository.delete(id);
+		paymentRepository.delete(paymentRepository.getOne(id));
 	}
 }

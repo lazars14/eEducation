@@ -16,7 +16,7 @@ public class ExamTermService {
 	ExamTermRepository examTermRepository;
 	
 	public ExamTerm findOne(Long id) {
-		return examTermRepository.findOne(id);
+		return examTermRepository.getOne(id);
 	}
 
 	public List<ExamTerm> findAll() {
@@ -32,6 +32,6 @@ public class ExamTermService {
 	}
 
 	public void remove(Long id) {
-		examTermRepository.delete(id);
+		examTermRepository.delete(examTermRepository.getOne(id));
 	}
 }

@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,14 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,12 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "colloquium")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Colloquium.findAll", query = "SELECT c FROM Colloquium c"),
-    @NamedQuery(name = "Colloquium.findById", query = "SELECT c FROM Colloquium c WHERE c.id = :id"),
-    @NamedQuery(name = "Colloquium.findByMaxPoints", query = "SELECT c FROM Colloquium c WHERE c.maxPoints = :maxPoints"),
-    @NamedQuery(name = "Colloquium.findByExamType", query = "SELECT c FROM Colloquium c WHERE c.examType = :examType"),
-    @NamedQuery(name = "Colloquium.findByExamDateTime", query = "SELECT c FROM Colloquium c WHERE c.examDateTime = :examDateTime")})
 public class Colloquium implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,19 +35,16 @@ public class Colloquium implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "maxPoints")
+    @Column(name = "max_points")
     private Float maxPoints;
-    @Column(name = "examType")
+    @Column(name = "exam_type")
     private String examType;
-    @Column(name = "examDateTime")
+    @Column(name = "exam_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date examDateTime;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
-    @OneToMany(mappedBy = "colloquiumId")
-    private Collection<ColloquiumResult> colloquiumResultCollection;
 
     public Colloquium() {
     }
@@ -105,15 +91,6 @@ public class Colloquium implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    @XmlTransient
-    public Collection<ColloquiumResult> getColloquiumResultCollection() {
-        return colloquiumResultCollection;
-    }
-
-    public void setColloquiumResultCollection(Collection<ColloquiumResult> colloquiumResultCollection) {
-        this.colloquiumResultCollection = colloquiumResultCollection;
     }
 
     @Override

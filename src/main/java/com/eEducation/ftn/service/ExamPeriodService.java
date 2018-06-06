@@ -16,7 +16,7 @@ public class ExamPeriodService {
 	ExamPeriodRepository examPeriodRepository;
 	
 	public ExamPeriod findOne(Long id) {
-		return examPeriodRepository.findOne(id);
+		return examPeriodRepository.getOne(id);
 	}
 
 	public List<ExamPeriod> findAll() {
@@ -32,6 +32,6 @@ public class ExamPeriodService {
 	}
 
 	public void remove(Long id) {
-		examPeriodRepository.delete(id);
+		examPeriodRepository.delete(examPeriodRepository.getOne(id));
 	}
 }

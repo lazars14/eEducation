@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,11 +27,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "notification")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
-    @NamedQuery(name = "Notification.findById", query = "SELECT n FROM Notification n WHERE n.id = :id"),
-    @NamedQuery(name = "Notification.findByMessage", query = "SELECT n FROM Notification n WHERE n.message = :message"),
-    @NamedQuery(name = "Notification.findByNDate", query = "SELECT n FROM Notification n WHERE n.nDate = :nDate")})
 public class Notification implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,18 +37,18 @@ public class Notification implements Serializable {
     private Long id;
     @Column(name = "message")
     private String message;
-    @Column(name = "nDate")
+    @Column(name = "n_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date nDate;
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
     private Course course;
-    @JoinColumn(name = "documentId", referencedColumnName = "id")
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
     @ManyToOne
     private CourseFile document;
     @Column(name = "seen")
     private Boolean seen;
-    @JoinColumn(name = "studentId", referencedColumnName = "id")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne
     private Student student;
 

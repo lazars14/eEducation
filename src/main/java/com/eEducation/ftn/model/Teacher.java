@@ -6,7 +6,6 @@
 package com.eEducation.ftn.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,13 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "teacher")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Teacher.findAll", query = "SELECT t FROM Teacher t"),
-    @NamedQuery(name = "Teacher.findById", query = "SELECT t FROM Teacher t WHERE t.id = :id"),
-    @NamedQuery(name = "Teacher.findByFirstname", query = "SELECT t FROM Teacher t WHERE t.firstname = :firstname"),
-    @NamedQuery(name = "Teacher.findByLastname", query = "SELECT t FROM Teacher t WHERE t.lastname = :lastname"),
-    @NamedQuery(name = "Teacher.findByEmail", query = "SELECT t FROM Teacher t WHERE t.email = :email"),
-    @NamedQuery(name = "Teacher.findBySPassword", query = "SELECT t FROM Teacher t WHERE t.sPassword = :sPassword")})
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,15 +38,11 @@ public class Teacher implements Serializable {
     private String lastname;
     @Column(name = "email")
     private String email;
-    @Column(name = "sPassword")
+    @Column(name = "s_password")
     private String sPassword;
-    @OneToMany(mappedBy = "teacherId")
-    private Collection<TeacherTeachesCourse> teacherTeachesCourseCollection;
     @JoinColumn(name = "rank", referencedColumnName = "id")
     @ManyToOne
     private Rank rank;
-    @OneToMany(mappedBy = "teacherId")
-    private Collection<Course> courseCollection;
 
     public Teacher() {
     }
@@ -107,30 +91,12 @@ public class Teacher implements Serializable {
         this.sPassword = sPassword;
     }
 
-    @XmlTransient
-    public Collection<TeacherTeachesCourse> getTeacherTeachesCourseCollection() {
-        return teacherTeachesCourseCollection;
-    }
-
-    public void setTeacherTeachesCourseCollection(Collection<TeacherTeachesCourse> teacherTeachesCourseCollection) {
-        this.teacherTeachesCourseCollection = teacherTeachesCourseCollection;
-    }
-
     public Rank getRank() {
         return rank;
     }
 
     public void setRank(Rank rank) {
         this.rank = rank;
-    }
-
-    @XmlTransient
-    public Collection<Course> getCourseCollection() {
-        return courseCollection;
-    }
-
-    public void setCourseCollection(Collection<Course> courseCollection) {
-        this.courseCollection = courseCollection;
     }
 
     @Override

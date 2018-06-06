@@ -18,7 +18,15 @@ public class ColloquiumResultDTO {
 		this.points = cr.getPoints();
 		this.colloquium = new ColloquiumDTO(cr.getColloquium());
 		this.student = new StudentDTO(cr.getStudent());
-		this.document = new StudentDocumentDTO(cr.getDocument());
+		
+		if(cr.getDocument() == null) {
+			// document doesn't exist
+			this.document = null;
+		} else {
+			// document exists
+			this.document = new StudentDocumentDTO(cr.getDocument());
+		}
+		
 	}
 
 	public Long getId() {
