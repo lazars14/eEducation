@@ -75,6 +75,25 @@ public class ColloquiumResultController {
 		return new ResponseEntity<>(new ColloquiumResultDTO(found), HttpStatus.OK);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value="/byColloquium")
+	public ResponseEntity<List<ColloquiumResultDTO>> getByColloquium(@PathVariable Long id, @PathVariable Long colloquiumId){
+		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
+		
+		if(colloquium == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<ColloquiumResult> results = colloquiumResultRepository.findByColloquium(colloquium);
+		List<ColloquiumResultDTO> resultDTOs = new ArrayList<>();
+		
+		for(ColloquiumResult result : results) {
+			resultDTOs.add(new ColloquiumResultDTO(result));
+		}
+				
+		
+		return new ResponseEntity<>(resultDTOs, HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value="/student/{studentId}")
 	public ResponseEntity<ColloquiumResultDTO> getByStudentAndColloquium(@PathVariable Long studentId, @PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);

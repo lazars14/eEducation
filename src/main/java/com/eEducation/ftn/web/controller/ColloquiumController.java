@@ -123,7 +123,7 @@ public class ColloquiumController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}")
+	@RequestMapping(method = RequestMethod.GET, value="/byCourse")
 	public ResponseEntity<List<ColloquiumDTO>> getByCourse(@PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
