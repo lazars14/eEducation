@@ -102,7 +102,7 @@ public class CourseController {
 		
 		if(teacher == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}		
+		}
 				
 		found.setTeacher(teacher);
 		found.setName(course.getName());

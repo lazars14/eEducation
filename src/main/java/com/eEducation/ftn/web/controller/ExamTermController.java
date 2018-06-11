@@ -80,7 +80,7 @@ public class ExamTermController {
 		
 		ExamTerm newExamTerm = new ExamTerm();
 		
-		if(examTerm.getCourse() == null || examTerm.getExamPeriod() == null) {
+		if(examTerm.getCourse() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
