@@ -79,7 +79,7 @@ public class PaymentController {
 		return new ResponseEntity<>(new PaymentDTO(newPayment), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<PaymentDTO> update(@RequestBody PaymentDTO payment){
 		Payment found = paymentService.findOne(payment.getId());
 		if(found == null) {

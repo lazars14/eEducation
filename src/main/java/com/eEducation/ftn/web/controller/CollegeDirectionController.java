@@ -62,7 +62,7 @@ public class CollegeDirectionController {
 		return new ResponseEntity<>(new CollegeDirectionDTO(newCollegeDirection), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<CollegeDirectionDTO> update(@RequestBody CollegeDirectionDTO CollegeDirections){
 		CollegeDirection found = CollegeDirectionService.findOne(CollegeDirections.getId());
 		if(found == null){

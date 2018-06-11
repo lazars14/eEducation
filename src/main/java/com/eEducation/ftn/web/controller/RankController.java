@@ -53,7 +53,7 @@ public class RankController {
 		return new ResponseEntity<>(new RankDTO(newRank), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<RankDTO> update(@RequestBody RankDTO rank){
 		Rank found = rankService.findOne(rank.getId());
 		if(found == null){

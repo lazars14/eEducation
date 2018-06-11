@@ -120,7 +120,7 @@ public class StudentController {
 		return new ResponseEntity<>(new StudentDTO(newStudent), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<StudentDTO> update(@RequestBody StudentDTO student){
 		Student found = studentService.findOne(student.getId());
 		if(found == null) {

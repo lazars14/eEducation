@@ -85,7 +85,7 @@ public class ColloquiumController {
 		return new ResponseEntity<>(new ColloquiumDTO(newColloquium), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<ColloquiumDTO> update(@RequestBody ColloquiumDTO colloquium, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {

@@ -82,7 +82,7 @@ public class GradeController {
 		return new ResponseEntity<>(new GradeDTO(newGrade), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<GradeDTO> update(@RequestBody GradeDTO grade){
 		Grade found = gradeService.findOne(grade.getId());
 		found.setPoints(grade.getPoints());

@@ -99,7 +99,7 @@ public class ExamTermController {
 		return new ResponseEntity<>(new ExamTermDTO(newExamTerm), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<ExamTermDTO> update(@RequestBody ExamTermDTO examTerm, @PathVariable Long examPeriodId){
 		ExamPeriod examPeriod = examPeriodService.findOne(examPeriodId);
 		

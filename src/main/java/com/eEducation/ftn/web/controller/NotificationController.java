@@ -186,7 +186,7 @@ public class NotificationController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<NotificationDTO> update(@RequestBody NotificationDTO notification){
 		Notification found = notificationService.findOne(notification.getId());
 		found.setMessage(notification.getMessage());

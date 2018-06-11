@@ -132,7 +132,7 @@ public class TeacherTeachesCourseController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<TeacherTeachesCourseDTO> update(@RequestBody TeacherTeachesCourseDTO ttc){
 		TeacherTeachesCourse found = ttcService.findOne(ttc.getId());
 		if(found == null) {

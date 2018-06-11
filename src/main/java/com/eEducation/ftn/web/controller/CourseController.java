@@ -87,7 +87,7 @@ public class CourseController {
 		return new ResponseEntity<>(new CourseDTO(newCourse), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<CourseDTO> update(@RequestBody CourseDTO course){
 		Course found = courseService.findOne(course.getId());
 		if(found == null) {

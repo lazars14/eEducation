@@ -55,7 +55,7 @@ public class ExamPeriodController {
 		return new ResponseEntity<>(new ExamPeriodDTO(newExamPeriod), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<ExamPeriodDTO> update(@RequestBody ExamPeriodDTO examPeriod){
 		ExamPeriod found = examPeriodService.findOne(examPeriod.getId());
 		if(found == null){

@@ -94,7 +94,7 @@ public class StudentDocumentController {
 		return new ResponseEntity<>(new StudentDocumentDTO(newStudentDocument), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<StudentDocumentDTO> update(@RequestBody StudentDocumentDTO studentDocument, @PathVariable Long courseId){
 		Course course = courseService.findOne(courseId);
 		if(course == null) {
