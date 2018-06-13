@@ -68,17 +68,6 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
-		if(student.getClass() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		CollegeDirection direction = directionService.findOne(student.getCollegeDirection().getId());
-		if(direction == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		newStudent.setCollegeDirection(direction);
-		
 		if(student.getIndexNumber() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -88,6 +77,16 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
+		if(student.getCollegeDirection() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		CollegeDirection direction = directionService.findOne(student.getCollegeDirection().getId());
+		if(direction == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		newStudent.setCollegeDirection(direction);
 		newStudent.setIndexNumber(student.getIndexNumber());
 		newStudent.setFirstname(student.getFirstname());
 		newStudent.setLastname(student.getLastname());
@@ -136,7 +135,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
-		if(student.getClass() == null) {
+		if(student.getCollegeDirection() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
