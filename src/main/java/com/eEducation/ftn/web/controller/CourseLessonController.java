@@ -119,8 +119,12 @@ public class CourseLessonController {
 		
 		CourseLesson found = courseLessonService.findOne(id);
 		if(found != null) {
-			courseLessonService.remove(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				courseLessonService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

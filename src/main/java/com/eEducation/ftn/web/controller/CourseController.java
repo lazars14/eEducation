@@ -117,8 +117,12 @@ public class CourseController {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Course found = courseService.findOne(id);
 		if(found != null) {
-			courseService.remove(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				courseService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

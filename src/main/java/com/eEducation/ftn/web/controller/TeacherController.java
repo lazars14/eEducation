@@ -146,8 +146,12 @@ public class TeacherController {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Teacher found = teacherService.findOne(id);
 		if(found != null) {
-			teacherService.remove(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				teacherService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

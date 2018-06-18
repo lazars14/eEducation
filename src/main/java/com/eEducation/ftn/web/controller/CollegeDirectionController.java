@@ -22,7 +22,7 @@ import com.eEducation.ftn.web.dto.CollegeDirectionDTO;
 @RequestMapping(value="api/classes")
 public class CollegeDirectionController {
 	@Autowired
-	CollegeDirectionService CollegeDirectionService;
+	CollegeDirectionService directionService;
 	
 	@Autowired
 	StudentService studentService;
@@ -32,7 +32,7 @@ public class CollegeDirectionController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CollegeDirectionDTO>> getAll(){
-		List<CollegeDirection> CollegeDirectiones = CollegeDirectionService.findAll();
+		List<CollegeDirection> CollegeDirectiones = directionService.findAll();
 		List<CollegeDirectionDTO> CollegeDirectionDTOs = new ArrayList<>();
 		
 		for(CollegeDirection c : CollegeDirectiones){
@@ -44,7 +44,7 @@ public class CollegeDirectionController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	public ResponseEntity<CollegeDirectionDTO> getById(@PathVariable Long id){
-		CollegeDirection found = CollegeDirectionService.findOne(id);
+		CollegeDirection found = directionService.findOne(id);
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -58,13 +58,13 @@ public class CollegeDirectionController {
 		newCollegeDirection.setName(CollegeDirections.getName());
 		newCollegeDirection.setNumOfYears(CollegeDirections.getNumOfYears());
 		
-		CollegeDirectionService.save(newCollegeDirection);
+		directionService.save(newCollegeDirection);
 		return new ResponseEntity<>(new CollegeDirectionDTO(newCollegeDirection), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<CollegeDirectionDTO> update(@RequestBody CollegeDirectionDTO CollegeDirections){
-		CollegeDirection found = CollegeDirectionService.findOne(CollegeDirections.getId());
+		CollegeDirection found = directionService.findOne(CollegeDirections.getId());
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -72,16 +72,20 @@ public class CollegeDirectionController {
 		found.setName(CollegeDirections.getName());
 		found.setNumOfYears(CollegeDirections.getNumOfYears());
 		
-		CollegeDirectionService.save(found);
+		directionService.save(found);
 		return new ResponseEntity<>(new CollegeDirectionDTO(found), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Long id){
-		CollegeDirection found = CollegeDirectionService.findOne(id);
+		CollegeDirection found = directionService.findOne(id);
 		if(found != null){
-			CollegeDirectionService.remove(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				directionService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

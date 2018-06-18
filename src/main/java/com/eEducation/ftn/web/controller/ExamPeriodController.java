@@ -74,8 +74,12 @@ public class ExamPeriodController {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		ExamPeriod found = examPeriodService.findOne(id);
 		if(found != null){
-			examPeriodService.remove(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				examPeriodService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

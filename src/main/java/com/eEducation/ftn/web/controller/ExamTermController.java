@@ -141,8 +141,12 @@ public class ExamTermController {
 		
 		ExamTerm found = examTermService.findOne(id);
 		if(found != null) {
-			examTermService.remove(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				examTermService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

@@ -69,7 +69,12 @@ public class RankController {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		Rank found = rankService.findOne(id);
 		if(found != null){
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				rankService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

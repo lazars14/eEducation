@@ -116,8 +116,12 @@ public class ColloquiumController {
 		
 		Colloquium found = colloquiumService.findOne(id);
 		if(found != null){
-			colloquiumService.remove(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			try {
+				colloquiumService.remove(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
