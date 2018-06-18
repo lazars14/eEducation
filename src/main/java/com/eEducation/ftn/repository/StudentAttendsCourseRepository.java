@@ -13,4 +13,5 @@ import com.eEducation.ftn.model.StudentAttendsCourse;
 public interface StudentAttendsCourseRepository extends JpaRepository<StudentAttendsCourse, Long>{
 	public List<StudentAttendsCourse> findByStudent(Student student);
 	public List<StudentAttendsCourse> findByCourse(Course course);
+	public StudentAttendsCourse findByStudentAndCourse(Student student, Course course);
 }

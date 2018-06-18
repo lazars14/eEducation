@@ -15,16 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.StudentAttendsCourse;
+import com.eEducation.ftn.repository.StudentAttendsCourseRepository;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.StudentAttendsCourseService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.StudentAttendsCourseDTO;
+import com.eEducation.ftn.web.dto.StudentDTO;
 
 @RestController
 @RequestMapping(value="api/studentAttendsCourse")
 public class StudentAttendsCourseController {
 	@Autowired
 	StudentAttendsCourseService sacService;
+	
+	@Autowired
+	StudentAttendsCourseRepository sacRepository;
 	
 	@Autowired
 	StudentService studentService;
@@ -123,7 +128,49 @@ public class StudentAttendsCourseController {
 	
 	// collection methods
 	
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/{courseId}/batchAdd")
+	public ResponseEntity<Void> batchAdd(@PathVariable Long courseId, @RequestBody List<StudentDTO> students){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		for (StudentDTO student : students) {
+			StudentAttendsCourse newSac = new StudentAttendsCourse();
+			newSac.setCourse(course);
+			
+			Student foundStudent = studentService.findOne(student.getId());
+			if(foundStudent == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			newSac.setStudent(foundStudent);
+			
+			sacService.save(newSac);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
-	
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/{courseId}/batchRemove")
+	public ResponseEntity<Void> batchRemove(@PathVariable Long courseId, @RequestBody List<StudentDTO> students){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		for (StudentDTO student : students) {
+			Student foundStudent = studentService.findOne(student.getId());
+			if(foundStudent == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			StudentAttendsCourse foundSac = sacRepository.findByStudentAndCourse(foundStudent, course);
+			
+			sacService.remove(foundSac.getId());
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
 }

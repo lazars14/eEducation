@@ -79,6 +79,12 @@ public class GradeController {
 		newGrade.setStudent(student);
 		
 		gradeService.save(newGrade);
+		
+		// increase student espb points
+		if(grade.getGrade() > 5) {
+			student.setEspbPoints(student.getEspbPoints() + course.getEspbPoints());
+			studentService.save(student);
+		}
 		return new ResponseEntity<>(new GradeDTO(newGrade), HttpStatus.OK);
 	}
 	
@@ -86,6 +92,24 @@ public class GradeController {
 	public ResponseEntity<GradeDTO> update(@RequestBody GradeDTO grade){
 		Grade found = gradeService.findOne(grade.getId());
 		found.setPoints(grade.getPoints());
+		
+		if(grade.getGrade() != found.getGrade()) {
+			// something changed
+
+			Student gradeStudent = found.getStudent();
+			
+			// deduct espb points, grade changed from 6-10 to 5
+			if(grade.getGrade() == 5) {
+				gradeStudent.setEspbPoints(gradeStudent.getEspbPoints() - found.getCourse().getEspbPoints());
+			}
+			// grade increased, add espb points
+			else {
+				gradeStudent.setEspbPoints(gradeStudent.getEspbPoints() + found.getCourse().getEspbPoints());
+			}
+			
+			studentService.save(gradeStudent);
+		}
+		
 		found.setGrade(grade.getGrade());
 		
 		// not allowed to change course or student
