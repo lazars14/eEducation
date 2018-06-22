@@ -1,3 +1,12 @@
+insert into authority (name) values ('ROLE_ADMIN');
+insert into authority (name) values ('ROLE_TEACHER');
+insert into authority (name) values ('ROLE_STUDENT');
+
+-- password is 'admin' (bcrypt encoded) 
+insert into user (email, u_password) values ('admin@gmail.com', '$2a$04$SwzgBrIJZhfnzOw7KFcdzOTiY6EFVwIpG7fkF/D1w26G1.fWsi.aK');
+
+insert into user_authority (user_id, authority_id) values (1, 1); -- admin has ROLE_ADMIN
+
 insert into class (name, num_of_years) values
 ('Softverske i informacione tehnologije', 3), ('Graficko inzenjerstvo i dizajn', 5), ('Arhitektura i gradjevinarstvo', 5), ('Softversko inzenjestvo', 5);
 
@@ -54,6 +63,67 @@ insert into student (index_number, firstname, lastname, account_number, referenc
 ('ag11-2018', 'Nikola', 'Pavlovic', '200-123456-46', '247-123456-00', 1, 1, 'nikolaPavlovic@gmail.com', 'nikolaPavlovic', 4, 0),
 ('ag12-2018', 'Stefan', 'Djordjevic', '200-123456-47', '248-123456-00', 1, 1, 'stefanDjordjevic@gmail.com', 'stefanDjordjevic', 4, 0);
 
+-- password is 'student' (bcrypt encoded) 
+insert into user (email, u_password) values
+('matijaPopovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('dusanKutlesic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('ilijaDjokovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('nikolaPesakovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('darkoBalaban@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('predragPrlja@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('milosDimic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('markoStojadinovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('aleksandarRadulovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('nemanjaTodorovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('urosCarapic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('markoMarinovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+
+('dusanBeslac@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('nemanjaKrstic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('vukVulikic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('milosMilisavljevic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('markoRadonjic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('aleksandarTodorovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('petarRakicevic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('milosGlisic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('andrejaStevanovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('aleksandarTomjanski@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('jonasBergstedt@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('nemanjaKapetanovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+
+('filipCovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('dejanDavidovac@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('brankoLazic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('aleksaRadanov@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('peroAntic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('ognjenDobric@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('jamesFeldeine@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('stefanJankovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('taylorRochestie@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('alenOmic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('mathiasLessort@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('nikolaJovanovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+
+('mirkoDjeric@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('miroslavPasajlic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('stefanMitrovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('milanRadivojevic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('milanMunizaba@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('milenkoVeljkovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('kocaJovovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('markoUzelac@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('daniloOstojic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('stefanMomirov@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('nikolaPavlovic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G'),
+('stefanDjordjevic@gmail.com', '$2y$12$2awrk3cg5Mq1RYBivboGcudbIx29lMIW5R1bauis8OtQq9T7efs8G');
+
+-- student has ROLE_STUDENT
+insert into user_authority (user_id, authority_id) values
+(2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3), (13, 3),
+(14, 3), (15, 3), (16, 3), (17, 3), (18, 3), (19, 3), (20, 3), (21, 3), (22, 3), (23, 3), (24, 3), (25, 3),
+(26, 3), (27, 3), (28, 3), (29, 3), (30, 3), (31, 3), (32, 3), (33, 3), (34, 3), (35, 3), (36, 3), (37, 3),
+(38, 3), (39, 3), (40, 3), (41, 3), (42, 3), (43, 3), (44, 3), (45, 3), (46, 3), (47, 3), (48, 3), (49, 3);
+
 insert into rank (name) values
 ('Teacher'), ('Assistant');
 
@@ -83,6 +153,40 @@ insert into teacher (firstname, lastname, email, s_password, rank) values
 ('Teodor', 'Atanasov', 'teodorAtanasov@gmail.com', 'teodorAtanasov', 2),
 ('Aleksa', 'Birovljev', 'aleksaBirovljev@gmail.com', 'aleksaBirovljev', 2),
 ('Danilo', 'Matovic', 'daniloMatovic@gmail.com', 'daniloMatovic', 2);
+
+-- password is 'teacher' (bcrypt encoded)
+insert into user (email, u_password) values
+('filipZekavcic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('adisTurbic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('bojanKrstovic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('aleksandarVasic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('dragomirMarojevic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('stefanColovic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('josipMikulic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('urosMatic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+
+('mladenPavlovic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('djordjeKaplanovic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('nenadNerandzic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('draganVasic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('aleksaZaric@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('aleksaStojanovic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('branimirBerbakov@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('dejanJanjic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('jovanVirijevic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('dusanPrica@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('nikolaSiladji@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('vladimirKovacevic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('aleksaCabrilo@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('teodorAtanasov@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('aleksaBirovljev@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC'),
+('daniloMatovic@gmail.com', '$2y$12$fR1FWaZ/PPddOA.Ck241Cu0ii/xo05v7dpq8YrMqw65BfSS4LYUtC');
+
+-- teacher has ROLE_TEACHER
+insert into user_authority (user_id, authority_id) values
+(50, 2), (51, 2), (52, 2), (53, 2), (54, 2), (55, 2), (56, 2),
+(57, 2), (58, 2), (59, 2), (60, 2), (61, 2), (62, 2), (63, 2), (64, 2),
+(65, 2), (66, 2), (67, 2), (68, 2), (69, 2), (70, 2), (71, 2), (72, 2);
 
 insert into course (name, description, espb_points, teacher_id) values
 ('Osnove programiranja', 'Some description', 8, 1),

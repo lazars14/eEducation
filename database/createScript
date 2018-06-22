@@ -2,6 +2,29 @@ create database eeducation;
 
 use eeducation;
 
+create table authority
+(
+	id int primary key auto_increment not null,
+	name varchar(20)
+);
+
+create table user
+(
+	id int primary key auto_increment not null,
+	email varchar(50) unique,
+	u_password varchar(100)
+);
+
+create table user_authority
+(
+	id int primary key auto_increment not null,
+	user_id int,
+	authority_id int,
+	
+	Foreign Key (user_id) References user(id),
+	Foreign Key (authority_id) References authority(id)
+);
+
 create table class
 (
 	id int primary key auto_increment not null,
