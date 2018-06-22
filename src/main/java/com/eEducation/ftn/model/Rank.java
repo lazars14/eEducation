@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lazar
  */
 @Entity
-@Table(name = "rank")
+@Table(name = "teacher_rank")
 @XmlRootElement
 public class Rank implements Serializable {
 

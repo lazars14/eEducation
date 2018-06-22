@@ -124,10 +124,10 @@ insert into user_authority (user_id, authority_id) values
 (26, 3), (27, 3), (28, 3), (29, 3), (30, 3), (31, 3), (32, 3), (33, 3), (34, 3), (35, 3), (36, 3), (37, 3),
 (38, 3), (39, 3), (40, 3), (41, 3), (42, 3), (43, 3), (44, 3), (45, 3), (46, 3), (47, 3), (48, 3), (49, 3);
 
-insert into teacher_rank (name) values
+insert into rank (name) values
 ('Teacher'), ('Assistant');
 
-insert into teacher (firstname, lastname, email, s_password, teacher_rank) values
+insert into teacher (firstname, lastname, email, s_password, rank) values
 ('Filip', 'Zekavcic', 'filipZekavcic@gmail.com', 'filipZekavcic', 1),
 ('Adis', 'Turbic', 'adisTurbic@gmail.com', 'adisTurbic', 1),
 ('Bojan', 'Krstovic', 'bojanKrstovic@gmail.com', 'bojanKrstovic', 1),

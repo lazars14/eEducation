@@ -50,7 +50,7 @@ create table student
 	Foreign Key (class_id) References class(id)
 );
 
-create table rank
+create table teacher_rank
 (
 	id int primary key auto_increment not null,
 	name varchar(30)
@@ -63,9 +63,9 @@ create table teacher
 	lastname varchar(20),
 	email varchar(30) unique,
 	s_password varchar(20),
-	rank integer,
+	teacher_rank integer,
 
-	Foreign Key (rank) References rank(id)
+	Foreign Key (teacher_rank) References teacher_rank(id)
 );
 
 create table course

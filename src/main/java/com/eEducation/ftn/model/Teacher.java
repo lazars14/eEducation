@@ -40,7 +40,7 @@ public class Teacher implements Serializable {
     private String email;
     @Column(name = "s_password")
     private String sPassword;
-    @JoinColumn(name = "rank", referencedColumnName = "id")
+    @JoinColumn(name = "teacher_rank", referencedColumnName = "id")
     @ManyToOne
     private Rank rank;
 
