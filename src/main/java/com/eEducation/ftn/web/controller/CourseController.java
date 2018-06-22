@@ -22,6 +22,7 @@ import com.eEducation.ftn.repository.TeacherTeachesCourseRepository;
 import com.eEducation.ftn.service.CourseService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.service.TeacherService;
+import com.eEducation.ftn.service.TeacherTeachesCourseService;
 import com.eEducation.ftn.web.dto.CourseDTO;
 
 @RestController
@@ -35,6 +36,9 @@ public class CourseController {
 	
 	@Autowired
 	TeacherTeachesCourseRepository ttcRepository;
+	
+	@Autowired
+	TeacherTeachesCourseService ttcService;
 	
 	@Autowired
 	StudentService studentService;
@@ -79,16 +83,26 @@ public class CourseController {
 		}		
 				
 		newCourse.setTeacher(teacher);
+		
 		newCourse.setName(course.getName());
 		newCourse.setDescription(course.getDescription());
 		newCourse.setEspbPoints(course.getEspbPoints());
 		
 		courseService.save(newCourse);
+		
+		// add teacherTeachesCourse
+		TeacherTeachesCourse ttc = new TeacherTeachesCourse();
+		ttc.setCourse(newCourse);
+		ttc.setTeacher(teacher);
+		ttcService.save(ttc);
+		
 		return new ResponseEntity<>(new CourseDTO(newCourse), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
 	public ResponseEntity<CourseDTO> update(@RequestBody CourseDTO course){
+		boolean teacherChanged = false;
+		
 		Course found = courseService.findOne(course.getId());
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -103,6 +117,20 @@ public class CourseController {
 		if(teacher == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		if(found.getTeacher().getId() != teacher.getId()) {
+			// teacher changed
+			
+			// first remove the ttc for old teacher
+			TeacherTeachesCourse foundOldTeacher = ttcRepository.findByTeacherAndCourse(found.getTeacher(), found);
+			if(foundOldTeacher == null) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			ttcService.remove(foundOldTeacher.getId());
+			
+			teacherChanged = true;
+		}
 				
 		found.setTeacher(teacher);
 		found.setName(course.getName());
@@ -110,6 +138,14 @@ public class CourseController {
 		found.setEspbPoints(course.getEspbPoints());
 		
 		courseService.save(found);
+		
+		if(teacherChanged == true) {
+			TeacherTeachesCourse ttc = new TeacherTeachesCourse();
+			ttc.setCourse(found);
+			ttc.setTeacher(teacher);
+			ttcService.save(ttc);
+		}
+		
 		return new ResponseEntity<>(new CourseDTO(found), HttpStatus.OK);
 	}
 	
