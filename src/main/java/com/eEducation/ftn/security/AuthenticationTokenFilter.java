@@ -34,71 +34,90 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 		String authToken = httpRequest.getHeader("x-access-token");
 		boolean loginApiCall = false;
 		
-		if(httpRequest.getRequestURI().contains("login") || httpRequest.getRequestURI().contains("logout")) {
+		if(httpRequest.getRequestURI().contains("login") || httpRequest.getRequestURI().contains("logout") || httpRequest.getRequestURI().contains("error")) {
 			loginApiCall = true;
 		}
 		
+		// if token is needed
 		if(loginApiCall == false) {
+
+			
+			System.out.println("url is " + httpRequest.getRequestURI());
+			
+			System.out.println("is login api or logout " + loginApiCall);
+			
+			System.out.println("auth token is " + authToken);
+			
 			if(authToken == null || authToken == "") {
 				// send error 401
 				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "missing token");
 			}
-		}
-		
-		String username = tokenUtils.getUsernameFromToken(authToken);
-		
-		if(username == null && loginApiCall == false) {
-			// send error 401
-			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "missing token");
-		}
-
-		if (username != null
-				&& SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.userDetailsService
-					.loadUserByUsername(username);
 			
-			/*
-				0 - token invalid username or password
-				1 - token expired
-				2 - token valid
-			*/
-			int tokenValidationResult = tokenUtils.validateToken(authToken, userDetails);
+			String username = tokenUtils.getUsernameFromToken(authToken);
 			
-			// not login api
-			if(loginApiCall == false) {
-				
-				if(tokenValidationResult == 0) {
-					// send error 409
-					httpResponse.sendError(HttpServletResponse.SC_CONFLICT, "invalid username/password");
-				}
-				
-				else if(tokenValidationResult == 1) {
-					// send error 403
-					httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
-				}
-				
-				else if(tokenValidationResult == 2) {
-					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-							userDetails, null, userDetails.getAuthorities());
-					authentication.setDetails(new WebAuthenticationDetailsSource()
-							.buildDetails(httpRequest));
-					SecurityContextHolder.getContext().setAuthentication(
-							authentication);
-				}
-			} else {
-				
-				// login api, token not required - gonna set the token
-				if(tokenValidationResult == 2) {
-					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-							userDetails, null, userDetails.getAuthorities());
-					authentication.setDetails(new WebAuthenticationDetailsSource()
-							.buildDetails(httpRequest));
-					SecurityContextHolder.getContext().setAuthentication(
-							authentication);
-				}
-				
+			System.out.println("username is " + username);
+			
+			if(username == null) {
+				// send error 401
+				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "missing token");
 			}
 			
+			if(username != null) {
+				UserDetails userDetails = this.userDetailsService
+						.loadUserByUsername(username);
+				
+				/*
+					0 - token invalid username or password
+					1 - token expired
+					2 - token valid
+				*/
+				int tokenValidationResult = tokenUtils.validateToken(authToken, userDetails);
+				
+				// no one logged in
+				if (SecurityContextHolder.getContext().getAuthentication() == null) {
+					
+					// not login api
+					if(loginApiCall == false) {
+						
+						if(tokenValidationResult == 0) {
+							// send error 409
+							httpResponse.sendError(HttpServletResponse.SC_CONFLICT, "invalid username/password");
+						}
+						
+						else if(tokenValidationResult == 1) {
+							// send error 403
+							httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
+						}
+						
+						else if(tokenValidationResult == 2) {
+							UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+									userDetails, null, userDetails.getAuthorities());
+							authentication.setDetails(new WebAuthenticationDetailsSource()
+									.buildDetails(httpRequest));
+							SecurityContextHolder.getContext().setAuthentication(
+									authentication);
+						}
+					} else {
+						
+						// login api, token not required - gonna set the token
+						if(tokenValidationResult == 2) {
+							UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+									userDetails, null, userDetails.getAuthorities());
+							authentication.setDetails(new WebAuthenticationDetailsSource()
+									.buildDetails(httpRequest));
+							SecurityContextHolder.getContext().setAuthentication(
+									authentication);
+						}
+						
+					}
+					
+				} else {
+					if(tokenValidationResult == 1) {
+						// send error 403
+						httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
+					}
+				}
+			}
 		}
 
 		chain.doFilter(request, response);
