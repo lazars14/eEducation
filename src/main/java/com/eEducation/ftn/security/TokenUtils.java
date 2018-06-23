@@ -59,10 +59,15 @@ public class TokenUtils {
 	    return expiration.before(new Date(System.currentTimeMillis()));
 	  }
 	
-	public boolean validateToken(String token, UserDetails userDetails) {
+	public int validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
-		return username.equals(userDetails.getUsername())
-				&& !isTokenExpired(token);
+		
+		// username doesn't match
+		if(!username.equals(userDetails.getUsername())) return 0;
+		// token expired
+		else if(isTokenExpired(token)) return 1;
+		// token valid
+		else return 2;
 	}
 	
 	public String generateToken(UserDetails userDetails) {
