@@ -149,6 +149,33 @@ public class NotificationController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/batchDelete")
+	public ResponseEntity<Void> batchDelete(@RequestBody NotificationDTO notification){
+		if(notification.getCourse() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		String[] newAndOldMessageParts = notification.getMessage().split("|");
+		String newMessage = newAndOldMessageParts[0];
+		String oldMessage = newAndOldMessageParts[1];
+		
+		notification.setMessage(newMessage);
+		
+		Course course = courseService.findOne(notification.getCourse().getId());
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		List<Notification> notifications = notificationRepository.findByCourseAndMessage(course, oldMessage);
+		
+		for(Notification n : notifications) {
+			// remove notification
+			notificationService.remove(n.getId());
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/batchUpdate")
 	public ResponseEntity<NotificationDTO> batchUpdate(@RequestBody NotificationDTO notification){
 		if(notification.getCourse() == null) {
