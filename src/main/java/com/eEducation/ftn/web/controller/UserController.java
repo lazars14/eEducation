@@ -15,7 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +25,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.Teacher;
+import com.eEducation.ftn.model.User;
+import com.eEducation.ftn.model.UserAuthority;
+import com.eEducation.ftn.repository.AuthorityRepository;
 import com.eEducation.ftn.repository.StudentRepository;
 import com.eEducation.ftn.repository.TeacherRepository;
+import com.eEducation.ftn.repository.UserAuthorityRepository;
+import com.eEducation.ftn.repository.UserRepository;
 import com.eEducation.ftn.security.TokenUtils;
+import com.eEducation.ftn.service.UserAuthorityService;
+import com.eEducation.ftn.service.UserService;
 import com.eEducation.ftn.web.dto.LoginDTO;
 
 @RestController
@@ -44,7 +53,25 @@ public class UserController {
 	private StudentRepository studentRepository;
 	
 	@Autowired
+	UserService userService;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	UserAuthorityService userAuthorityService;
+	
+	@Autowired
+	UserAuthorityRepository userAuthorityRepository;
+	
+	@Autowired
+	AuthorityRepository authorityRepository;
+	
+	@Autowired
 	TokenUtils tokenUtils;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping(value = "/api/login", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, String>> login(@RequestBody LoginDTO loginDTO) {
@@ -105,4 +132,95 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 	}
+	
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="api/admin/changeEmail")
+	public ResponseEntity<String> changeEmail(@RequestBody String oldEmail, @RequestBody String newEmail){
+		if(oldEmail == null || newEmail == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(oldEmail.equals(newEmail)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		User found = userRepository.findByUsername(oldEmail);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(!found.getUsername().equals(oldEmail)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		// there is already an user with that email
+		User existing = userRepository.findByUsername(newEmail);
+		if(existing != null) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+		// update user
+		UserAuthority ua = userAuthorityRepository.findByUser(found);
+				
+		found.setUsername(newEmail);
+				
+		userService.save(found);
+				
+		// update user authority
+		ua.setUser(found);
+				
+		userAuthorityService.save(ua);
+		
+		// generate new token for session to be valid
+		UserDetails details = userDetailsService.loadUserByUsername(found.getUsername());
+		String newToken = tokenUtils.generateToken(details);
+		
+		return new ResponseEntity<String>(newToken, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="api/admin/changePassword")
+	public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody String oldPassword, 
+			@RequestBody String newPassword, @RequestBody String repeatPassword, @RequestBody String email){
+		if(oldPassword == null || newPassword == null || repeatPassword == null || email == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(newPassword.equals("") || repeatPassword.equals("")) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(!newPassword.equals(repeatPassword)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		User found = userRepository.findByUsername(email);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		boolean oldPasswordMatches = passwordEncoder.matches(oldPassword, found.getPassword());
+		
+		if(oldPasswordMatches == false) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		// update user
+		UserAuthority ua = userAuthorityRepository.findByUser(found);
+				
+		found.setPassword(passwordEncoder.encode(newPassword));
+		
+		userService.save(found);
+				
+		// update user authority
+		ua.setUser(found);
+				
+		userAuthorityService.save(ua);
+		
+		// generate new token for session to be valid
+		UserDetails details = userDetailsService.loadUserByUsername(found.getUsername());
+		String newToken = tokenUtils.generateToken(details);
+		
+		return new ResponseEntity<String>(newToken, HttpStatus.OK);
+	}
+	
+	
 }

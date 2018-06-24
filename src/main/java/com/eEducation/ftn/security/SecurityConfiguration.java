@@ -80,7 +80,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.hasAuthority("ROLE_TEACHER")
 				.antMatchers(HttpMethod.PUT, "/api/grades/*/", "/api/examEntries/*/", "/api/notifications/*/",
 							"/api/notifications/batchUpdate", "/api/notifications/batchDelete", "/api/course/*/colloquiums/*/",
-							"/api/course/*/courseLessons/*/", "/api/courseFiles/*/", "/api/colloquium/*/colloquiumResults/*/")
+							"/api/course/*/courseLessons/*/", "/api/courseFiles/*/", "/api/colloquium/*/colloquiumResults/*/",
+							"/api/teachers/*/changeEmail", "/api/teachers/*/changePassword")
 					.hasAuthority("ROLE_TEACHER")
 				.antMatchers(HttpMethod.DELETE, "/api/grades/*/", "/api/notifications/*/", "/api/course/*/colloquiums/*/",
 							"/api/course/*/courseLessons/*/", "/api/courseFiles/*/")
@@ -99,7 +100,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/api/examEntries", "/api/course/*/studentDocuments", 
 						"/api/colloquium/*/colloquiumResults/")
 					.hasAuthority("ROLE_STUDENT")
-				.antMatchers(HttpMethod.PUT, "").hasAuthority("ROLE_STUDENT")
+				.antMatchers(HttpMethod.PUT, "/api/students/*/changeEmail", "/api/students/*/changePassword").hasAuthority("ROLE_STUDENT")
 				.antMatchers(HttpMethod.DELETE, "/api/examEntries/*/", "/api/course/*/studentDocuments/*/").hasAuthority("ROLE_STUDENT")
 				.anyRequest().authenticated();
 		
