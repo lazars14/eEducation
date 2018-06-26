@@ -134,7 +134,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="api/admin/changeEmail")
-	public ResponseEntity<String> changeEmail(@RequestBody String oldEmail, @RequestBody String newEmail){
+	public ResponseEntity<Void> changeEmail(@RequestBody HashMap<String, String> body){
+		String oldEmail = body.get("oldEmail");
+		String newEmail = body.get("newEmail");
+		
 		if(oldEmail == null || newEmail == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -169,17 +172,27 @@ public class UserController {
 		ua.setUser(found);
 				
 		userAuthorityService.save(ua);
-		
+				
+//		can't do this, because I don't have the user's password
 		// generate new token for session to be valid
-		UserDetails details = userDetailsService.loadUserByUsername(found.getUsername());
-		String newToken = tokenUtils.generateToken(details);
-		
-		return new ResponseEntity<String>(newToken, HttpStatus.OK);
+//		UserDetails details = userDetailsService.loadUserByUsername(u.getUsername());
+//		String newToken = tokenUtils.generateToken(details);
+//		
+//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//				u.getUsername(), loginDTO.getPassword());
+//		Authentication authentication = authenticationManager.authenticate(newToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="api/admin/changePassword")
-	public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody String oldPassword, 
-			@RequestBody String newPassword, @RequestBody String repeatPassword, @RequestBody String email){
+	public ResponseEntity<Void> changePassword(@RequestBody HashMap<String, String> body){
+		String oldPassword = body.get("oldPassword");
+		String newPassword = body.get("newPassword");
+		String repeatPassword = body.get("repeatPassword");
+		String email = body.get("email");
+		
 		if(oldPassword == null || newPassword == null || repeatPassword == null || email == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -215,11 +228,17 @@ public class UserController {
 				
 		userAuthorityService.save(ua);
 		
+//		can't do this, because I don't have the user's password
 		// generate new token for session to be valid
-		UserDetails details = userDetailsService.loadUserByUsername(found.getUsername());
-		String newToken = tokenUtils.generateToken(details);
+//		UserDetails details = userDetailsService.loadUserByUsername(u.getUsername());
+//		String newToken = tokenUtils.generateToken(details);
+//		
+//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//				u.getUsername(), loginDTO.getPassword());
+//		Authentication authentication = authenticationManager.authenticate(newToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		return new ResponseEntity<String>(newToken, HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	

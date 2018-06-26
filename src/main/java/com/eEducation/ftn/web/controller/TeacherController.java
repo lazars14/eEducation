@@ -1,11 +1,13 @@
 package com.eEducation.ftn.web.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -78,6 +80,9 @@ public class TeacherController {
 	
 	@Autowired
 	TokenUtils tokenUtils;
+
+	@Autowired
+	AuthenticationManager authenticationManager;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<TeacherDTO>> getAll(){
@@ -268,23 +273,37 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}/changeEmail")
-	public ResponseEntity<String> changeEmail(@PathVariable Long id, @RequestBody String oldEmail, @RequestBody String newEmail){
+	public ResponseEntity<Void> changeEmail(@PathVariable Long id, @RequestBody HashMap<String, String> body){
+		String oldEmail = body.get("oldEmail");
+		String newEmail = body.get("newEmail");
+		
+		System.out.println("stari email je: " + oldEmail + " i novi email je: " + newEmail);
+		
+		
 		if(oldEmail == null || newEmail == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		System.out.println("posle null provere");
+		
 		if(oldEmail.equals(newEmail)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		System.out.println("posle provere da li je jednak star novom");
 		
 		Teacher found = teacherService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		System.out.println("posle pronadjenog studenta");
+		
 		if(!found.getEmail().equals(oldEmail)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		System.out.println("posle provere da li je stari mail jednak pronadjenom starom");
 		
 		// there is already an user with that email
 		User existing = userRepository.findByUsername(newEmail);
@@ -308,17 +327,26 @@ public class TeacherController {
 				
 		userAuthorityService.save(ua);
 		
+//		can't do this, because I don't have the user's password
 		// generate new token for session to be valid
-		UserDetails details = userDetailsService.loadUserByUsername(u.getUsername());
-		String newToken = tokenUtils.generateToken(details);
+//		UserDetails details = userDetailsService.loadUserByUsername(u.getUsername());
+//		String newToken = tokenUtils.generateToken(details);
+//		
+//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//				u.getUsername(), loginDTO.getPassword());
+//		Authentication authentication = authenticationManager.authenticate(newToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		
-		return new ResponseEntity<String>(newToken, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}/changePassword")
-	public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody String oldPassword, 
-			@RequestBody String newPassword, @RequestBody String repeatPassword){
+	public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody HashMap<String, String> body){
+		String oldPassword = body.get("oldPassword");
+		String newPassword = body.get("newPassword");
+		String repeatPassword = body.get("repeatPassword");
+		
 		if(oldPassword == null || newPassword == null || repeatPassword == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -358,10 +386,17 @@ public class TeacherController {
 				
 		userAuthorityService.save(ua);
 		
+		// didn't do it in email, so not going to do it here
 		// generate new token for session to be valid
-		UserDetails details = userDetailsService.loadUserByUsername(u.getUsername());
-		String newToken = tokenUtils.generateToken(details);
+//		UserDetails details = userDetailsService.loadUserByUsername(u.getUsername());
+//		String newToken = tokenUtils.generateToken(details);
+//		
+//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//				u.getUsername(), loginDTO.getPassword());
+//		Authentication authentication = authenticationManager.authenticate(newToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		return new ResponseEntity<String>(newToken, HttpStatus.OK);
+		
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 }

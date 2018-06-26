@@ -66,6 +66,8 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 				UserDetails userDetails = this.userDetailsService
 						.loadUserByUsername(username);
 				
+				System.out.println("user details are " + userDetails);
+				
 				/*
 					0 - token invalid username or password
 					1 - token expired
@@ -76,43 +78,38 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 				// no one logged in
 				if (SecurityContextHolder.getContext().getAuthentication() == null) {
 					
-					// not login api
-					if(loginApiCall == false) {
-						
-						if(tokenValidationResult == 0) {
-							// send error 409
-							httpResponse.sendError(HttpServletResponse.SC_CONFLICT, "invalid username/password");
-						}
-						
-						else if(tokenValidationResult == 1) {
-							// send error 403
-							httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
-						}
-						
-						else if(tokenValidationResult == 2) {
-							UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-									userDetails, null, userDetails.getAuthorities());
-							authentication.setDetails(new WebAuthenticationDetailsSource()
-									.buildDetails(httpRequest));
-							SecurityContextHolder.getContext().setAuthentication(
-									authentication);
-						}
-					} else {
-						
-						// login api, token not required - gonna set the token
-						if(tokenValidationResult == 2) {
-							UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-									userDetails, null, userDetails.getAuthorities());
-							authentication.setDetails(new WebAuthenticationDetailsSource()
-									.buildDetails(httpRequest));
-							SecurityContextHolder.getContext().setAuthentication(
-									authentication);
-						}
-						
+					if(tokenValidationResult == 0) {
+						// send error 409
+						httpResponse.sendError(HttpServletResponse.SC_CONFLICT, "invalid username/password");
+					}
+					
+					else if(tokenValidationResult == 1) {
+						System.out.println("forbidden");
+						// send error 403
+						httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
+					}
+					
+					else if(tokenValidationResult == 2) {
+						UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+								userDetails, null, userDetails.getAuthorities());
+						authentication.setDetails(new WebAuthenticationDetailsSource()
+								.buildDetails(httpRequest));
+						SecurityContextHolder.getContext().setAuthentication(
+								authentication);
 					}
 					
 				} else {
+					
+					System.out.println("user details are " + userDetails);
+					
+					// someone is logged in
+					if(tokenValidationResult == 0) {
+						// send error 409
+						httpResponse.sendError(HttpServletResponse.SC_CONFLICT, "invalid username/password");
+					}
+					
 					if(tokenValidationResult == 1) {
+						System.out.println("forbidden");
 						// send error 403
 						httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
 					}
