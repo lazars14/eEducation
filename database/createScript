@@ -43,7 +43,7 @@ create table student
 	stud_year int,
 	stud_year_ord_num int,
 	email varchar(30) unique,
-	s_password varchar(20),
+	s_password varchar(100),
 	class_id int,
 	espb_points int,
 
@@ -62,7 +62,7 @@ create table teacher
 	firstname varchar(20),
 	lastname varchar(20),
 	email varchar(30) unique,
-	s_password varchar(20),
+	s_password varchar(100),
 	teacher_rank integer,
 
 	Foreign Key (teacher_rank) References teacher_rank(id)
