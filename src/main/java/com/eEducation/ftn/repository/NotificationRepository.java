@@ -14,6 +14,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 	public List<Notification> findByStudent(Student student);
 	public List<Notification> findByCourse(Course course);
 	public List<Notification> findByCourseAndStudent(Course course, Student student);
-	public List<Notification> findDistinctMessageByCourse(Course course);
 	public List<Notification> findByCourseAndMessage(Course course, String message);
 }

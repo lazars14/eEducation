@@ -222,6 +222,57 @@ insert into course_lesson (name, description, course_id) values
 ('Lesson number 1', 'Description', 7), ('Lesson number 2', 'Description', 7), ('Lesson number 3', 'Description', 7), ('Lesson number 4', 'Description', 7),
 ('Lesson number 1', 'Description', 8), ('Lesson number 2', 'Description', 8), ('Lesson number 3', 'Description', 8), ('Lesson number 4', 'Description', 8);
 
+insert into course_file (document_name, document_type, document_url, mime_type, course_lesson_id, course_id) values
+('courseFile1530651182200.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182200.pdf', 'application/pdf', 1, 1),
+('courseFile1530651182201.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182201.pdf', 'application/pdf', 2, 1),
+('courseFile1530651182202.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182202.pdf', 'application/pdf', 3, 1),
+('courseFile1530651182203.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182203.pdf', 'application/pdf', 4, 1),
+
+('courseFile1530651182204.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182204.pdf', 'application/pdf', 5, 2),
+('courseFile1530651182205.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182205.pdf', 'application/pdf', 6, 2),
+('courseFile1530651182206.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182206.pdf', 'application/pdf', 7, 2),
+('courseFile1530651182207.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182207.pdf', 'application/pdf', 8, 2),
+
+('courseFile1530651182208.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182208.pdf', 'application/pdf', 9, 3),
+('courseFile1530651182209.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182209.pdf', 'application/pdf', 10, 3),
+('courseFile1530651182210.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182210.pdf', 'application/pdf', 11, 3),
+('courseFile1530651182211.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182211.pdf', 'application/pdf', 12, 3),
+
+('courseFile1530651182212.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182212.pdf', 'application/pdf', 13, 4),
+('courseFile1530651182213.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182213.pdf', 'application/pdf', 14, 4),
+('courseFile1530651182214.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182214.pdf', 'application/pdf', 15, 4),
+('courseFile1530651182215.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182215.pdf', 'application/pdf', 16, 4),
+
+('courseFile1530651182216.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182216.pdf', 'application/pdf', 17, 5),
+('courseFile1530651182217.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182217.pdf', 'application/pdf', 18, 5),
+('courseFile1530651182218.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182218.pdf', 'application/pdf', 19, 5),
+('courseFile1530651182219.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182219.pdf', 'application/pdf', 20, 5),
+
+('courseFile1530651182220.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182220.pdf', 'application/pdf', 21, 6),
+('courseFile1530651182221.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182221.pdf', 'application/pdf', 22, 6),
+('courseFile1530651182222.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182222.pdf', 'application/pdf', 23, 6),
+('courseFile1530651182223.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182223.pdf', 'application/pdf', 24, 6),
+
+('courseFile1530651182224.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182224.pdf', 'application/pdf', 25, 7),
+('courseFile1530651182225.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182225.pdf', 'application/pdf', 26, 7),
+('courseFile1530651182226.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182226.pdf', 'application/pdf', 27, 7),
+('courseFile1530651182227.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182227.pdf', 'application/pdf', 28, 7),
+
+('courseFile1530651182228.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182228.pdf', 'application/pdf', 29, 8),
+('courseFile1530651182229.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182229.pdf', 'application/pdf', 30, 8),
+('courseFile1530651182230.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182230.pdf', 'application/pdf', 31, 8),
+('courseFile1530651182231.pdf', 'courseLesson', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\courseFile1530651182231.pdf', 'application/pdf', 32, 8),
+
+('notificationFile1530651182200.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182200.pdf', 'application/pdf', null, 1),
+('notificationFile1530651182201.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182201.pdf', 'application/pdf', null, 2),
+('notificationFile1530651182202.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182202.pdf', 'application/pdf', null, 3),
+('notificationFile1530651182203.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182203.pdf', 'application/pdf', null, 4),
+
+('notificationFile1530651182204.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182204.pdf', 'application/pdf', null, 5),
+('notificationFile1530651182205.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182205.pdf', 'application/pdf', null, 6),
+('notificationFile1530651182206.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182206.pdf', 'application/pdf', null, 7),
+('notificationFile1530651182207.pdf', 'notification', 'C:\\Users\\Lazar Stijakovic\\Desktop\\files\\notificationFile1530651182207.pdf', 'application/pdf', null, 8);
+
 insert into payment (student_id, amount, cause, payment_date, owes) values
 (1, 1000, 'Exam entries', '2018-06-01', true),
 (2, 1000, 'Exam entries', '2018-06-01', true),
@@ -273,37 +324,98 @@ insert into payment (student_id, amount, cause, payment_date, owes) values
 (48, 1000, 'Exam entries', '2018-06-01', true);
 
 insert into colloquium (course_id, max_points, exam_type, exam_date_time) values
-(1, 40, 'theory', '2018-07-01'),
-(1, 40, 'exercise', '2018-07-01'),
-(1, 40, 'homework', '2018-07-01'),
+(1, 40, 'theory', '2018-08-01'),
+(1, 40, 'exercise', '2018-08-01'),
+(1, 40, 'homework', '2018-08-01'),
 
-(2, 40, 'theory', '2018-07-01'),
-(2, 40, 'exercise', '2018-07-01'),
-(2, 40, 'homework', '2018-07-01'),
+(2, 40, 'theory', '2018-08-01'),
+(2, 40, 'exercise', '2018-08-01'),
+(2, 40, 'homework', '2018-08-01'),
 
-(3, 40, 'theory', '2018-07-01'),
-(3, 40, 'exercise', '2018-07-01'),
-(3, 40, 'homework', '2018-07-01'),
+(3, 40, 'theory', '2018-08-01'),
+(3, 40, 'exercise', '2018-08-01'),
+(3, 40, 'homework', '2018-08-01'),
 
-(4, 40, 'theory', '2018-07-01'),
-(4, 40, 'exercise', '2018-07-01'),
-(4, 40, 'homework', '2018-07-01'),
+(4, 40, 'theory', '2018-08-01'),
+(4, 40, 'exercise', '2018-08-01'),
+(4, 40, 'homework', '2018-08-01'),
 
-(5, 40, 'theory', '2018-07-01'),
-(5, 40, 'exercise', '2018-07-01'),
-(5, 40, 'homework', '2018-07-01'),
+(5, 40, 'theory', '2018-08-01'),
+(5, 40, 'exercise', '2018-08-01'),
+(5, 40, 'homework', '2018-08-01'),
 
-(6, 40, 'theory', '2018-07-01'),
-(6, 40, 'exercise', '2018-07-01'),
-(6, 40, 'homework', '2018-07-01'),
+(6, 40, 'theory', '2018-08-01'),
+(6, 40, 'exercise', '2018-08-01'),
+(6, 40, 'homework', '2018-08-01'),
 
-(7, 40, 'theory', '2018-07-01'),
-(7, 40, 'exercise', '2018-07-01'),
-(7, 40, 'homework', '2018-07-01'),
+(7, 40, 'theory', '2018-08-01'),
+(7, 40, 'exercise', '2018-08-01'),
+(7, 40, 'homework', '2018-08-01'),
 
-(8, 40, 'theory', '2018-07-01'),
-(8, 40, 'exercise', '2018-07-01'),
-(8, 40, 'homework', '2018-07-01');
+(8, 40, 'theory', '2018-08-01'),
+(8, 40, 'exercise', '2018-08-01'),
+(8, 40, 'homework', '2018-08-01');
+
+insert into student_document (document_name, document_type, document_url, mime_type, student_id, course_id) values
+('studentFile1530651182200.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182200.pdf', 'application/pdf', 1, 1),
+('studentFile1530651182201.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182201.pdf', 'application/pdf', 2, 1),
+('studentFile1530651182202.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182202.pdf', 'application/pdf', 3, 1),
+
+('studentFile1530651182203.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182203.pdf', 'application/pdf', 13, 2),
+('studentFile1530651182204.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182204.pdf', 'application/pdf', 14, 2),
+('studentFile1530651182205.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182205.pdf', 'application/pdf', 15, 2),
+
+('studentFile1530651182206.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182206.pdf', 'application/pdf', 27, 3),
+('studentFile1530651182207.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182207.pdf', 'application/pdf', 28, 3),
+('studentFile1530651182208.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182208.pdf', 'application/pdf', 29, 3),
+
+('studentFile1530651182209.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182209.pdf', 'application/pdf', 44, 4),
+('studentFile1530651182210.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182210.pdf', 'application/pdf', 45, 4),
+('studentFile1530651182211.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182211.pdf', 'application/pdf', 46, 4),
+
+('studentFile1530651182212.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182212.pdf', 'application/pdf', 1, 5),
+('studentFile1530651182213.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182213.pdf', 'application/pdf', 2, 5),
+('studentFile1530651182214.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182214.pdf', 'application/pdf', 3, 5),
+
+('studentFile1530651182215.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182215.pdf', 'application/pdf', 13, 6),
+('studentFile1530651182216.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182216.pdf', 'application/pdf', 14, 6),
+('studentFile1530651182217.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182217.pdf', 'application/pdf', 15, 6),
+
+('studentFile1530651182218.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182218.pdf', 'application/pdf', 27, 7),
+('studentFile1530651182219.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182219.pdf', 'application/pdf', 28, 7),
+('studentFile1530651182220.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182220.pdf', 'application/pdf', 29, 7),
+
+('studentFile1530651182221.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182221.pdf', 'application/pdf', 44, 8),
+('studentFile1530651182222.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182222.pdf', 'application/pdf', 45, 8),
+('studentFile1530651182223.pdf', 'colloquiumEntry', 'C:\\Users\\Lazar Stijakovic\\Desktop\\studentFiles\\studentFile1530651182223.pdf', 'application/pdf', 46, 8);
+
+
+
+insert into colloquium_result (points, colloquium_id, student_id, document_id) values
+(0, 1, 1, null),
+(0, 2, 2, null),
+(0, 3, 3, null),
+(0, 4, 13, null),
+(0, 5, 14, null),
+(0, 6, 15, null),
+(0, 7, 27, null),
+(0, 8, 28, null),
+(0, 9, 29, null),
+(0, 10, 44, null),
+(0, 11, 45, null),
+(0, 12, 46, null),
+(0, 13, 1, null),
+(0, 14, 2, null),
+(0, 15, 3, null),
+(0, 16, 13, null),
+(0, 17, 14, null),
+(0, 18, 15, null),
+(0, 19, 27, null),
+(0, 20, 28, null),
+(0, 21, 29, null),
+(0, 22, 44, null),
+(0, 23, 45, null),
+(0, 24, 46, null);
 
 insert into exam_period (name, start_date, end_date) values
 ('July', '2018-07-01', '2018-07-30'),
@@ -312,7 +424,6 @@ insert into exam_period (name, start_date, end_date) values
 ('October', '2018-10-01', '2018-10-30'),
 ('November', '2018-11-01', '2018-11-30'),
 ('December', '2018-12-01', '2018-12-30');
-
 
 insert into exam_term (exam_date, class_room, course_id, exam_period_id) values
 ('2018-07-02 15:00:00', '101', 1, 1),
@@ -323,7 +434,6 @@ insert into exam_term (exam_date, class_room, course_id, exam_period_id) values
 ('2018-07-07 15:00:00', '101', 6, 1),
 ('2018-07-08 15:00:00', '101', 7, 1),
 ('2018-07-09 15:00:00', '101', 8, 1);
-
 
 insert into student_exam_entry (exam_term_id, student_id, grade_id) values 
 (1, 1, null), (1, 2, null), (1, 3, null), (1, 4, null), (1, 5, null), (1, 6, null), (1, 7, null), (1, 8, null), (1, 9, null), (1, 10, null), (1, 11, null), (1, 12, null),
@@ -336,121 +446,113 @@ insert into student_exam_entry (exam_term_id, student_id, grade_id) values
 (8, 37, null), (8, 38, null), (8, 39, null), (8, 40, null), (8, 41, null), (8, 42, null), (8, 43, null), (8, 44, null), (8, 45, null), (8, 46, null), (8, 47, null), (8, 48, null);
 
 insert into notification (message, n_date, course_id, document_id, seen, student_id) values 
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 1),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 2),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 3),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 4),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 5),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 6),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 7),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 8),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 9),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 10),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 11),
-('Random message', '2018-07-02 15:00:00', 1, null, 0, 12),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 1),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 2),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 3),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 4),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 5),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 6),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 7),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 8),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 9),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 10),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 11),
+('Random message', '2018-07-02 15:00:00', 1, 33, 0, 12),
 
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 13),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 14),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 15),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 16),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 17),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 18),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 19),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 20),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 21),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 22),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 23),
-('Random message', '2018-07-02 15:00:00', 2, null, 0, 24),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 13),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 14),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 15),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 16),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 17),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 18),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 19),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 20),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 21),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 22),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 23),
+('Random message', '2018-07-02 15:00:00', 2, 34, 0, 24),
 
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 25),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 26),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 27),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 28),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 29),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 30),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 31),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 32),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 33),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 34),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 35),
-('Random message', '2018-07-02 15:00:00', 3, null, 0, 36),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 25),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 26),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 27),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 28),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 29),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 30),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 31),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 32),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 33),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 34),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 35),
+('Random message', '2018-07-02 15:00:00', 3, 35, 0, 36),
 
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 37),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 38),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 39),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 40),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 41),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 42),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 43),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 44),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 45),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 46),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 47),
-('Random message', '2018-07-02 15:00:00', 4, null, 0, 48),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 37),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 38),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 39),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 40),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 41),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 42),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 43),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 44),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 45),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 46),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 47),
+('Random message', '2018-07-02 15:00:00', 4, 36, 0, 48),
 
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 1),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 2),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 3),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 4),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 5),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 6),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 7),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 8),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 9),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 10),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 11),
-('Random message', '2018-07-02 15:00:00', 5, null, 0, 12),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 1),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 2),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 3),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 4),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 5),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 6),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 7),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 8),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 9),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 10),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 11),
+('Random message', '2018-07-02 15:00:00', 5, 37, 0, 12),
 
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 13),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 14),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 15),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 16),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 17),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 18),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 19),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 20),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 21),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 22),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 23),
-('Random message', '2018-07-02 15:00:00', 6, null, 0, 24),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 13),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 14),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 15),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 16),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 17),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 18),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 19),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 20),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 21),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 22),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 23),
+('Random message', '2018-07-02 15:00:00', 6, 38, 0, 24),
 
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 25),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 26),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 27),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 28),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 29),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 30),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 31),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 32),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 33),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 34),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 35),
-('Random message', '2018-07-02 15:00:00', 7, null, 0, 36),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 25),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 26),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 27),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 28),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 29),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 30),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 31),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 32),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 33),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 34),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 35),
+('Random message', '2018-07-02 15:00:00', 7, 39, 0, 36),
 
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 37),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 38),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 39),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 40),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 41),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 42),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 43),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 44),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 45),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 46),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 47),
-('Random message', '2018-07-02 15:00:00', 8, null, 0, 48);
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 37),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 38),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 39),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 40),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 41),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 42),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 43),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 44),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 45),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 46),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 47),
+('Random message', '2018-07-02 15:00:00', 8, 40, 0, 48);
 
 /* to do
-insert into colloquium_result (points, colloquiumId, studentId, documentId) values
-();
 
 insert into grade (points, grade, courseId, studentId) values 
-();
-
-insert into studentDocument (documentName, documentType, documentURL, mimeType, studentId, courseId) values
-();
-
-insert into courseFile (documentName, documentType, documentURL, mimeType, courseLessonId, courseId) values
 ();
 
 */

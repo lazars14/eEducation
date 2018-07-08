@@ -1,10 +1,17 @@
 package com.eEducation.ftn.web.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +26,7 @@ import com.eEducation.ftn.repository.CourseFileRepository;
 import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseLessonService;
 import com.eEducation.ftn.service.CourseService;
+import com.eEducation.ftn.service.FileService;
 import com.eEducation.ftn.web.dto.CourseFileDTO;
 
 @RestController
@@ -35,6 +43,9 @@ public class CourseFileController {
 	
 	@Autowired
 	CourseService courseService;
+	
+	@Autowired
+	FileService fileService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CourseFileDTO>> getAll(@PathVariable Long courseId){
@@ -188,4 +199,50 @@ public class CourseFileController {
 		
 		return new ResponseEntity<>(courseFileDTOs, HttpStatus.OK);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/course/{courseId}/download/{courseFileId}")
+	public ResponseEntity<Resource> download(@PathVariable Long courseId, @PathVariable Long courseFileId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		CourseFile courseFile = courseFileService.findOne(courseFileId);
+		if(courseFile == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		if(courseFile.getCourse().getId() != course.getId()) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+//		System.out.println("filename is " + courseFile.getDocumentName());
+		
+		String folderPath = fileService.getFolderPath();
+		
+//		System.out.println("full url is " + folderPath + "to_do.zip");
+		try {
+			File file = new File(folderPath + courseFile.getDocumentName());
+							
+			InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Content-Disposition", "attachment: " + courseFile.getDocumentName());
+			headers.set("Cache-Control", "no-cache, no-store, must-revalidate");
+			headers.set("Pragma", "no-cache");
+			
+			return ResponseEntity.ok()
+		            .headers(headers)
+		            .contentLength(file.length())
+		            .contentType(MediaType.parseMediaType(courseFile.getMimeType()))
+		            .body(resource);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
 }

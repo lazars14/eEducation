@@ -7,7 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,11 +24,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.Teacher;
@@ -33,9 +43,19 @@ import com.eEducation.ftn.repository.TeacherRepository;
 import com.eEducation.ftn.repository.UserAuthorityRepository;
 import com.eEducation.ftn.repository.UserRepository;
 import com.eEducation.ftn.security.TokenUtils;
+import com.eEducation.ftn.service.FileService;
 import com.eEducation.ftn.service.UserAuthorityService;
 import com.eEducation.ftn.service.UserService;
 import com.eEducation.ftn.web.dto.LoginDTO;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 public class UserController {
@@ -73,18 +93,21 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	FileService fileService;
+	
 	@RequestMapping(value = "/api/login", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, String>> login(@RequestBody LoginDTO loginDTO) {
         try {
-        	System.out.println("credentials : " + loginDTO.getUsername() + " and " + loginDTO.getPassword());
+//        	System.out.println("credentials : " + loginDTO.getUsername() + " and " + loginDTO.getPassword());
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 					loginDTO.getUsername(), loginDTO.getPassword());
-			System.out.println("token is " + token);
+//			System.out.println("token is " + token);
             Authentication authentication = authenticationManager.authenticate(token);
-            System.out.println("authentication is " + authentication);
+//            System.out.println("authentication is " + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
-            System.out.println("details are " + details);
+//            System.out.println("details are " + details);
             
             Long id = null;
             String email = authentication.getName();
@@ -240,6 +263,5 @@ public class UserController {
 		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
 	
 }

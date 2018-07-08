@@ -42,11 +42,11 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 		if(loginApiCall == false) {
 
 			
-			System.out.println("url is " + httpRequest.getRequestURI());
+//			System.out.println("url is " + httpRequest.getRequestURI());
 			
-			System.out.println("is login api or logout " + loginApiCall);
+//			System.out.println("is login api or logout " + loginApiCall);
 			
-			System.out.println("auth token is " + authToken);
+//			System.out.println("auth token is " + authToken);
 			
 			if(authToken == null || authToken == "") {
 				// send error 401
@@ -55,7 +55,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 			
 			String username = tokenUtils.getUsernameFromToken(authToken);
 			
-			System.out.println("username is " + username);
+//			System.out.println("username is " + username);
 			
 			if(username == null) {
 				// send error 401
@@ -66,7 +66,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 				UserDetails userDetails = this.userDetailsService
 						.loadUserByUsername(username);
 				
-				System.out.println("user details are " + userDetails);
+//				System.out.println("user details are " + userDetails);
 				
 				/*
 					0 - token invalid username or password
@@ -84,7 +84,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 					}
 					
 					else if(tokenValidationResult == 1) {
-						System.out.println("forbidden");
+//						System.out.println("forbidden");
 						// send error 403
 						httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
 					}
@@ -100,7 +100,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 					
 				} else {
 					
-					System.out.println("user details are " + userDetails);
+//					System.out.println("user details are " + userDetails);
 					
 					// someone is logged in
 					if(tokenValidationResult == 0) {
@@ -109,7 +109,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 					}
 					
 					if(tokenValidationResult == 1) {
-						System.out.println("forbidden");
+//						System.out.println("forbidden");
 						// send error 403
 						httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "token expired");
 					}

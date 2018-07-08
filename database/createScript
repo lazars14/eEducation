@@ -112,7 +112,7 @@ create table course_lesson
 create table student_document
 (
 	id int primary key auto_increment not null,
-	document_name varchar(30),
+	document_name varchar(100),
 	document_type varchar(30),
 	document_url varchar(200),
 	mime_type varchar(30),
@@ -126,7 +126,7 @@ create table student_document
 create table course_file
 (
 	id int primary key auto_increment not null,
-	document_name varchar(30),
+	document_name varchar(100),
 	document_type varchar(30),
 	document_url varchar(200),
 	mime_type varchar(30),

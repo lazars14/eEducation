@@ -154,6 +154,11 @@ public class CourseController {
 		Course found = courseService.findOne(id);
 		if(found != null) {
 			try {
+				List<TeacherTeachesCourse> ttcList = ttcRepository.findByCourse(found);
+				for (TeacherTeachesCourse ttc : ttcList) {
+					ttcService.remove(ttc.getId());
+				}
+				
 				courseService.remove(id);
 				return new ResponseEntity<>(HttpStatus.OK);
 			} catch (Exception e) {

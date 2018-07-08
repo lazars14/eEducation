@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.authorizeRequests()
-				.antMatchers("/index.html", "/api/login").permitAll() 
+				.antMatchers("/index.html", "/api/login", "/api/logout").permitAll() 
 				.antMatchers("/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT");
 					
 //				.hasAuthority("ROLE_ADMIN") // admin api's

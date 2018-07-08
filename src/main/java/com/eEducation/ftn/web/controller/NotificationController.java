@@ -1,16 +1,22 @@
 package com.eEducation.ftn.web.controller;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.CourseFile;
@@ -21,6 +27,7 @@ import com.eEducation.ftn.repository.NotificationRepository;
 import com.eEducation.ftn.repository.StudentAttendsCourseRepository;
 import com.eEducation.ftn.service.CourseFileService;
 import com.eEducation.ftn.service.CourseService;
+import com.eEducation.ftn.service.FileService;
 import com.eEducation.ftn.service.NotificationService;
 import com.eEducation.ftn.service.StudentAttendsCourseService;
 import com.eEducation.ftn.service.StudentService;
@@ -49,6 +56,9 @@ public class NotificationController {
 	
 	@Autowired
 	StudentAttendsCourseRepository sacRepository;
+	
+	@Autowired
+	FileService fileService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<NotificationDTO>> getAll(){
@@ -86,61 +96,49 @@ public class NotificationController {
 		return new ResponseEntity<>(new NotificationDTO(found), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<NotificationDTO> add(@RequestBody NotificationDTO notification){
-		Notification newNotification = new Notification();
-		newNotification.setMessage(notification.getMessage());
-		newNotification.setNDate(notification.getnDate());
-		
-		if(notification.getCourse() == null || notification.getDocument() == null || notification.getStudent() == null) {
+	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value="/course/{courseId}/batchAdd")
+	public ResponseEntity<Void> batchAdd(@PathVariable Long courseId, @RequestParam("message") String message, @RequestParam("file") MultipartFile file){
+		if(message.equals("") || message == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Course course = courseService.findOne(notification.getCourse().getId());
-		CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
-		Student student = studentService.findOne(notification.getStudent().getId());
-		
-		if(course == null || courseFile == null || student == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		// seen is false on creation - student hasn't seen it yet
-		newNotification.setSeen(false);
-		
-		newNotification.setCourse(course);
-		newNotification.setDocument(courseFile);
-		newNotification.setStudent(student);
-		
-		notificationService.save(newNotification);
-		return new ResponseEntity<>(new NotificationDTO(newNotification), HttpStatus.OK);
-	}
-	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json", value="/batchAdd")
-	public ResponseEntity<Void> batchAdd(@RequestBody NotificationDTO notification){
-		if(notification.getCourse() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		Course course = courseService.findOne(notification.getCourse().getId());
+		Course course = courseService.findOne(courseId);
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		CourseFile courseFile = null;
+		if(file.isEmpty() == false) {
+			// upload file
+			String[] uploadResult = fileService.upload(file);
+			
+			if(uploadResult[0].equals("invalid")) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			// create course file
+			courseFile = new CourseFile();
+			courseFile.setCourse(course);
+			courseFile.setCourseLesson(null);
+			courseFile.setDocumentName(uploadResult[1]);
+			courseFile.setDocumentType("notification");
+			courseFile.setMimeType(uploadResult[0]);
+			courseFile.setDocumentURL(fileService.getFolderPath() + file.getOriginalFilename());
+			
+			courseFileService.save(courseFile);
 		}
 		
 		List<StudentAttendsCourse> sacS = sacRepository.findByCourse(course);
 		
 		for(StudentAttendsCourse sac : sacS) {
 			Notification newNotification = new Notification();
-			
-			newNotification.setMessage(notification.getMessage());
-			newNotification.setNDate(notification.getnDate());
-			
-			CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
-			
-			// seen is false on update - student hasn't seen it yet
-			newNotification.setSeen(false);
-			
+			newNotification.setMessage(message);
+			newNotification.setNDate(new Date());
 			newNotification.setCourse(course);
+			// seen is false on creation - student hasn't seen it yet
+			newNotification.setSeen(false);
 			newNotification.setDocument(courseFile);
+			// set student from for loop
 			newNotification.setStudent(sac.getStudent());
 			
 			notificationService.save(newNotification);
@@ -149,66 +147,115 @@ public class NotificationController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/batchDelete")
-	public ResponseEntity<Void> batchDelete(@RequestBody NotificationDTO notification){
-		if(notification.getCourse() == null) {
+	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value="/course/{courseId}/batchUpdate")
+	public ResponseEntity<Void> batchEdit(@PathVariable Long courseId, @RequestParam("notificationId") String notificationId, @RequestParam("message") String message, @RequestParam(value="file", required=false) MultipartFile file){		
+		Long notificationIdLong = Long.parseLong(notificationId);
+		
+		if(message.equals("") || message == null || notificationIdLong == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		String[] newAndOldMessageParts = notification.getMessage().split("|");
-		String newMessage = newAndOldMessageParts[0];
-		String oldMessage = newAndOldMessageParts[1];
+		Notification found = notificationService.findOne(notificationIdLong);
+		if(found == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		
-		notification.setMessage(newMessage);
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		CourseFile newCourseFile = null;
+		
+		if(file != null) {
+			
+			// delete course file - file
+			boolean deleted = false;
+			try {
+				deleted = fileService.delete(found.getDocument().getDocumentName());
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(deleted == false) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
+			// upload file
+			String[] uploadResult = fileService.upload(file);
+			
+			if(uploadResult[0].equals("invalid")) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			// create course file
+			newCourseFile = new CourseFile();
+			newCourseFile.setCourse(course);
+			newCourseFile.setCourseLesson(null);
+			newCourseFile.setDocumentName(uploadResult[1]);
+			newCourseFile.setDocumentType("notification");
+			newCourseFile.setMimeType(uploadResult[0]);
+			newCourseFile.setDocumentURL(fileService.getFolderPath() + file.getOriginalFilename());
+			
+			courseFileService.save(newCourseFile);
+		}
+		
+		List<Notification> notifications = notificationRepository.findByCourseAndMessage(course, found.getMessage());
+		
+		for(Notification notification : notifications) {
+			notification.setNDate(new Date());
+			notification.setMessage(message);
+			// seen is false on update - student hasn't seen it yet
+			notification.setSeen(false);
+			
+			if(newCourseFile != null) {
+				notification.setDocument(newCourseFile);
+			}
+			
+			notificationService.save(notification);
+		}
+		
+		if(newCourseFile != null) {
+			// delete old course file
+			courseFileService.remove(found.getDocument().getId());
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/batchDelete")
+	public ResponseEntity<Void> batchDelete(@RequestBody NotificationDTO notification){
+		if(notification == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		
 		Course course = courseService.findOne(notification.getCourse().getId());
 		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		List<Notification> notifications = notificationRepository.findByCourseAndMessage(course, oldMessage);
+		// delete course file
+		boolean deleted = false;
+		try {
+			deleted = fileService.delete(notification.getDocument().getDocumentName());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		if(deleted == false) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<Notification> notifications = notificationRepository.findByCourseAndMessage(course, notification.getMessage());
 		
 		for(Notification n : notifications) {
 			// remove notification
 			notificationService.remove(n.getId());
 		}
 		
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/batchUpdate")
-	public ResponseEntity<NotificationDTO> batchUpdate(@RequestBody NotificationDTO notification){
-		if(notification.getCourse() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		String[] newAndOldMessageParts = notification.getMessage().split("|");
-		String newMessage = newAndOldMessageParts[0];
-		String oldMessage = newAndOldMessageParts[1];
-		
-		notification.setMessage(newMessage);
-		
-		Course course = courseService.findOne(notification.getCourse().getId());
-		if(course == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		List<Notification> notifications = notificationRepository.findByCourseAndMessage(course, oldMessage);
-		
-		for(Notification nForUpdate : notifications) {
-			nForUpdate.setMessage(notification.getMessage());
-			nForUpdate.setNDate(notification.getnDate());
-			
-			CourseFile courseFile = courseFileService.findOne(notification.getDocument().getId());
-			
-			// seen is false on update - student hasn't seen it yet
-			nForUpdate.setSeen(false);
-			nForUpdate.setDocument(courseFile);
-			
-			// not allowed to change course and student
-			
-			notificationService.save(nForUpdate);
-		}
+		courseFileService.remove(notification.getDocument().getId());
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -295,11 +342,18 @@ public class NotificationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		List<Notification> notifications = notificationRepository.findDistinctMessageByCourse(course);
-		List<NotificationDTO> notificationDTOs = new ArrayList<>();
+		List<StudentAttendsCourse> sac = sacRepository.findByCourse(course);
 		
-		for(Notification n : notifications) {
-			notificationDTOs.add(new NotificationDTO(n));
+		List<NotificationDTO> notificationDTOs = new ArrayList<>();
+				
+		if(sac.size() == 0) return new ResponseEntity<>(notificationDTOs, HttpStatus.OK);
+		
+		Student student = sac.get(0).getStudent();
+		
+		List<Notification> notifications = notificationRepository.findByCourseAndStudent(course, student);
+		
+		for(Notification notification : notifications) {
+			notificationDTOs.add(new NotificationDTO(notification));
 		}
 		
 		return new ResponseEntity<>(notificationDTOs, HttpStatus.OK);
