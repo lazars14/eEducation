@@ -3,6 +3,8 @@ package com.eEducation.ftn.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ import com.eEducation.ftn.web.dto.PaymentDTO;
 @RestController
 @RequestMapping(value="api/payments")
 public class PaymentController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+	
 	@Autowired
 	PaymentService paymentService;
 	
@@ -44,6 +49,7 @@ public class PaymentController {
 			paymentDTOs.add(new PaymentDTO(p));
 		}
 		
+		logger.info("payment - returned all");
 		return new ResponseEntity<>(paymentDTOs, HttpStatus.OK);
 	}
 	
@@ -54,6 +60,7 @@ public class PaymentController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
+		logger.info("payment - found one by id " + id);
 		return new ResponseEntity<>(new PaymentDTO(found), HttpStatus.OK);
 	}
 	
@@ -132,6 +139,8 @@ public class PaymentController {
 		for(Payment p : payments) {
 			paymentDTOs.add(new PaymentDTO(p));
 		}
+		
+		logger.info("payment - returned all payments for student");
 		
 		return new ResponseEntity<>(paymentDTOs, HttpStatus.OK);
 	}

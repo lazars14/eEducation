@@ -1,7 +1,6 @@
 package com.eEducation.ftn.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,11 +18,9 @@ public class UserAuthority {
 	private Long id;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-//	@Column(name = "user_id")
 	private User user;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-//	@Column(name = "authority_id")
 	private Authority authority;
 
 	public Long getId() {

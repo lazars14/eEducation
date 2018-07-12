@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eEducation.ftn.model.Authority;
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.Rank;
-import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.Teacher;
 import com.eEducation.ftn.model.TeacherTeachesCourse;
 import com.eEducation.ftn.model.User;
@@ -42,6 +40,9 @@ import com.eEducation.ftn.web.dto.TeacherDTO;
 @RestController
 @RequestMapping(value="api/teachers")
 public class TeacherController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TeacherController.class);
+	
 	@Autowired
 	TeacherService teacherService;
 	
@@ -76,9 +77,6 @@ public class TeacherController {
 	BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
-	
-	@Autowired
 	TokenUtils tokenUtils;
 
 	@Autowired
@@ -105,6 +103,8 @@ public class TeacherController {
 		}
 		
 		found.setSPassword("");
+		
+		logger.info("teacher - returned all");
 		
 		return new ResponseEntity<>(new TeacherDTO(found), HttpStatus.OK);
 	}
@@ -162,6 +162,8 @@ public class TeacherController {
 		newUserAuthority.setAuthority(auth);
 		
 		userAuthorityService.save(newUserAuthority);
+		
+		logger.info("teacher - added new with email " + newTeacher.getEmail());
 		
 		return new ResponseEntity<>(new TeacherDTO(newTeacher), HttpStatus.OK);
 	}
@@ -230,6 +232,8 @@ public class TeacherController {
 		}
 		
 		
+		logger.info("teacher - updated teacher with id " + teacher.getId());
+		
 		return new ResponseEntity<>(new TeacherDTO(found), HttpStatus.OK);
 	}
 	
@@ -245,6 +249,9 @@ public class TeacherController {
 				userService.remove(u.getId());
 				
 				teacherService.remove(id);
+				
+				logger.info("teacher - deleted teacher with id " + id);
+				
 				return new ResponseEntity<>(HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
@@ -269,16 +276,15 @@ public class TeacherController {
 			teacherDTOs.add(new TeacherDTO(t.getTeacher()));
 		}
 		
+		logger.info("teacher - get all teachers for course with id " + courseId);
+		
 		return new ResponseEntity<>(teacherDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}/changeEmail")
 	public ResponseEntity<Void> changeEmail(@PathVariable Long id, @RequestBody HashMap<String, String> body){
 		String oldEmail = body.get("oldEmail");
-		String newEmail = body.get("newEmail");
-		
-		System.out.println("stari email je: " + oldEmail + " i novi email je: " + newEmail);
-		
+		String newEmail = body.get("newEmail");	
 		
 		if(oldEmail == null || newEmail == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -290,20 +296,14 @@ public class TeacherController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println("posle provere da li je jednak star novom");
-		
 		Teacher found = teacherService.findOne(id);
 		if(found == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println("posle pronadjenog studenta");
-		
 		if(!found.getEmail().equals(oldEmail)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		System.out.println("posle provere da li je stari mail jednak pronadjenom starom");
 		
 		// there is already an user with that email
 		User existing = userRepository.findByUsername(newEmail);
@@ -337,6 +337,7 @@ public class TeacherController {
 //		Authentication authentication = authenticationManager.authenticate(newToken);
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 		
+		logger.info("teacher - updated email of teacher with id " + id);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -396,6 +397,7 @@ public class TeacherController {
 //		Authentication authentication = authenticationManager.authenticate(newToken);
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 		
+		logger.info("teacher - changed password for teacher with id " + id);
 		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}

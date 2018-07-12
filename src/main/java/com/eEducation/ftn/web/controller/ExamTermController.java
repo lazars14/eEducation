@@ -3,6 +3,8 @@ package com.eEducation.ftn.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ import com.eEducation.ftn.web.dto.ExamTermDTO;
 @RestController
 @RequestMapping(value="api/examPeriod/{examPeriodId}/examTerms")
 public class ExamTermController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ExamTermController.class);
+	
 	@Autowired
 	ExamTermService examTermService;
 	

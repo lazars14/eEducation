@@ -34,23 +34,15 @@ public class FileService {
 			return result;
 		}
 		
-//		System.out.println("original filename is " + file.getOriginalFilename());
-		
-//		System.out.println("folder path is " + environment.getProperty("file.path"));
-		
 		try {
 			// Get the file and save it somewhere
 			byte[] bytes = file.getBytes();
 			
 			long millis = System.currentTimeMillis();
-//			System.out.println("part 1 is " + parts[0] + " and part 2 is " + parts[1]);
 			String generatedFilename = parts[0] + millis + "." + parts[1];
-//			System.out.println("generated filename is " + generatedFilename);
 			
 			Path path = Paths.get(environment.getProperty("file.path") + generatedFilename);
 			Files.write(path, bytes);
-			
-//			System.out.println("filename is " + generatedFilename);
 			
 			result[1] = generatedFilename;
 			

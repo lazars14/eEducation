@@ -3,6 +3,8 @@ package com.eEducation.ftn.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import com.eEducation.ftn.web.dto.StudentDTO;
 @RestController
 @RequestMapping(value="api/studentAttendsCourse")
 public class StudentAttendsCourseController {
+
+	private static final Logger logger = LoggerFactory.getLogger(StudentAttendsCourseController.class);
+	
 	@Autowired
 	StudentAttendsCourseService sacService;
 	
@@ -47,6 +52,8 @@ public class StudentAttendsCourseController {
 			sacDTOs.add(new StudentAttendsCourseDTO(sac));
 		}
 		
+		logger.info("sac - returned all");
+		
 		return new ResponseEntity<>(sacDTOs, HttpStatus.OK);
 	}
 	
@@ -58,6 +65,8 @@ public class StudentAttendsCourseController {
 		}
 		
 		found.getStudent().setSPassword("");
+		
+		logger.info("sac - found by id " + id);
 		
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(found), HttpStatus.OK);
 	}
@@ -83,6 +92,8 @@ public class StudentAttendsCourseController {
 		sacService.save(newSac);
 		
 		newSac.getStudent().setSPassword("");
+		
+		logger.info("sac - created new, course is " + course.getName() + " and student is " + student.getEmail());
 		
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(newSac), HttpStatus.OK);
 	}
@@ -112,6 +123,8 @@ public class StudentAttendsCourseController {
 		
 		found.getStudent().setSPassword("");
 		
+		logger.info("sac - updated sac with id " + sac.getId());
+		
 		return new ResponseEntity<>(new StudentAttendsCourseDTO(found), HttpStatus.OK);
 	}
 	
@@ -119,6 +132,7 @@ public class StudentAttendsCourseController {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		StudentAttendsCourse found = sacService.findOne(id);
 		if(found != null) {
+			logger.info("sac - deleted sac with id " + id);
 			sacService.remove(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
@@ -149,6 +163,8 @@ public class StudentAttendsCourseController {
 			sacService.save(newSac);
 		}
 		
+		logger.info("sac - batch added sac for course " + course.getName());
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -169,6 +185,8 @@ public class StudentAttendsCourseController {
 			
 			sacService.remove(foundSac.getId());
 		}
+		
+		logger.info("sac - batch removed sac for course " + course.getName());
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

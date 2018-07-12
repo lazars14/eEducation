@@ -3,6 +3,8 @@ package com.eEducation.ftn.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,9 @@ import com.eEducation.ftn.web.dto.ColloquiumDTO;
 @RestController
 @RequestMapping(value="api/course/{courseId}/colloquiums")
 public class ColloquiumController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ColloquiumController.class);
+	
 	@Autowired
 	ColloquiumService colloquiumService;
 	
@@ -70,12 +75,7 @@ public class ColloquiumController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Colloquium newColloquium = new Colloquium();
-		
-		if(colloquium.getCourse() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
+		Colloquium newColloquium = new Colloquium();		
 		newColloquium.setCourse(course);
 		newColloquium.setMaxPoints(colloquium.getMaxPoints());
 		newColloquium.setExamType(colloquium.getExamType());

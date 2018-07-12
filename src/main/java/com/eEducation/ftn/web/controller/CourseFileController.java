@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eEducation.ftn.model.Course;
 import com.eEducation.ftn.model.CourseFile;
@@ -32,6 +36,9 @@ import com.eEducation.ftn.web.dto.CourseFileDTO;
 @RestController
 @RequestMapping(value="api/courseFiles")
 public class CourseFileController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CourseFileController.class);
+	
 	@Autowired
 	CourseFileService courseFileService;
 	
@@ -80,42 +87,47 @@ public class CourseFileController {
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<CourseFileDTO> add(@RequestBody CourseFileDTO courseFile, @PathVariable Long courseId){
-		Course c = courseService.findOne(courseId);
-		if(c == null) {
+	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+			value="/course/{courseId}/courseLesson/{courseLessonId}")
+	public ResponseEntity<Void> add(@RequestParam("file") MultipartFile[] files, @PathVariable Long courseId, 
+			@PathVariable Long courseLessonId){
+		Course course = courseService.findOne(courseId);
+		if(course == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		CourseFile newCourseFile = new CourseFile();
-		
-		if(courseFile.getCourseLesson() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		CourseLesson courseLesson = courseLessonService.findOne(courseFile.getCourseLesson().getId());
+		CourseLesson courseLesson = courseLessonService.findOne(courseLessonId);
 		if(courseLesson == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(courseFile.getCourse() == null) {
+		if(courseLesson.getCourse().getId() != course.getId()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Course course = courseService.findOne(courseFile.getCourse().getId());
-		if(course == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		for(MultipartFile file : files) {
+			// upload file
+			String[] uploadResult = fileService.upload(file);
+			
+			if(uploadResult[0].equals("invalid")) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			// create course file
+			CourseFile courseFile = new CourseFile();
+			courseFile.setCourse(course);
+			courseFile.setCourseLesson(courseLesson);
+			courseFile.setDocumentName(uploadResult[1]);
+			courseFile.setDocumentType("courseFile");
+			courseFile.setMimeType(uploadResult[0]);
+			courseFile.setDocumentURL(fileService.getFolderPath() + file.getOriginalFilename());
+			
+			courseFileService.save(courseFile);
+			
+			System.out.println("added course file with name " + courseFile.getDocumentName());
 		}
 		
-		newCourseFile.setCourse(course);
-		newCourseFile.setCourseLesson(courseLesson);
-		newCourseFile.setDocumentName(courseFile.getDocumentName());
-		newCourseFile.setDocumentType(courseFile.getDocumentType());
-		newCourseFile.setDocumentURL(courseFile.getDocumentURL());
-		newCourseFile.setMimeType(courseFile.getMimeType());
-		
-		courseFileService.save(newCourseFile);
-		return new ResponseEntity<>(new CourseFileDTO(newCourseFile), HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
@@ -142,19 +154,27 @@ public class CourseFileController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long courseId){
-		Course c = courseService.findOne(courseId);
-		if(c == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		CourseFile found = courseFileService.findOne(id);
 		if(found != null) {
+			// first try to delete file in file system
+			boolean deleted = false;
+			try {
+				deleted = fileService.delete(found.getDocumentName());
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(deleted == false) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
 			try {
 				courseFileService.remove(id);
 				return new ResponseEntity<>(HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -216,11 +236,8 @@ public class CourseFileController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
-//		System.out.println("filename is " + courseFile.getDocumentName());
-		
 		String folderPath = fileService.getFolderPath();
 		
-//		System.out.println("full url is " + folderPath + "to_do.zip");
 		try {
 			File file = new File(folderPath + courseFile.getDocumentName());
 							

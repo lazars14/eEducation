@@ -3,22 +3,29 @@ package com.eEducation.ftn.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eEducation.ftn.model.Colloquium;
 import com.eEducation.ftn.model.ColloquiumResult;
+import com.eEducation.ftn.model.CourseFile;
 import com.eEducation.ftn.model.Student;
 import com.eEducation.ftn.model.StudentDocument;
 import com.eEducation.ftn.repository.ColloquiumResultRepository;
 import com.eEducation.ftn.service.ColloquiumResultService;
 import com.eEducation.ftn.service.ColloquiumService;
+import com.eEducation.ftn.service.FileService;
 import com.eEducation.ftn.service.StudentDocumentService;
 import com.eEducation.ftn.service.StudentService;
 import com.eEducation.ftn.web.dto.ColloquiumResultDTO;
@@ -26,6 +33,9 @@ import com.eEducation.ftn.web.dto.ColloquiumResultDTO;
 @RestController
 @RequestMapping(value="api/colloquium/{colloquiumId}/colloquiumResults")
 public class ColloquiumResultController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ColloquiumResultController.class);
+	
 	@Autowired
 	ColloquiumResultService colloquiumResultService;
 	
@@ -40,6 +50,9 @@ public class ColloquiumResultController {
 	
 	@Autowired
 	StudentDocumentService studentDocumentService;
+	
+	@Autowired
+	FileService fileService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ColloquiumResultDTO>> getAll(@PathVariable Long colloquiumId){
@@ -76,7 +89,7 @@ public class ColloquiumResultController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/byColloquium")
-	public ResponseEntity<List<ColloquiumResultDTO>> getByColloquium(@PathVariable Long id, @PathVariable Long colloquiumId){
+	public ResponseEntity<List<ColloquiumResultDTO>> getByColloquium(@PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
 		if(colloquium == null) {
@@ -90,7 +103,6 @@ public class ColloquiumResultController {
 			resultDTOs.add(new ColloquiumResultDTO(result));
 		}
 				
-		
 		return new ResponseEntity<>(resultDTOs, HttpStatus.OK);
 	}
 	
@@ -110,35 +122,49 @@ public class ColloquiumResultController {
 		
 		ColloquiumResult found = colloquiumResultRepository.findByStudentAndColloquium(student, colloquium);
 		if(found == null){
-			return new ResponseEntity<>(null, HttpStatus.OK);
+			return new ResponseEntity<>(new ColloquiumResultDTO(), HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<>(new ColloquiumResultDTO(found), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<ColloquiumResultDTO> add(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Long colloquiumId){
-		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
-		
+	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<ColloquiumResultDTO> add(@RequestParam("studentId") String studentId, 
+			@RequestParam("file") MultipartFile file, @PathVariable Long colloquiumId){
+		Colloquium colloquium = colloquiumService.findOne(colloquiumId);	
 		if(colloquium == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		Student student = studentService.findOne(Long.parseLong(studentId));
+		if(student == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		StudentDocument studDoc = null;
+		if(file.isEmpty() == false) {
+			// upload file
+			String[] uploadResult = fileService.upload(file);
+			
+			if(uploadResult[0].equals("invalid")) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			studDoc = new StudentDocument();
+			studDoc.setCourse(colloquium.getCourse());
+			studDoc.setStudent(student);
+			studDoc.setDocumentName(uploadResult[1]);
+			studDoc.setDocumentType("notification");
+			studDoc.setMimeType(uploadResult[0]);
+			studDoc.setDocumentURL(fileService.getFolderPath() + file.getOriginalFilename());
+			
+			studentDocumentService.save(studDoc);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		ColloquiumResult newColloquiumResult = new ColloquiumResult();
-		newColloquiumResult.setPoints(colloquiumResult.getPoints());
-		
-		if(colloquiumResult.getColloquium() == null || colloquiumResult.getStudent() == null ||
-				colloquiumResult.getDocument() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		Student student = studentService.findOne(colloquiumResult.getStudent().getId());
-		StudentDocument studDoc = studentDocumentService.findOne(colloquiumResult.getDocument().getId());
-		
-		if(student == null || studDoc == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
+		newColloquiumResult.setPoints(Float.valueOf(0));
 		newColloquiumResult.setColloquium(colloquium);
 		newColloquiumResult.setStudent(student);
 		newColloquiumResult.setDocument(studDoc);
@@ -147,7 +173,7 @@ public class ColloquiumResultController {
 		return new ResponseEntity<>(new ColloquiumResultDTO(newColloquiumResult), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, consumes="application/json", value="/{id}")
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<ColloquiumResultDTO> update(@RequestBody ColloquiumResultDTO colloquiumResult, @PathVariable Long colloquiumId){
 		Colloquium colloquium = colloquiumService.findOne(colloquiumId);
 		
@@ -161,20 +187,6 @@ public class ColloquiumResultController {
 		}
 		
 		found.setPoints(colloquiumResult.getPoints());
-		
-		if(colloquiumResult.getDocument() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		StudentDocument studDoc = studentDocumentService.findOne(colloquiumResult.getDocument().getId());
-		
-		if(studDoc == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		found.setDocument(studDoc);
-		
-		// not allowed to change colloquium and student
 		
 		colloquiumResultService.save(found);
 		return new ResponseEntity<>(new ColloquiumResultDTO(found), HttpStatus.OK);

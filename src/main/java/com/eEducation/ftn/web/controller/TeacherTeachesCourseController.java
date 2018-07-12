@@ -3,6 +3,8 @@ package com.eEducation.ftn.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import com.eEducation.ftn.web.dto.TeacherTeachesCourseDTO;
 @RestController
 @RequestMapping(value="api/teacherTeachesCourse")
 public class TeacherTeachesCourseController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TeacherTeachesCourseController.class);
+	
 	@Autowired
 	TeacherTeachesCourseService ttcService;
 	
@@ -47,6 +52,8 @@ public class TeacherTeachesCourseController {
 			ttcDTOs.add(new TeacherTeachesCourseDTO(ttc));
 		}
 		
+		logger.info("ttc - returned all");
+		
 		return new ResponseEntity<>(ttcDTOs, HttpStatus.OK);
 	}
 	
@@ -58,6 +65,8 @@ public class TeacherTeachesCourseController {
 		}
 		
 		found.getTeacher().setSPassword("");
+		
+		logger.info("ttc - found by id " + id);
 		
 		return new ResponseEntity<>(new TeacherTeachesCourseDTO(found), HttpStatus.OK);
 	}

@@ -3,6 +3,8 @@ package com.eEducation.ftn.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,9 @@ import com.eEducation.ftn.service.GradeService;
 @RestController
 @RequestMapping(value="api/examEntries")
 public class StudentExamEntryController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(StudentExamEntryController.class);
+	
 	@Autowired
 	StudentExamEntryService examEntryService;
 	
@@ -55,6 +60,8 @@ public class StudentExamEntryController {
 			examEntriesDTOs.add(new StudentExamEntryDTO(ee));
 		}
 		
+		logger.info("student exam entry - returned all");
+		
 		return new ResponseEntity<>(examEntriesDTOs, HttpStatus.OK);
 	}
 	
@@ -64,6 +71,8 @@ public class StudentExamEntryController {
 		if(found == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
+		logger.info("student exam entry - found by id " + id);
 		
 		return new ResponseEntity<>(new StudentExamEntryDTO(found), HttpStatus.OK);
 	}
@@ -89,6 +98,9 @@ public class StudentExamEntryController {
 		newExamEntry.setExamTerm(examTerm);
 		
 		examEntryService.save(newExamEntry);
+		
+		logger.info("student exam entry - added new");
+		
 		return new ResponseEntity<>(new StudentExamEntryDTO(newExamEntry), HttpStatus.OK);
 	}
 	
@@ -117,6 +129,9 @@ public class StudentExamEntryController {
 		found.setGrade(grade);
 		
 		examEntryService.save(found);
+		
+		logger.info("student exam entry - updated with id " + examEntry.getId());
+		
 		return new ResponseEntity<>(new StudentExamEntryDTO(found), HttpStatus.OK);
 	}
 	
@@ -125,6 +140,7 @@ public class StudentExamEntryController {
 		StudentExamEntry found = examEntryService.findOne(id);
 		if(found != null){
 			examEntryService.remove(id);
+			logger.info("student exam entry - deleted with id " + id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -147,6 +163,8 @@ public class StudentExamEntryController {
 			examEntriesDTOs.add(new StudentExamEntryDTO(ee));
 		}
 		
+		logger.info("student exam entry - found by examterm and student");
+		
 		return new ResponseEntity<>(examEntriesDTOs, HttpStatus.OK);
 	}
 	
@@ -167,6 +185,8 @@ public class StudentExamEntryController {
 				examEntriesDTOs.add(new StudentExamEntryDTO(ee));
 			}
 		}
+		
+		logger.info("student exam entry - found by examterm and teacher");
 		
 		return new ResponseEntity<>(examEntriesDTOs, HttpStatus.OK);
 	}
